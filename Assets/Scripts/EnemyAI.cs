@@ -6,16 +6,16 @@ public class EnemyAI : MonoBehaviour
 {
     public Transform player;
     public float detectionRange = 10f;
-    private navmeshAgent agent;
+    private NavMeshAgent agent;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }
