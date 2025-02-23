@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 3166240210002429893}
   - component: {fileID: 8389037505214851991}
   - component: {fileID: 4901618307030153897}
+  - component: {fileID: 8128972416975255777}
   m_Layer: 3
   m_Name: Evil Guy
   m_TagString: Untagged
@@ -162,6 +163,20 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.60209954
   m_Center: {x: 0, y: 0.10209954, z: 0}
+--- !u!114 &8128972416975255777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464091639905442141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d10aca6e9ed143d78125c38da888e3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  detectionRange: 10
 --- !u!1 &1741255827260458419
 GameObject:
   m_ObjectHideFlags: 0
