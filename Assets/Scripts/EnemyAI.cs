@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+
+public enum EnemyState
+{
+    Wander = 0,
+    Pursue = 1,
+    Search = 2
+}
+
+
 public class EnemyAI : MonoBehaviour
 {
     public Transform player;
