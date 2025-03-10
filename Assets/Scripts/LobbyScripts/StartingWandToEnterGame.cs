@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Transform))]
-public class BouncingWand : MonoBehaviour
+public class StartingWandToEnterGame : MonoBehaviour
 {
     private Vector3 objectPos;
     private float changingValue = 1;
@@ -25,5 +26,15 @@ public class BouncingWand : MonoBehaviour
         float t = (Mathf.Sin(Time.time * speed) + 1) / 2;
         changingValue = Mathf.Lerp(minPercent, maxPercent, t);
         transform.position = new Vector3(objectPos.x, (objectPos.y * changingValue), objectPos.z);
+    }
+
+    // Load with StartCoroutine(LoadSceneAsync());
+    private IEnumerator LoadGame()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Game"); // TODO Replace with game scene name
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
     }
 }
