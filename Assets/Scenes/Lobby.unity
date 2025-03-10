@@ -268,7 +268,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8112921285308865003, guid: 4ab2fc4928ff37746b26b549008cd60d, type: 3}
       propertyPath: m_Name
-      value: Example2_Grey
+      value: Spaceship
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6331519497941710784, guid: 4ab2fc4928ff37746b26b549008cd60d, type: 3}
@@ -961,7 +961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15787c134c27304ea50f3b4dcfdf58c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectToBounce: {fileID: 955644689}
 --- !u!1 &1005971225
 GameObject:
   m_ObjectHideFlags: 0
