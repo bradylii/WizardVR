@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spell : MonoBehaviour
@@ -5,6 +6,7 @@ public class Spell : MonoBehaviour
     [SerializeField] private float lifetime = 2;
     [SerializeField] private float velocity = 50;
     [SerializeField] private float sizePercentage = 1;
+    [SerializeField] private List<string> tagsToDetroyOn = new List<string>();
 
     private Rigidbody rb;
     private Vector3 launchForce = Vector3.right;
@@ -15,6 +17,7 @@ public class Spell : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("2");
         SetOriginalSizeValue();
         UpdateSize();
         if (rb == null)
@@ -55,5 +58,11 @@ public class Spell : MonoBehaviour
     private void UpdateSize()
     {
         this.transform.localScale = originalSize * sizePercentage;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if ("weapon" == collision.gameObject.tag) return;
+        Destroy(gameObject);
     }
 }
