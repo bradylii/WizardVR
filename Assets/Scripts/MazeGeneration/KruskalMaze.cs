@@ -11,6 +11,7 @@ public class KruskalMaze : AbstractMaze
     public GameObject wallPrefab; // Prefab for the walls of the maze cells
 
     public bool haveEntranceExit = false;
+    public int mazeSeed = 0; // 0 to randomize seed
 
     private List<MazeEdge> walls = new List<MazeEdge>();
     private Dictionary<MazeCell, MazeCell> unions = new Dictionary<MazeCell, MazeCell>();
@@ -19,6 +20,7 @@ public class KruskalMaze : AbstractMaze
     {
         Generate();
         Build();
+
     }
 
     // Initialize the cells of the maze
@@ -114,8 +116,16 @@ public class KruskalMaze : AbstractMaze
         InitializeCells();
         InitializeWalls();
 
-        // Shuffle walls to randomize the maze generation
-        var rand = new System.Random();
+        // Shuffle walls to randomize the maze generationv
+        System.Random rand;
+        if (mazeSeed == 0)
+        {
+            rand = new System.Random();
+        }
+        else
+        {
+            rand = new System.Random(mazeSeed);
+        }
         walls = walls.OrderBy(_ => rand.Next()).ToList();
 
         foreach (MazeEdge wall in walls)

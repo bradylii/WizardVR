@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 1889349480}
   - component: {fileID: 1889349479}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Maze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,6 +249,8 @@ MonoBehaviour:
   height: 10
   floorPrefab: {fileID: 1133188356480196555, guid: e7f3a1f0fb64fd8438c293ad04a65a2c, type: 3}
   wallPrefab: {fileID: 3708411228879417520, guid: 1ddfa70bcf04c0b4aac1332e190e7cc3, type: 3}
+  haveEntranceExit: 0
+  mazeSeed: 0
 --- !u!4 &1889349480
 Transform:
   m_ObjectHideFlags: 0
