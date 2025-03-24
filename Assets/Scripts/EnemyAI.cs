@@ -15,6 +15,9 @@ public class EnemyAI : MonoBehaviour
     private Vector3 directionToPlayer;
     private Quaternion targetRotation;
 
+    private bool playerSeen = false;
+    private Vector3 lastKnownPlayerPosition;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -29,6 +32,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (isInRange() && isFacingPlayer() && inLineOfSight())
         {
+            playerSeen = true;
+            lastKnownPlayerPosition = player.position;
             RotateTowardsPlayer();
 
             if (distanceToPlayer <= stoppingDistance)
@@ -42,7 +47,20 @@ public class EnemyAI : MonoBehaviour
                 agent.SetDestination(player.position);
             }
         }
+        else if (playerSeen)
+        {
+            agent.isStopped = false;
+            agent.SetDestination(lastKnownPlayerPosition);
+
+            if (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
+            {
+                agent.isStopped = true;
+                agent.ResetPath();
+                playerSeen = false;
+            }
+        }
     }
+
 
 
     bool isInRange()
