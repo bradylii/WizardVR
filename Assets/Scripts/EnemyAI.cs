@@ -4,22 +4,27 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
+    // player positions and navmesh agent init
     public Transform player;
     [SerializeField] private float distanceToPlayer;
     private NavMeshAgent agent;
 
+    // Variables for checking if enemy can see player
     public float detectionRange = 10f;
     public float stoppingDistance = 2f;
     public float angle;
 
+    // variables for rotation
     private Vector3 directionToPlayer;
     private Quaternion targetRotation;
 
+    // variables for going to last known location
     private bool playerSeen = false;
     private Vector3 lastKnownPlayerPosition;
 
     void Start()
     {
+        // Navmesh init
         agent = GetComponent<NavMeshAgent>();
         if (player == null)
         {
@@ -30,13 +35,13 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (isInRange() && isFacingPlayer() && inLineOfSight())
+        if (isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
             playerSeen = true;
             lastKnownPlayerPosition = player.position;
-            RotateTowardsPlayer();
+            RotateTowardsPlayer(); // rotate to player 
 
-            if (distanceToPlayer <= stoppingDistance)
+            if (distanceToPlayer <= stoppingDistance) // if enemy is close to player stop movement
             {
                 agent.isStopped = true;
                 agent.ResetPath();
@@ -44,15 +49,15 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 agent.isStopped = false;
-                agent.SetDestination(player.position);
+                agent.SetDestination(player.position); // if not go to player
             }
         }
-        else if (playerSeen)
+        else if (playerSeen) // if player out of vision but enemy has seen them
         {
             agent.isStopped = false;
-            agent.SetDestination(lastKnownPlayerPosition);
+            agent.SetDestination(lastKnownPlayerPosition); // go to last known position
 
-            if (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
+            if (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance) // if enemy is close to last known position, stop
             {
                 agent.isStopped = true;
                 agent.ResetPath();
@@ -72,19 +77,19 @@ public class EnemyAI : MonoBehaviour
     bool inLineOfSight()
     {
         RaycastHit hit;
-        Vector3 origin = transform.position + Vector3.up * 1.5f;
-        Vector3 direction = (player.position - origin).normalized;
+        Vector3 origin = transform.position + Vector3.up * 1.5f; // have raycast come from enemy eyes
+        Vector3 direction = (player.position - origin).normalized; 
 
-        if(Physics.Raycast(origin, direction, out hit, detectionRange))
+        if(Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
         {
-            return (hit.transform.CompareTag("Player"));
+            return (hit.transform.CompareTag("Player")); // return true if it hits player tag
         }
         return false;
     }
 
     bool isFacingPlayer()
     {
-        directionToPlayer = (player.position - transform.position).normalized;
+        directionToPlayer = (player.position - transform.position).normalized; 
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         return angleToPlayer < angle;
@@ -92,13 +97,14 @@ public class EnemyAI : MonoBehaviour
 
     void RotateTowardsPlayer()
     {
-        directionToPlayer.y = 0;
+        directionToPlayer.y = 0; // make sure the enemy doesnt rotate head up and down (can change this if we have verticality in game)
 
-        targetRotation = Quaternion.LookRotation(directionToPlayer);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+        targetRotation = Quaternion.LookRotation(directionToPlayer); // figure out where to rotate to
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // smoothly rotate to player 
     }
 
 
+    // copy pasted code for visualizing detection range, line to player, and stopping distance. does not affect code at all just visual 
     void OnDrawGizmosSelected()
     {
         // Draw Detection Range
