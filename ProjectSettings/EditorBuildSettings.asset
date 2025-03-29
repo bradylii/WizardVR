@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 2d70bf2ba70988c46bf75ec690f78dfb
+  - enabled: 1
+    path: Assets/Scenes/MazeGameScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: a6a7aecb9f9f0bb4f87f5d48d1b8d946, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: ba5b7f966cc164d4f9acdbd95f337d2e, type: 2}
