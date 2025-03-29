@@ -4,10 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
+    // How much damage enemy does
+    public float damage;
+    private bool isDamagingPlayer = false; // Flag to track if coroutine is running
+
     // player positions and navmesh agent init
     public Transform player;
     [SerializeField] private float distanceToPlayer;
     private NavMeshAgent agent;
+    private Player playerInfo;
 
     // Variables for checking if enemy can see player
     public float detectionRange = 10f;
@@ -26,6 +31,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Navmesh init
         agent = GetComponent<NavMeshAgent>();
+        playerInfo = GetComponent<Player>();
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -62,8 +68,26 @@ public class EnemyAI : MonoBehaviour
                 agent.isStopped = true;
                 agent.ResetPath();
                 playerSeen = false;
+
+                if (!isDamagingPlayer) // Only start coroutine if it's not already running
+                {
+                    StartCoroutine(DamagePlayerOverTime());
+                }
             }
         }
+    }
+
+    private IEnumerator DamagePlayerOverTime()
+    {
+        isDamagingPlayer = true;
+
+        while (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
+        {
+            playerInfo.lowerPlayerHealth(damage);
+            yield return new WaitForSeconds(1f); // Wait for 1 second before dealing damage again
+        }
+
+        isDamagingPlayer = false; // Reset flag when enemy moves away
     }
 
 
