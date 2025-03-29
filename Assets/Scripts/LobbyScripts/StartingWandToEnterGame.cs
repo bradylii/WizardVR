@@ -20,6 +20,13 @@ public class StartingWandToEnterGame : MonoBehaviour
     private void Update()
     {
         bounceObject();
+
+        // TO DO: REPLACE WITH GRAB WAND
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("transition!");
+            StartCoroutine(LoadGame());
+        }
     }
 
     private void bounceObject()
@@ -32,7 +39,7 @@ public class StartingWandToEnterGame : MonoBehaviour
     // Load with StartCoroutine(LoadSceneAsync());
     private IEnumerator LoadGame()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Game"); // TODO Replace with game scene name
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MazeGameScene"); // TODO Replace with game scene name
         while (!asyncLoad.isDone)
         {
             yield return null;

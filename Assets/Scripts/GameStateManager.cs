@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class GameStateManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.Lobby:
-                Debug.Log("Game is in loading screen");
+                Debug.Log("Game is in lobby");
                 lobby();
                 break;
             case GameState.Playing:
@@ -55,6 +56,29 @@ public class GameStateManager : MonoBehaviour
                 Debug.Log("Victory!");
                 victory();
                 break;
+        }
+    }
+
+    public void LoadLobbyScene()
+    {
+        StartCoroutine(LoadLobby());
+    }
+
+    private IEnumerator LoadLobby()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby");
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
+
+    void Update()
+    {
+        // TO DO: MOVE TO SEPARATE SCRIPT (MANAGING WIN/LOSS DISPLAY) AND REPLACE WITH XR INTERFACE INTERACTION
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            LoadLobbyScene();
         }
     }
 
