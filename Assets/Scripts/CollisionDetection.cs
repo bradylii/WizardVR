@@ -7,7 +7,7 @@ public class CollisionDetection : MonoBehaviour
     Player player;
     private void Start()
     {
-        player = GetComponent<Player>();
+        player = GameObject.Find("Game Manager")?.GetComponent<Player>();
     }
     void OnTriggerEnter(Collider other)
     {
