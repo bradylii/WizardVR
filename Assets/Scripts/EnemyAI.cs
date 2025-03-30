@@ -25,8 +25,10 @@ public class EnemyAI : MonoBehaviour
 
 
     public EnemyState currentState = EnemyState.Wander_init;
-    int dRadius = 2;
+    int dRadius = 4;
     public Vector3 originalWanderPoint;
+    public Vector3 newWanderPoint;
+    public Vector3 destinationPoint;
 
     void Start()
     {
@@ -50,6 +52,7 @@ public class EnemyAI : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.Wander_init:
+                
                 //randomly select a point in a radius around the wanderpoint
                 System.Random random = new System.Random();
                 int random_number_x = random.Next( ( (int) originalWanderPoint.x) - dRadius,  ((int) originalWanderPoint.x) + 1 + dRadius);
@@ -59,11 +62,17 @@ public class EnemyAI : MonoBehaviour
                 NavMeshPath path = new NavMeshPath();
                 if (Vector3.Distance(generated_point,transform.position) <= dRadius && agent.CalculatePath(generated_point, path))
                 {
-                    Debug.Log("MAKE WAY");
-                    
-                    Debug.Log(generated_point);
+                    destinationPoint = generated_point;
                     //currentState = EnemyState.Wander_to_Path;
-                    transform.position = generated_point;
+                    //transform.position = generated_point;
+                    currentState = EnemyState.Wander_to_Path;
+                    agent.SetPath(path);
+                }
+                break;
+            case EnemyState.Wander_to_Path:
+                if (agent.remainingDistance == 0 || agent.velocity == new Vector3(0, 0, 0))
+                {
+                    currentState = EnemyState.Wander_init;
                 }
                 break;
             default:
