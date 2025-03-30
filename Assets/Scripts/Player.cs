@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public void killedBadGuy()
     {
         kills++;
+        Debug.Log("kills: " + kills);
     }
 
     public void lowerPlayerHealth(float damage)
