@@ -60,9 +60,13 @@ public class Spell : MonoBehaviour
         this.transform.localScale = originalSize * sizePercentage;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if ("weapon" == collision.gameObject.tag) return;
+        if ("weapon" == other.gameObject.tag)
+        {
+            Debug.Log("hit itself");
+            return;
+        }
         Destroy(gameObject);
     }
 }

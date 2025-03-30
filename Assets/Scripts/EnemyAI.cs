@@ -6,6 +6,7 @@ public class EnemyAI : MonoBehaviour
 {
     // How much damage enemy does
     public float damage;
+    public float attackRate;
     private bool isDamagingPlayer = false; // Flag to track if coroutine is running
 
     // player positions and navmesh agent init
@@ -31,7 +32,7 @@ public class EnemyAI : MonoBehaviour
     {
         // Navmesh init
         agent = GetComponent<NavMeshAgent>();
-        playerInfo = GetComponent<Player>();
+        playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -50,6 +51,10 @@ public class EnemyAI : MonoBehaviour
             if (distanceToPlayer <= stoppingDistance) // if enemy is close to player stop movement
             {
                 agent.isStopped = true;
+                if (!isDamagingPlayer) // Only start coroutine if it's not already running
+                {
+                    StartCoroutine(DamagePlayerOverTime());
+                }
                 agent.ResetPath();
             }
             else
@@ -68,23 +73,24 @@ public class EnemyAI : MonoBehaviour
                 agent.isStopped = true;
                 agent.ResetPath();
                 playerSeen = false;
-
-                if (!isDamagingPlayer) // Only start coroutine if it's not already running
-                {
-                    StartCoroutine(DamagePlayerOverTime());
-                }
             }
         }
     }
 
     private IEnumerator DamagePlayerOverTime()
     {
+        if (playerInfo == null)
+        {
+            Debug.LogError("playerInfo is null! Assign it before starting DamagePlayerOverTime.");
+            yield break; // Exit coroutine to prevent errors
+        }
+
         isDamagingPlayer = true;
 
         while (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
         {
             playerInfo.lowerPlayerHealth(damage);
-            yield return new WaitForSeconds(1f); // Wait for 1 second before dealing damage again
+            yield return new WaitForSeconds(attackRate); // Wait for 1 second before dealing damage again
         }
 
         isDamagingPlayer = false; // Reset flag when enemy moves away
