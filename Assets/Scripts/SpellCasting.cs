@@ -10,6 +10,7 @@ public class SpellCasting : MonoBehaviour
 {
     public GameObject particlePrefab;
     public GameObject particlePlane;
+    public Wand wand;
     public float maxDistance = 40.0f;
     public float spawnDelayMilliseconds = 50;
 
@@ -17,11 +18,14 @@ public class SpellCasting : MonoBehaviour
     private float lastSpawnTime;
     private GameObject activePlane;
     private Vector3? centerpoint;
+    private Transform wandTip;
     // Start is called before the first frame update
     void Start()
     {
         lastSpawnTime = Time.time;
         points = new List<Vector2>();
+        wandTip = transform.GetChild(0).GetChild(0);
+        wand = transform.GetChild(0).GetComponent<Wand>();
     }
 
     // Update is called once per frame
@@ -31,7 +35,7 @@ public class SpellCasting : MonoBehaviour
         {
             Debug.Log("Trigger down");
             //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Ray ray = new Ray(transform.position, gameObject.transform.forward);
+            Ray ray = new Ray(transform.position, wandTip.forward);
             RaycastHit hit;
 
             if (!Physics.Raycast(ray, out hit, maxDistance) && !activePlane)
@@ -133,6 +137,7 @@ public class SpellCasting : MonoBehaviour
         {
             //0 degrees +- degreeLeeway
             print("Found a right-facing line");
+            wand.Cast(0);
         }
         else if (angleTotal < 180 + degreeLeeway && angleTotal > 180 - degreeLeeway && angleFirstLast < 180 + degreeLeeway &&
             angleFirstLast > 180 - degreeLeeway)

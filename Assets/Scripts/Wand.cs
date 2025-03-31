@@ -13,8 +13,9 @@ public class Wand : MonoBehaviour
         }
     }
 
-    void Cast(int spellNum)
+    public void Cast(int spellNum)
     {
-        Instantiate(spells[(int)spellNum], wandTipTransform.transform.position, wandTipTransform.transform.rotation);
+        Spell spell = Instantiate(spells[(int)spellNum], wandTipTransform.transform.position, wandTipTransform.transform.rotation);
+        spell.transform.forward = wandTipTransform.transform.forward;
     }
 }
