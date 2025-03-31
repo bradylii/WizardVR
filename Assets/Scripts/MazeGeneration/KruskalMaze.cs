@@ -20,7 +20,8 @@ public class KruskalMaze : AbstractMaze
     {
         Generate();
         Build();
-
+        BuildNavMeshRuntime buildNavMeshRuntime = GetComponent<BuildNavMeshRuntime>();
+        buildNavMeshRuntime.BuildNavMesh();
     }
 
     // Initialize the cells of the maze
@@ -31,7 +32,7 @@ public class KruskalMaze : AbstractMaze
             cells.Add(new List<MazeCell>());
             for (int y = 0; y < height; y++)
             {
-                AbstractMazeCell cell = new BasicMazeCell(x, y, 1, 1, floorPrefab);
+                AbstractMazeCell cell = new BasicMazeCell(x, y, cellSize, cellSize, floorPrefab);
                 cells[x].Add(cell);
 
                 // Initialize the unions dictionary
@@ -178,19 +179,22 @@ public class KruskalMaze : AbstractMaze
                 // Also build the walls if cell possesses outer walls of the maze
                 // Can most likely be refactored to be more efficient and less repetitive
                 GameObject edge = BuildEdge(cell.GetEdge(MazeDirection.East));
+                float positionOffset = 0.5f * cellSize;
                 if (edge != null)
                 {
                     edge.transform.parent = cellGO.transform;
-                    edge.transform.localPosition = new Vector3(0.5f, 0, 0);
+                    edge.transform.localPosition = new Vector3(positionOffset, 0, 0);
                     edge.transform.Rotate(0, 90, 0);
-                    
+
+
+
                 }
-  
+
                 edge = BuildEdge(cell.GetEdge(MazeDirection.South));
                 if (edge != null)
                 {
                     edge.transform.parent = cellGO.transform;
-                    edge.transform.localPosition = new Vector3(0, 0, 0.5f);
+                    edge.transform.localPosition = new Vector3(0, 0, positionOffset);
                 }
 
                 if(x == 0)
@@ -199,7 +203,7 @@ public class KruskalMaze : AbstractMaze
                     if (edge != null)
                     {
                         edge.transform.parent = cellGO.transform;
-                        edge.transform.localPosition = new Vector3(-0.5f, 0, 0);
+                        edge.transform.localPosition = new Vector3(-positionOffset, 0, 0);
                         edge.transform.Rotate(0, -90, 0);
                     }
                 }
@@ -210,9 +214,11 @@ public class KruskalMaze : AbstractMaze
                     if (edge != null)
                     {
                         edge.transform.parent = cellGO.transform;
-                        edge.transform.localPosition = new Vector3(0, 0, -0.5f);
+                        edge.transform.localPosition = new Vector3(0, 0, -positionOffset);
                     }
                 }
+
+
             }
         }
 
@@ -225,7 +231,13 @@ public class KruskalMaze : AbstractMaze
     {
         if (edge.edgeType == MazeEdgeType.Wall)
         {
-            return Instantiate(wallPrefab);
+            GameObject wallGO = Instantiate(wallPrefab);
+
+            wallGO.transform.localScale = new Vector3(
+                wallPrefab.transform.localScale.x * cellSize,
+                wallPrefab.transform.localScale.y,
+                wallPrefab.transform.localScale.z * cellSize);
+            return wallGO;
         }
         else
         {

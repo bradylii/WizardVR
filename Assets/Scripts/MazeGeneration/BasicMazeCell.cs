@@ -19,7 +19,10 @@ public class BasicMazeCell : AbstractMazeCell
         cellObject.transform.position = new Vector3(x_position * size.x, 0, y_position * size.y);
 
         GameObject floor = Object.Instantiate(floorPrefab, cellObject.transform);
-        floor.transform.localScale = new Vector3(size.x, floor.transform.localScale.y, size.y);
+        floor.transform.localScale = new Vector3(
+            size.x * floor.transform.localScale.x, 
+            floor.transform.localScale.y, 
+            size.y * floor.transform.localScale.z);
 
         return cellObject;
     }

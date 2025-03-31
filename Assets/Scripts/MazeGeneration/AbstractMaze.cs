@@ -14,6 +14,9 @@ public abstract class AbstractMaze : MonoBehaviour, MazeWorld
     [SerializeField]
     protected int height = 10;
 
+    [SerializeField]
+    protected int cellSize = 1;
+
     protected List<List<MazeCell>> cells = new List<List<MazeCell>>();
 
     public abstract void Generate();
