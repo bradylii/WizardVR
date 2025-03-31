@@ -17,7 +17,7 @@ public enum EnemyState
 public class EnemyAI : MonoBehaviour
 {
     public Transform player;
-    public float detectionRange = 10f;
+    public float detectionRange = 2f;
     public float stoppingDistance = 2f;
     
     private NavMeshAgent agent;
@@ -29,13 +29,14 @@ public class EnemyAI : MonoBehaviour
     public Vector3 originalWanderPoint;
     public Vector3 newWanderPoint;
     public Vector3 destinationPoint;
+    public float margin_of_difference = 1;
+    NavMeshPath path = new NavMeshPath();
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         originalWanderPoint = transform.position;//add a raycast to snap to the ground
         originalWanderPoint.y = (float) 0.58;
-        Debug.Log(dRadius);
     }
 
 
@@ -44,7 +45,13 @@ public class EnemyAI : MonoBehaviour
         distanceToPlayer = Vector3.Distance(transform.position, player.position);
         
         //this section modifies the enemy state
-        //if (PlayerDetected()) currentState = EnemyState.Pursue;
+        if (PlayerDetected())
+        {
+            currentState = EnemyState.Pursue;
+        }else if (!PlayerDetected() && currentState == EnemyState.Pursue)
+        {
+            currentState = EnemyState.Wander_init;//this is supposed to go EnemyState.Search_init but for now we will go to Wander_init
+        }
 
 
         //this section determines what to do in any given state;
@@ -59,7 +66,7 @@ public class EnemyAI : MonoBehaviour
                 int random_number_z = random.Next(((int)originalWanderPoint.z) - dRadius, ((int)originalWanderPoint.z) + 1 + dRadius);
                 Vector3 generated_point = new Vector3(random_number_x, originalWanderPoint.y, random_number_z);
 
-                NavMeshPath path = new NavMeshPath();
+                path = new NavMeshPath();
                 if (Vector3.Distance(generated_point,transform.position) <= dRadius && agent.CalculatePath(generated_point, path))
                 {
                     destinationPoint = generated_point;
@@ -73,6 +80,14 @@ public class EnemyAI : MonoBehaviour
                 if (agent.remainingDistance == 0 || agent.velocity == new Vector3(0, 0, 0))
                 {
                     currentState = EnemyState.Wander_init;
+                }
+                break;
+            case EnemyState.Pursue:
+                if (Vector3.Distance(destinationPoint, player.position) > margin_of_difference)
+                {
+                    path = new NavMeshPath();
+                    agent.CalculatePath(player.position,path);
+                    agent.SetPath(path);
                 }
                 break;
             default:
