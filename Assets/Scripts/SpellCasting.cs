@@ -27,22 +27,20 @@ public class SpellCasting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.RTouch) > 0.1f) // Detect right trigger press
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.Log("Trigger down");
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = new Ray(transform.position, gameObject.transform.forward);
             RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit, maxDistance))
+
+            if (!Physics.Raycast(ray, out hit, maxDistance) && !activePlane)
             {
                 activePlane = Instantiate(particlePlane);
                 activePlane.transform.position = ray.origin + ray.direction * maxDistance;
                 activePlane.transform.forward = ray.direction;
+                return;
             }
-        }
-        if (Input.GetMouseButton(0)) // Detect left mouse button press
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
             if (Physics.Raycast(ray, out hit) && Time.time - lastSpawnTime >= spawnDelayMilliseconds / 1000)
             {
                 //spawn the prefab at the end of the ray
@@ -64,7 +62,7 @@ public class SpellCasting : MonoBehaviour
                 }
             }
         }
-        if (Input.GetMouseButtonUp(0) && activePlane)
+        else if (activePlane)
         {
             Destroy(activePlane);
             centerpoint = null;
@@ -127,7 +125,7 @@ public class SpellCasting : MonoBehaviour
         }
 
         print($"Best-fit slope is {angleTotal} and first-to-last slope is {angleFirstLast}");
-        float degreeLeeway = 5.0f;
+        float degreeLeeway = 7.5f;
         if (
             (angleTotal < degreeLeeway || angleTotal > 360 - degreeLeeway)
             && (angleFirstLast < degreeLeeway || angleFirstLast > 360 - degreeLeeway)
