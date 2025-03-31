@@ -404,8 +404,8 @@ Transform:
   m_GameObject: {fileID: 2977122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.96, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.6472, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1876706790}
@@ -631,6 +631,7 @@ GameObject:
   - component: {fileID: 10170715}
   - component: {fileID: 10170717}
   - component: {fileID: 10170718}
+  - component: {fileID: 10170719}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -696,6 +697,22 @@ MonoBehaviour:
   spells:
   - {fileID: 391833402}
   wandTipTransform: {fileID: 2977122}
+--- !u!114 &10170719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 10170714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ae90effca1657148b03ba8c54dcf74f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 2481318559634602441, guid: 3c5dbca555bb26a4bb79fd6c793817b4, type: 3}
+  particlePlane: {fileID: 1508809473178650025, guid: be8f9d6c4bcbaad46b244e89e84409e1, type: 3}
+  maxDistance: 5
+  spawnDelayMilliseconds: 2
 --- !u!1 &11993572
 GameObject:
   m_ObjectHideFlags: 0
