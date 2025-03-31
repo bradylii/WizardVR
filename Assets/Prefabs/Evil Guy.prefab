@@ -96,7 +96,8 @@ GameObject:
   - component: {fileID: 3166240210002429893}
   - component: {fileID: 8389037505214851991}
   - component: {fileID: 4901618307030153897}
-  - component: {fileID: 8128972416975255777}
+  - component: {fileID: 8696542261553327078}
+  - component: {fileID: 6338575392665332595}
   m_Layer: 3
   m_Name: Evil Guy
   m_TagString: Untagged
@@ -163,7 +164,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.60209954
   m_Center: {x: 0, y: 0.10209954, z: 0}
---- !u!114 &8128972416975255777
+--- !u!114 &8696542261553327078
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,8 +176,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d10aca6e9ed143d78125c38da888e3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 1
+  attackRate: 1
   player: {fileID: 0}
-  detectionRange: 10
+  distanceToPlayer: 0
+  detectionRange: 5
+  stoppingDistance: 2
+  angle: 80
+--- !u!114 &6338575392665332595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1464091639905442141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87ebdcafa2b910e438f8f910df33c71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1741255827260458419
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 1741255827260458419}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3800001, y: 0.13, z: -0.22000003}
+  m_LocalPosition: {x: -0.167, y: 0.13, z: 0.403}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -287,7 +305,7 @@ Transform:
   m_GameObject: {fileID: 8350964748375936015}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3800001, y: 0.13, z: 0.19999993}
+  m_LocalPosition: {x: 0.187, y: 0.13, z: 0.419}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []

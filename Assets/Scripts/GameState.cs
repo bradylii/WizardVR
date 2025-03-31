@@ -1,6 +1,6 @@
 public enum GameState
 {
-    Loading,
+    Lobby,
     Playing,
     GameOver,
     Victory

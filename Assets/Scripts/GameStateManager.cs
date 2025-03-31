@@ -24,7 +24,7 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-        currentState = GameState.Loading;
+        currentState = GameState.Lobby;
     }
 
     // To set game state and update accordingly
@@ -39,9 +39,9 @@ public class GameStateManager : MonoBehaviour
     {
         switch (currentState)
         {
-            case GameState.Loading:
+            case GameState.Lobby:
                 Debug.Log("Game is in loading screen");
-                loading();
+                lobby();
                 break;
             case GameState.Playing:
                 Debug.Log("Game is being played");
@@ -59,7 +59,7 @@ public class GameStateManager : MonoBehaviour
     }
 
     // To preform actions and configurations in loading screen/lobby
-    public void loading()
+    public void lobby()
     {
 
     }
@@ -71,12 +71,18 @@ public class GameStateManager : MonoBehaviour
     }
 
     // To preform actions and configurations when game is over
+    // loss confetti
+    // loss display (with stats)
+    // option to go back to lobby
     public void gameOver()
     {
 
     }
 
     // To preform actions and configurations when player wins
+    // win confetti
+    // win display (with stats)
+    // option to go back to lobby
     public void victory()
     {
 
