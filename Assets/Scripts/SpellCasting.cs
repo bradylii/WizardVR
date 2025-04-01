@@ -10,6 +10,7 @@ public class SpellCasting : MonoBehaviour
 {
     public GameObject particlePrefab;
     public GameObject particlePlane;
+    public Wand wand;
     public float maxDistance = 40.0f;
     public float spawnDelayMilliseconds = 50;
 
@@ -17,32 +18,33 @@ public class SpellCasting : MonoBehaviour
     private float lastSpawnTime;
     private GameObject activePlane;
     private Vector3? centerpoint;
+    private Transform wandTip;
     // Start is called before the first frame update
     void Start()
     {
         lastSpawnTime = Time.time;
         points = new List<Vector2>();
+        wandTip = transform.GetChild(0).GetChild(0);
+        wand = transform.GetChild(0).GetComponent<Wand>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (OVRInput.Get(OVRInput.Axis1D.PrimaryIndexTrigger, OVRInput.Controller.RTouch) > 0.1f) // Detect right trigger press
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Debug.Log("Trigger down");
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = new Ray(transform.position, wandTip.forward);
             RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit, maxDistance))
+
+            if (!Physics.Raycast(ray, out hit, maxDistance) && !activePlane)
             {
                 activePlane = Instantiate(particlePlane);
                 activePlane.transform.position = ray.origin + ray.direction * maxDistance;
                 activePlane.transform.forward = ray.direction;
+                return;
             }
-        }
-        if (Input.GetMouseButton(0)) // Detect left mouse button press
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
             if (Physics.Raycast(ray, out hit) && Time.time - lastSpawnTime >= spawnDelayMilliseconds / 1000)
             {
                 //spawn the prefab at the end of the ray
@@ -64,7 +66,7 @@ public class SpellCasting : MonoBehaviour
                 }
             }
         }
-        if (Input.GetMouseButtonUp(0) && activePlane)
+        else if (activePlane)
         {
             Destroy(activePlane);
             centerpoint = null;
@@ -127,7 +129,7 @@ public class SpellCasting : MonoBehaviour
         }
 
         print($"Best-fit slope is {angleTotal} and first-to-last slope is {angleFirstLast}");
-        float degreeLeeway = 5.0f;
+        float degreeLeeway = 7.5f;
         if (
             (angleTotal < degreeLeeway || angleTotal > 360 - degreeLeeway)
             && (angleFirstLast < degreeLeeway || angleFirstLast > 360 - degreeLeeway)
@@ -135,6 +137,7 @@ public class SpellCasting : MonoBehaviour
         {
             //0 degrees +- degreeLeeway
             print("Found a right-facing line");
+            wand.Cast(0);
         }
         else if (angleTotal < 180 + degreeLeeway && angleTotal > 180 - degreeLeeway && angleFirstLast < 180 + degreeLeeway &&
             angleFirstLast > 180 - degreeLeeway)
