@@ -48,9 +48,9 @@ public class EnemyAI : MonoBehaviour
         if (PlayerDetected())
         {
             currentState = EnemyState.Pursue;
-        }else if (!PlayerDetected() && currentState == EnemyState.Pursue)
+        }else if (currentState == EnemyState.Pursue)
         {
-            currentState = EnemyState.Wander_init;//this is supposed to go EnemyState.Search_init but for now we will go to Wander_init
+            currentState = EnemyState.Search_init;//this is supposed to go EnemyState.Search_init but for now we will go to Wander_init
         }
 
 
@@ -67,7 +67,7 @@ public class EnemyAI : MonoBehaviour
                 Vector3 generated_point = new Vector3(random_number_x, originalWanderPoint.y, random_number_z);
 
                 path = new NavMeshPath();
-                if (Vector3.Distance(generated_point,transform.position) <= dRadius && agent.CalculatePath(generated_point, path))
+                if (Vector3.Distance(generated_point,originalWanderPoint) <= dRadius && agent.CalculatePath(generated_point, path))
                 {
                     destinationPoint = generated_point;
                     //currentState = EnemyState.Wander_to_Path;
@@ -90,11 +90,35 @@ public class EnemyAI : MonoBehaviour
                     agent.SetPath(path);
                 }
                 break;
+            case EnemyState.Search_init:
+                newWanderPoint = path.corners[path.corners.Length - 1];//Create a new temporary wanderpoint to circle around.
+                System.Random random1 = new System.Random();
+                int random_number_x1 = random1.Next(((int)newWanderPoint.x) - dRadius, ((int)newWanderPoint.x) + 1 + dRadius);
+                int random_number_z1 = random1.Next(((int)newWanderPoint.z) - dRadius, ((int)newWanderPoint.z) + 1 + dRadius);
+                Vector3 generated_point1 = new Vector3(random_number_x1, newWanderPoint.y, random_number_z1);
+
+                path = new NavMeshPath();
+
+
+                if (Vector3.Distance(generated_point1, newWanderPoint) <= dRadius && agent.CalculatePath(generated_point1, path))
+                {
+                    destinationPoint = generated_point1;
+                    //currentState = EnemyState.Wander_to_Path;
+                    //transform.position = generated_point;
+                    currentState = EnemyState.Search_to_Path;
+                    agent.SetPath(path);
+                }
+                break;
+            case EnemyState.Search_to_Path:
+                if (agent.remainingDistance == 0 || agent.velocity == new Vector3(0, 0, 0))
+                {
+                    currentState = EnemyState.Search_init;
+                }
+                break;
             default:
                 
                 break;
-                //agent.CalculatePath will return true if there is a path, false if no path exists.
-                //Physics.SphereCast() returns every object in that sphere.
+                
         }
 
 
