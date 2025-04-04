@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2344264287249958160}
   - component: {fileID: 23251051448847455}
   - component: {fileID: 209601645407731599}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HomingSpell
   m_TagString: weapon
   m_Icon: {fileID: 0}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fbf3b90358c139b499e483cb82e283b4, type: 2}
+  - {fileID: 2100000, guid: c27c70d24b39f414e9873ebb1dc9eee7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
