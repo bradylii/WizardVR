@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ReloadScene : MonoBehaviour
 {
+    public GameStateManager gameStateManager;
 
     public void LoadSceneUsingName(string sceneName)
     {
@@ -14,5 +15,10 @@ public class ReloadScene : MonoBehaviour
     public void ReloadCurrentScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void goToLobby()
+    {
+        gameStateManager.setGameState(GameState.Lobby);
     }
 }

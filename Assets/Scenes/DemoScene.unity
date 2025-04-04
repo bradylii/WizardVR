@@ -652,6 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  gameOverInterface: {fileID: 1118639247}
 --- !u!4 &10170716
 Transform:
   m_ObjectHideFlags: 0

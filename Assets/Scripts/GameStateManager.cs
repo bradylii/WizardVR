@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -26,8 +27,7 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-        currentState = GameState.Lobby;
-        updateGameState();
+       setGameState(GameState.Playing);
     }
 
     // To set game state and update accordingly
@@ -35,6 +35,15 @@ public class GameStateManager : MonoBehaviour
     {
         currentState = newState;
         updateGameState();
+    }
+
+    private IEnumerator LoadLobby()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
     }
 
     // To handle calling actions when game state changes
@@ -64,6 +73,7 @@ public class GameStateManager : MonoBehaviour
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
+        StartCoroutine(LoadLobby());
         gameOverInterface.SetActive(false);
     }
 
