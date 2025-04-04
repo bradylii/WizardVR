@@ -3,6 +3,7 @@ using UnityEngine;
 public class CustomControllerModels : MonoBehaviour
 {
     public GameObject rightControllerModelPrefab; // Your custom right controller model
+    public Transform trackingSpace;
     private GameObject rightControllerInstance;
 
     void Start()
@@ -23,7 +24,7 @@ public class CustomControllerModels : MonoBehaviour
         if (rightControllerInstance != null && OVRInput.IsControllerConnected(OVRInput.Controller.RTouch))
         {
             // Set the position and rotation of the custom right controller model
-            rightControllerInstance.transform.position = OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch);
+            rightControllerInstance.transform.position = trackingSpace.TransformPoint(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
             rightControllerInstance.transform.rotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
         }
     }
