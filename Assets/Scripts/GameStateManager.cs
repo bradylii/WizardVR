@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameStateManager : MonoBehaviour
 {
     public GameState currentState;
 
     public static GameStateManager Instance;
+
+    public GameObject gameOverInterface;
 
     private void Awake()
     {
@@ -24,7 +27,7 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-        currentState = GameState.Lobby;
+       setGameState(GameState.Playing);
     }
 
     // To set game state and update accordingly
@@ -32,6 +35,15 @@ public class GameStateManager : MonoBehaviour
     {
         currentState = newState;
         updateGameState();
+    }
+
+    private IEnumerator LoadLobby()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
     }
 
     // To handle calling actions when game state changes
@@ -61,13 +73,14 @@ public class GameStateManager : MonoBehaviour
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
-
+        StartCoroutine(LoadLobby());
+        gameOverInterface.SetActive(false);
     }
 
     // To preform actions and configurations when playing game
     public void playing()
     {
-
+        gameOverInterface.SetActive(false);
     }
 
     // To preform actions and configurations when game is over
@@ -76,7 +89,7 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void gameOver()
     {
-
+        gameOverInterface.SetActive(true);
     }
 
     // To preform actions and configurations when player wins
@@ -85,7 +98,7 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void victory()
     {
-
+        gameOverInterface.SetActive(true);
     }
 
 }
