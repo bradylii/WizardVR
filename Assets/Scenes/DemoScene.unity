@@ -658,6 +658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rightControllerModelPrefab: {fileID: 1381810874909508647, guid: 6373eb13bfa87d541af7091ae4af9304, type: 3}
+  trackingSpace: {fileID: 1876706790}
 --- !u!1 &11993572
 GameObject:
   m_ObjectHideFlags: 0
