@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 6338575392665332595}
   m_Layer: 8
   m_Name: Evil Guy
-  m_TagString: enemy
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

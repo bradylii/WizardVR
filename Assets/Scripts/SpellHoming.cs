@@ -17,7 +17,6 @@ public class SpellHoming : MonoBehaviour
     {
         moveDirection = transform.forward;
         targetEnemy = FindClosestEnemeyInFront();
-        Debug.Log("TIME TO KILL");
     }
 
     private void Update()
@@ -41,7 +40,7 @@ public class SpellHoming : MonoBehaviour
 
     Transform FindClosestEnemeyInFront()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("enemy");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         Transform bestTarget = null;
         float closestDistance = detectionRange;
         Vector3 playerForward = transform.forward;

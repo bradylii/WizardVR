@@ -6,7 +6,7 @@ TagManager:
   tags:
   - weapon
   - endOfMaze
-  - enemy
+  - Enemy
   layers:
   - Default
   - TransparentFX
