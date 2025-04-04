@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     {
         if (playerHealth <= 0)
         {
+            Debug.Log("Player Died!");
             gameStateManager.setGameState(GameState.GameOver);
         }
     }
