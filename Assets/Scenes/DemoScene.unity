@@ -683,6 +683,7 @@ MonoBehaviour:
   playerHealth: 0
   kills: 0
   gameStateManager: {fileID: 10170715}
+  playing: 0
 --- !u!114 &10170718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7654,7 +7655,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3166240210002429893, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.04
+      value: 3.61
       objectReference: {fileID: 0}
     - target: {fileID: 3166240210002429893, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7662,7 +7663,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3166240210002429893, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.98
+      value: -0.44
       objectReference: {fileID: 0}
     - target: {fileID: 3166240210002429893, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -7691,6 +7692,10 @@ PrefabInstance:
     - target: {fileID: 3166240210002429893, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696542261553327078, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
+      propertyPath: damage
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8696542261553327078, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
       propertyPath: player
@@ -26337,6 +26342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d7d4d8b53ba51141a3f2d4f5e9e6d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameStateManager: {fileID: 10170715}
 --- !u!114 &1877273824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26382,8 +26388,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1877273823}
-        m_TargetAssemblyTypeName: LoadScene, Assembly-CSharp
-        m_MethodName: ReloadCurrentScene
+        m_TargetAssemblyTypeName: ReloadScene, Assembly-CSharp
+        m_MethodName: goToLobby
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -29473,7 +29479,7 @@ Transform:
   m_GameObject: {fileID: 2089256800}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0.855, z: 0}
+  m_LocalPosition: {x: -0, y: 0.855, z: -0}
   m_LocalScale: {x: 0.33902392, y: 0.55596393, z: 0.35106182}
   m_ConstrainProportionsScale: 0
   m_Children: []
