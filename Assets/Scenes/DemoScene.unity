@@ -21637,6 +21637,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1531894437}
+  - component: {fileID: 1531894438}
   m_Layer: 6
   m_Name: Maze Walls
   m_TagString: Untagged
@@ -21666,6 +21667,21 @@ Transform:
   - {fileID: 1623325903}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1531894438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531894436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c895e9a0e66799e40bf2f0768972414e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1534577236
 GameObject:
   m_ObjectHideFlags: 0
