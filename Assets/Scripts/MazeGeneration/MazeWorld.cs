@@ -15,5 +15,7 @@ public interface MazeWorld
     GameObject Build();
     // Get the cell at the specified coordinates
     MazeCell GetCell(int x, int y);
+
+    MazeCell GetPositionInMaze(float x, float z);
     
 }

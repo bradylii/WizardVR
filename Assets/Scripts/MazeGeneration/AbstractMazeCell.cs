@@ -10,6 +10,7 @@ public abstract class AbstractMazeCell : MazeCell
 
     protected IntVect2 coordinates;
     protected IntVect2 size;
+    protected GameObject cellGO;
 
     // Dictionary that maps a direction to an edge
     protected Dictionary<MazeDirection, MazeEdge> edges;
@@ -79,6 +80,11 @@ public abstract class AbstractMazeCell : MazeCell
 
     public int GetSizeY() {
         return size.y;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return cellGO;
     }
 
     public override string ToString() {

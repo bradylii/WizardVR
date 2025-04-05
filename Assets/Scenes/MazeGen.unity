@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 1889349479}
   - component: {fileID: 1889349481}
   - component: {fileID: 1889349482}
+  - component: {fileID: 1889349483}
   m_Layer: 0
   m_Name: Maze
   m_TagString: Untagged
@@ -312,6 +313,21 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!114 &1889349483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1889349478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c66dcdbe0afc647b27481c6ce45597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 1464091639905442141, guid: fe69a400c677f384f9c3efc5cf8a115b, type: 3}
+  minSpawnDistance: 1
+  maxSpawnDistance: 5
 --- !u!1 &1975909083
 GameObject:
   m_ObjectHideFlags: 0

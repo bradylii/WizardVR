@@ -15,13 +15,15 @@ public class KruskalMaze : AbstractMaze
 
     private List<MazeEdge> walls = new List<MazeEdge>();
     private Dictionary<MazeCell, MazeCell> unions = new Dictionary<MazeCell, MazeCell>();
-
+    private Dictionary<MazeCell, GameObject> cellToObject = new Dictionary<MazeCell, GameObject>();
+    
     private void Start()
     {
         Generate();
         Build();
         BuildNavMeshRuntime buildNavMeshRuntime = GetComponent<BuildNavMeshRuntime>();
         buildNavMeshRuntime.BuildNavMesh();
+        MazeEnemySpawner.EnableSpawning();
     }
 
     // Initialize the cells of the maze

@@ -38,6 +38,9 @@ public interface MazeCell
     // Get the size of the cell
     IntVect2 GetSize();
 
+    // Get the related GameObject
+    GameObject GetGameObject();
+
     // Get the string representation of the cell
     string ToString();
 }

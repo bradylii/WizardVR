@@ -24,6 +24,8 @@ public class BasicMazeCell : AbstractMazeCell
             floor.transform.localScale.y, 
             size.y * floor.transform.localScale.z);
 
+        cellGO = cellObject;
+
         return cellObject;
     }
 }

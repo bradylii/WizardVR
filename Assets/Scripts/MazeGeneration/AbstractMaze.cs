@@ -45,5 +45,11 @@ public abstract class AbstractMaze : MonoBehaviour, MazeWorld
         return width;
     }
 
-    
+    public MazeCell GetPositionInMaze(float x, float z)
+    {
+        int relativePosX = Mathf.FloorToInt(x / cellSize);
+        int relativePosY = Mathf.FloorToInt(z / cellSize); // Z if top-down 3D
+
+        return cells[relativePosX][relativePosY];
+    }
 }
