@@ -13,6 +13,8 @@ public class SpellHoming : MonoBehaviour
     private Transform targetEnemy;
     private Rigidbody rb;
 
+    public string obstacleLayerName;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>(); 
@@ -52,9 +54,33 @@ public class SpellHoming : MonoBehaviour
             float angle = Vector3.Angle(forward, enemyDirection);
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
 
-            Debug.DrawLine(transform.position, enemy.transform.position, Color.yellow, 1.0f);
+            if (angle > maxHomingAngle || distance > detectionRange) continue;
 
-            if (angle < maxHomingAngle && distance < closestDistance) // check to see if in view of spell and closer than previous target
+            // send raycast to check if enemy behind wall
+            Ray ray = new Ray(transform.position, enemyDirection);
+            RaycastHit[] hits = Physics.RaycastAll(ray, distance);
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+
+            bool wallBlocking = false;
+            foreach (RaycastHit hit in hits)
+            {
+                if (hit.transform == enemy.transform) break;
+
+                if (hit.transform.gameObject.layer == LayerMask.NameToLayer(obstacleLayerName))
+                {
+                    wallBlocking = true;
+                    Debug.DrawLine(transform.position, hit.point, Color.gray, 1.0f);
+                    break;
+                }
+            }
+
+            if (wallBlocking)
+            {
+                Debug.Log("[SpellHoming] Blocked by wall");
+                continue;
+            }
+
+            if (distance < closestDistance) // check to see if in view of spell and closer than previous target
             {
                 closestDistance = distance;
                 bestTarget = enemy.transform;
@@ -65,11 +91,11 @@ public class SpellHoming : MonoBehaviour
 
         if (bestTarget != null) 
         {
-            Debug.Log("Target found");
+            Debug.Log("[SpellHoming] Target found");
         }
         else 
         {
-            Debug.Log("No Target Found in angle range");
+            Debug.Log("[SpellHoming] No Target Found in line of sight");
         }
 
         return bestTarget;
