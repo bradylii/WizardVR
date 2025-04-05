@@ -5,37 +5,38 @@ using UnityEngine;
 
 public class SpellHoming : MonoBehaviour
 {
-    public float speed = 10f;
+
     public float homingStrength = 0.2f;
     public float maxHomingAngle = 45f;
     public float detectionRange = 20f;
 
     private Transform targetEnemy;
-    private Vector3 moveDirection;
+    private Rigidbody rb;
 
     private void Start()
     {
-        moveDirection = transform.forward;
+        rb = GetComponent<Rigidbody>(); 
         targetEnemy = FindClosestEnemeyInFront();
     }
 
     private void Update()
     {
-        transform.position += moveDirection * speed * Time.deltaTime;
+        if (targetEnemy == null || rb == null) return;
 
-        if (targetEnemy != null)
+        // Calculate where enemy is compared to spell
+        Vector3 targetDirection = (targetEnemy.position - transform.position).normalized; 
+        float angle = Vector3.Angle(transform.right, targetDirection);
+
+        Debug.DrawLine(transform.position, targetEnemy.position, Color.red); // line to enemy
+        Debug.DrawRay(transform.position, rb.velocity.normalized * 2f, Color.green); // spell direction
+
+        if (angle < maxHomingAngle)
         {
-       
-            Vector3 targetDirection = (targetEnemy.position - transform.position).normalized;
+            Vector3 newDirection = Vector3.Lerp(rb.velocity.normalized, targetDirection, homingStrength * Time.deltaTime).normalized; // smoothly turn object
+            rb.velocity = newDirection * rb.velocity.magnitude; // keep speed 
 
-            moveDirection = Vector3.Lerp(moveDirection, targetDirection, homingStrength * Time.deltaTime).normalized;
-
-            transform.forward = moveDirection;
-
-            Debug.DrawLine(transform.position, targetEnemy.position, Color.red);
+            transform.right = rb.velocity.normalized; // change spell's forward direction to match velocity
         }
-
-        Debug.DrawRay(transform.position, moveDirection * 2f, Color.green);
     }
 
     Transform FindClosestEnemeyInFront()
@@ -43,30 +44,40 @@ public class SpellHoming : MonoBehaviour
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         Transform bestTarget = null;
         float closestDistance = detectionRange;
-        Vector3 playerForward = transform.forward;
-
-        
+        Vector3 forward = transform.right;
 
         foreach (GameObject enemy in enemies)
         {
             Vector3 enemyDirection = (enemy.transform.position - transform.position).normalized;
-            float angle = Vector3.Angle(playerForward, enemyDirection);
+            float angle = Vector3.Angle(forward, enemyDirection);
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
 
             Debug.DrawLine(transform.position, enemy.transform.position, Color.yellow, 1.0f);
 
-            if (angle < maxHomingAngle && distance < closestDistance)
+            if (angle < maxHomingAngle && distance < closestDistance) // check to see if in view of spell and closer than previous target
             {
                 closestDistance = distance;
                 bestTarget = enemy.transform;
-
-                Debug.DrawLine(transform.position, enemy.transform.position, Color.blue, 1.0f);
+                
+                Debug.DrawLine(transform.position, enemy.transform.position, Color.blue, 1.0f); // line to selected enemy
             }
         }
 
+        if (bestTarget != null) 
+        {
+            Debug.Log("Target found");
+        }
+        else 
+        {
+            Debug.Log("No Target Found in angle range");
+        }
+
         return bestTarget;
+
+        
     }
 
+    // Visual representations don't ask me how this works
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
@@ -79,7 +90,7 @@ public class SpellHoming : MonoBehaviour
         }
 
         // Use the spell's own forward direction
-        Vector3 forward = transform.forward;
+        Vector3 forward = transform.right;
 
         // Correctly rotate based on spell's own up axis
         Quaternion leftRot = Quaternion.AngleAxis(-maxHomingAngle, transform.up);
