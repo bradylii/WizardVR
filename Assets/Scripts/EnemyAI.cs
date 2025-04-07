@@ -19,6 +19,9 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     public float detectionRange = 2f;
     public float stoppingDistance = 2f;
+
+    private float timerDuration = 10f;
+    public float currentTime = 0f;
     
     private NavMeshAgent agent;
     [SerializeField] private float distanceToPlayer;
@@ -39,6 +42,15 @@ public class EnemyAI : MonoBehaviour
         originalWanderPoint.y = (float) 0.58;
     }
 
+    bool addDeltaTime(){
+        currentTime += Time.deltaTime;
+        if (currentTime >= timerDuration)
+        {
+            currentTime = 0f;
+            return true;
+        }
+        return false;
+    }
 
     void Update()
     {
@@ -50,6 +62,7 @@ public class EnemyAI : MonoBehaviour
             currentState = EnemyState.Pursue;
         }else if (currentState == EnemyState.Pursue)
         {
+            newWanderPoint = path.corners[path.corners.Length - 1];
             currentState = EnemyState.Search_init;//this is supposed to go EnemyState.Search_init but for now we will go to Wander_init
         }
 
@@ -59,6 +72,7 @@ public class EnemyAI : MonoBehaviour
         switch (currentState)
         {
             case EnemyState.Wander_init:
+                currentTime = 0f;
                 
                 //randomly select a point in a radius around the wanderpoint
                 System.Random random = new System.Random();
@@ -83,6 +97,7 @@ public class EnemyAI : MonoBehaviour
                 }
                 break;
             case EnemyState.Pursue:
+                currentTime = 0f;
                 if (Vector3.Distance(destinationPoint, player.position) > margin_of_difference)
                 {
                     path = new NavMeshPath();
@@ -91,7 +106,11 @@ public class EnemyAI : MonoBehaviour
                 }
                 break;
             case EnemyState.Search_init:
-                newWanderPoint = path.corners[path.corners.Length - 1];//Create a new temporary wanderpoint to circle around.
+                if (addDeltaTime() == true)
+                {
+                    currentState = EnemyState.Wander_init;
+                }
+                //newWanderPoint = path.corners[path.corners.Length - 1];//Create a new temporary wanderpoint to circle around.
                 System.Random random1 = new System.Random();
                 int random_number_x1 = random1.Next(((int)newWanderPoint.x) - dRadius, ((int)newWanderPoint.x) + 1 + dRadius);
                 int random_number_z1 = random1.Next(((int)newWanderPoint.z) - dRadius, ((int)newWanderPoint.z) + 1 + dRadius);
@@ -110,6 +129,10 @@ public class EnemyAI : MonoBehaviour
                 }
                 break;
             case EnemyState.Search_to_Path:
+                if (addDeltaTime() == true)
+                {
+                    currentState = EnemyState.Wander_init;
+                }
                 if (agent.remainingDistance == 0 || agent.velocity == new Vector3(0, 0, 0))
                 {
                     currentState = EnemyState.Search_init;
