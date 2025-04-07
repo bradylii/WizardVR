@@ -46,7 +46,7 @@ public class Spell : MonoBehaviour
     private void LaunchObject()
     {
         if (rb == null) return;
-        launchForce = transform.right * velocity;
+        launchForce = transform.forward * velocity;
         rb.AddForce(launchForce, ForceMode.Impulse);
     }
 
