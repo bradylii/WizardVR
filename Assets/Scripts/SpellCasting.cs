@@ -10,19 +10,18 @@ public class SpellCasting : MonoBehaviour
 {
     public GameObject particlePrefab;
     public GameObject particlePlane;
+    public GameObject spellChargeEffect;
     public Wand wand;
     public float maxDistance = 40.0f;
-    public float spawnDelayMilliseconds = 50;
+    public int spellDelayMs = 2000;
 
     private List<Vector2> points;
-    private float lastSpawnTime;
     private GameObject activePlane;
     private Vector3? centerpoint;
     private Transform wandTip;
     // Start is called before the first frame update
     void Start()
     {
-        lastSpawnTime = Time.time;
         points = new List<Vector2>();
         wandTip = transform.GetChild(0).GetChild(0);
         wand = transform.GetChild(0).GetComponent<Wand>();
@@ -45,7 +44,7 @@ public class SpellCasting : MonoBehaviour
                 activePlane.transform.forward = ray.direction;
                 return;
             }
-            if (Physics.Raycast(ray, out hit) && Time.time - lastSpawnTime >= spawnDelayMilliseconds / 1000)
+            if (Physics.Raycast(ray, out hit))
             {
                 //spawn the prefab at the end of the ray
                 if (hit.transform.gameObject == activePlane)
@@ -137,7 +136,7 @@ public class SpellCasting : MonoBehaviour
         {
             //0 degrees +- degreeLeeway
             print("Found a right-facing line");
-            wand.Cast(0);
+            StartCoroutine(CastWithDelay(0));
         }
         else if (angleTotal < 180 + degreeLeeway && angleTotal > 180 - degreeLeeway && angleFirstLast < 180 + degreeLeeway &&
             angleFirstLast > 180 - degreeLeeway)
@@ -162,5 +161,15 @@ public class SpellCasting : MonoBehaviour
             print("No valid shape found.");
         }
 
+    }
+
+    IEnumerator CastWithDelay(int spellIdx)
+    {
+        Debug.Log("Coroutine started");
+        GameObject effect = Instantiate(spellChargeEffect, wandTip.transform);
+        effect.transform.forward = wandTip.transform.forward;
+        Destroy(effect, effect.GetComponent<ParticleSystem>().main.duration);
+        yield return new WaitForSeconds(spellDelayMs/1000);
+        wand.Cast(spellIdx);
     }
 }
