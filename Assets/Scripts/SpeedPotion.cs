@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class SpeedPotion : MonoBehaviour
 {
-    public float healAmount = 25f;
+    public float speedBoost = 2f;
     public float drinkDistance = 0.3f;
     public float drinkAngleThreshold = 60f;
-    public float destroyDelay = 2f;
+
+    public float deactivateDelay = 2f;
     public float resetSpeedDelay = 5f;
     public float currentSpeed;
 
@@ -80,7 +81,7 @@ public class SpeedPotion : MonoBehaviour
     private void ActivateSpeed()
     {
         currentSpeed = playerMovement.speed;
-        playerMovement.speed += 2f;
+        playerMovement.speed += speedBoost;
         used = true;
         Debug.Log("[POTION] Speed Potion Used. Player Faster.");
 
@@ -91,15 +92,22 @@ public class SpeedPotion : MonoBehaviour
     private IEnumerator ResetSpeed()
     {
         yield return new WaitForSeconds(resetSpeedDelay);
+        Debug.Log("[POTION] Speed reset");
+        playerMovement.speed -= speedBoost;
+
+        Destroy(gameObject);
 
 
-        playerMovement.speed = currentSpeed;
     }
 
     private IEnumerator DestroyPotion()
     {
-        yield return new WaitForSeconds(destroyDelay);
+        yield return new WaitForSeconds(deactivateDelay);
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        //gameObject.SetActive(false);
+        Debug.Log("[POTION] Speed Potion Dissapear");
 
-        Destroy(gameObject);
+        
     }
 }
