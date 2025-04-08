@@ -183,6 +183,12 @@ MonoBehaviour:
   detectionRange: 5
   stoppingDistance: 2
   angle: 80
+  currentTime: 0
+  currentState: 0
+  originalWanderPoint: {x: 0, y: 0, z: 0}
+  newWanderPoint: {x: 0, y: 0, z: 0}
+  destinationPoint: {x: 0, y: 0, z: 0}
+  margin_of_difference: 1.5
 --- !u!114 &6338575392665332595
 MonoBehaviour:
   m_ObjectHideFlags: 0
