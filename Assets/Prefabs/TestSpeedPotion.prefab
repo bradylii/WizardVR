@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1957945556990216371}
   - component: {fileID: 3787622180692510249}
   - component: {fileID: 4967083509739702620}
-  - component: {fileID: 8852137356057371115}
+  - component: {fileID: 2563802183828914461}
   m_Layer: 0
-  m_Name: Health Potion
+  m_Name: TestSpeedPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6b73dfc889bfc444885cb15bd44140b4, type: 2}
+  - {fileID: 2100000, guid: 58b2042ab90002e4884820b009fd40a5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8852137356057371115
+--- !u!114 &2563802183828914461
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,17 +144,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 3096640566196156592}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 488323bf43830f2478bf0b07b1ac05a6, type: 3}
+  m_Script: {fileID: 11500000, guid: aba661c8e8e0c50439bc8de388b010b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healAmount: 25
-  drinkDistance: 0.4
-  drinkAngleThreshold: 85
-  destroyDelay: 1
+  drinkDistance: 0.3
+  drinkAngleThreshold: 60
+  destroyDelay: 2
+  resetSpeedDelay: 5
+  currentSpeed: 0
   distance: 0
   angle: 0
   player: {fileID: 0}
   playerHead: {fileID: 0}
+  manualButton: S
 --- !u!1 &5000529010594453926
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockId: f8766c17-aaf8-4b55-9431-de8deea83842
-  instanceId: f218a8ab-02b3-4fa3-83fe-7720ed4031c1
+  instanceId: 36d73511-5672-4c9e-bdf0-f0ce826e8ce2
   version: 1
   installationRoutineCheckpoint:
     _installationRoutineId: f8338144-8280-4ff6-9455-ae2bb9c20fe8
