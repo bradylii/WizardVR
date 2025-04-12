@@ -37,7 +37,7 @@ public class HeatlhPotion : MonoBehaviour
         }
         if (playerHead == null)
         {
-            playerHead = player?.Find("CenterEyeAnchor");
+            playerHead = player?.Find("TrackingSpace/CenterEyeAnchor");
         }
         if (playerHead == null)
         {

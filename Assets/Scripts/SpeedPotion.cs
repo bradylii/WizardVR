@@ -41,7 +41,7 @@ public class SpeedPotion : MonoBehaviour
         }
         if (playerHead == null)
         {
-            playerHead = player?.Find("CenterEyeAnchor");
+            playerHead = player?.Find("TrackingSpace/CenterEyeAnchor");
         }
         if (playerHead == null)
         {
@@ -85,8 +85,11 @@ public class SpeedPotion : MonoBehaviour
         used = true;
         Debug.Log("[POTION] Speed Potion Used. Player Faster.");
 
-        StartCoroutine(ResetSpeed());
-        StartCoroutine(DestroyPotion());
+        // StartCoroutine(RemoveObject());    
+        // StartCoroutine(ResetSpeed());
+
+        StartCoroutine(HandlePotion());
+        
     }
 
     private IEnumerator ResetSpeed()
@@ -100,14 +103,36 @@ public class SpeedPotion : MonoBehaviour
 
     }
 
-    private IEnumerator DestroyPotion()
+    private IEnumerator RemoveObject()
     {
         yield return new WaitForSeconds(deactivateDelay);
         GetComponent<MeshRenderer>().enabled = false;
         GetComponent<Collider>().enabled = false;
-        //gameObject.SetActive(false);
         Debug.Log("[POTION] Speed Potion Dissapear");
 
         
+    }
+
+    private IEnumerator HandlePotion()
+    {
+        yield return new WaitForSeconds(deactivateDelay);
+
+        MeshRenderer[] childrenRenderers = GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer renderer in childrenRenderers) 
+        {
+            renderer.enabled = false;
+        }
+
+        GetComponent<Collider>().enabled = false;
+        Debug.Log("[POTION] Speed Potion Dissapear");
+
+
+
+
+        yield return new WaitForSeconds(resetSpeedDelay - deactivateDelay);
+        playerMovement.speed -= speedBoost;
+        Debug.Log("[POTION] Speed reset");
+
+        Destroy(gameObject);
     }
 }
