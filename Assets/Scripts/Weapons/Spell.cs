@@ -62,15 +62,11 @@ public class Spell : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if ("weapon" == other.gameObject.tag || "Wand" == other.gameObject.tag)
+        if ("wall" == other.gameObject.tag || "Enemy" == other.gameObject.tag)
         {
-            Debug.Log("[SPELL] hit itself");
-            return;
+           Destroy(gameObject);
         }
-        else 
-        {
-            Destroy(gameObject);
-        }
+
         
     }
 }
