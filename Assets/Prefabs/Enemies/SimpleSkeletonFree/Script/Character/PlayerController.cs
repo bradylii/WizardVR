@@ -22,10 +22,10 @@ namespace SkeletonEditor
         public static PlayerController Instance { get; private set; }
 
         void Awake() {
-            if (Instance != null) {
-                Destroy(this.gameObject);
-            }
-            Instance = this;
+            // if (Instance != null) {
+            //     Destroy(this.gameObject);
+            // }
+            // Instance = this;
         }
 
         void Start() {
@@ -92,10 +92,8 @@ namespace SkeletonEditor
                 }
             }
 
-            float speed = Mathf.Max(Mathf.Abs(h), Mathf.Abs(v));
-if (float.IsNaN(speed)) speed = 0f;
-animator.SetFloat("speedv", speed);
-
+            // var speed = Mathf.Max(Mathf.Abs(h), Mathf.Abs(v));
+            // animator.SetFloat("speedv", speed);
         }
     }
 }
