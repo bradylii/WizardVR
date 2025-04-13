@@ -64,7 +64,7 @@ public class Spell : MonoBehaviour
     {
         if ("weapon" == other.gameObject.tag)
         {
-            Debug.Log("hit itself");
+            Debug.Log("[SPELL] hit itself");
             return;
         }
         Destroy(gameObject);
