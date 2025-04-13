@@ -31,6 +31,8 @@ public class EnemyAI : MonoBehaviour
     private Vector3 lastKnownPlayerPosition;
 
     private Animator animator;
+    private bool canAttack = true;
+    public float attackCoodldown = 1.5f;
 
     void Start()
     {
@@ -58,11 +60,22 @@ public class EnemyAI : MonoBehaviour
             {
                 agent.isStopped = true;
                 goingToPlayer = false;
-                if (!isDamagingPlayer) // Only start coroutine if it's not already running
+
+                
+                if (!isDamagingPlayer && animator == null) // Only start coroutine if it's not already running
                 {
                     StartCoroutine(DamagePlayerOverTime());
                 }
+                
+                
+                if (agent != null && animator != null && canAttack)
+                {
+                   StartCoroutine(AttackCoolDown());
+                }
+                
+
                 agent.ResetPath();
+
             }
             else
             {
@@ -92,6 +105,17 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    private IEnumerator AttackCoolDown()
+    {
+         canAttack = false;
+
+        animator.SetTrigger("Attack1h1");
+
+        yield return new WaitForSeconds(attackCoodldown);
+
+        canAttack = true;
+    }
+
     private IEnumerator DamagePlayerOverTime()
     {
         if (playerInfo == null)
@@ -109,6 +133,15 @@ public class EnemyAI : MonoBehaviour
         }
 
         isDamagingPlayer = false; // Reset flag when enemy moves away
+    }
+
+    public void DamagePlayer() 
+    {
+        if (Vector3.Distance(transform.position, player.position) <= stoppingDistance)
+        {
+            Debug.Log("[ENEMYAI] Damaged Player (animation)");
+            playerInfo?.lowerPlayerHealth(damage);
+        }
     }
 
 
