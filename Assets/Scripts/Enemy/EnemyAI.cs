@@ -30,6 +30,8 @@ public class EnemyAI : MonoBehaviour
     public bool playerSeen = false;
     private Vector3 lastKnownPlayerPosition;
 
+    private Animator animator;
+
     void Start()
     {
         // Navmesh init
@@ -39,6 +41,8 @@ public class EnemyAI : MonoBehaviour
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
+
+        animator = GetComponent<Animator>();
     }
 
 
@@ -81,6 +85,11 @@ public class EnemyAI : MonoBehaviour
             }
         }
         
+        if (agent != null && animator != null)
+        {
+            float speed = agent.velocity.magnitude;
+            animator.SetFloat("speedv", speed);
+        }
     }
 
     private IEnumerator DamagePlayerOverTime()
