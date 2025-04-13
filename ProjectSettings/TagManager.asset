@@ -8,6 +8,8 @@ TagManager:
   - endOfMaze
   - Enemy
   - Item
+  - Wand
+  - wall
   layers:
   - Default
   - TransparentFX

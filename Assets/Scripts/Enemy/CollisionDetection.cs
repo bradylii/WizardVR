@@ -6,6 +6,7 @@ public class CollisionDetection : MonoBehaviour
 {
     Player player;
     ItemDrop dropItemScript;
+    private bool collided = false;
     private void Start()
     {
         player = GameObject.Find("Game Manager")?.GetComponent<Player>();
@@ -13,9 +14,10 @@ public class CollisionDetection : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "weapon")
+        if (other.gameObject.tag == "weapon" && !collided)
         {
-            Destroy(gameObject);
+            collided = true;
+            // Destroy(gameObject);
             player.killedBadGuy();
             dropItemScript.dropItem();
         }

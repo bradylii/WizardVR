@@ -8,6 +8,7 @@ public class EnemyAI : MonoBehaviour
     // How much damage enemy does
     public float damage;
     public float attackRate;
+    public float health;
     public bool isDamagingPlayer = false; // Flag to track if coroutine is running
     public bool goingToPlayer = false;
 
@@ -33,6 +34,10 @@ public class EnemyAI : MonoBehaviour
     private Animator animator;
     private bool canAttack = true;
     public float attackCoodldown = 1.5f;
+
+    public bool showDebugGizmos = false;
+
+    private bool hasBeenHit;
 
     void Start()
     {
@@ -144,7 +149,14 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "weapon" && !hasBeenHit)
+        {
+            hasBeenHit = true;
+            animator.SetTrigger("Fall1");
+        }
+    }
 
     bool isInRange()
     {
@@ -185,6 +197,9 @@ public class EnemyAI : MonoBehaviour
     // copy pasted code for visualizing detection range, line to player, and stopping distance. does not affect code at all just visual 
     void OnDrawGizmosSelected()
     {
+
+        if (!showDebugGizmos) return;
+
         // Draw Detection Range
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
