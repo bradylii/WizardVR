@@ -23,11 +23,13 @@ public class Player : MonoBehaviour
         Debug.Log("kills: " + kills);
     }
 
+
     public void lowerPlayerHealth(float damage)
     {
         playerHealth -= damage;
         Debug.Log("player health = " + playerHealth);
     }
+    
 
     // Update is called once per frame
     void Update()

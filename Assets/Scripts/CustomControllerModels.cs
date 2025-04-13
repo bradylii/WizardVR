@@ -14,9 +14,9 @@ public class CustomControllerModels : MonoBehaviour
             rightControllerInstance.SetActive(true);
         }
         // Hide the default controller models if needed
-        //GameObject defaultRightController = GameObject.Find("RightController");
-        //if (defaultRightController != null)
-        //    defaultRightController.SetActive(false);
+        GameObject defaultRightController = GameObject.Find("RightController");
+        if (defaultRightController != null)
+            defaultRightController.SetActive(false);
     }
 
     void Update()
