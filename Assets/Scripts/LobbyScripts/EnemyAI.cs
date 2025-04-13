@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
@@ -7,7 +8,8 @@ public class EnemyAI : MonoBehaviour
     // How much damage enemy does
     public float damage;
     public float attackRate;
-    private bool isDamagingPlayer = false; // Flag to track if coroutine is running
+    public bool isDamagingPlayer = false; // Flag to track if coroutine is running
+    public bool goingToPlayer = false;
 
     // player positions and navmesh agent init
     public Transform player;
@@ -18,14 +20,14 @@ public class EnemyAI : MonoBehaviour
     // Variables for checking if enemy can see player
     public float detectionRange = 10f;
     public float stoppingDistance = 2f;
-    public float angle;
+    public float angle = 80;
 
     // variables for rotation
     private Vector3 directionToPlayer;
     private Quaternion targetRotation;
 
     // variables for going to last known location
-    private bool playerSeen = false;
+    public bool playerSeen = false;
     private Vector3 lastKnownPlayerPosition;
 
     void Start()
@@ -51,6 +53,7 @@ public class EnemyAI : MonoBehaviour
             if (distanceToPlayer <= stoppingDistance) // if enemy is close to player stop movement
             {
                 agent.isStopped = true;
+                goingToPlayer = false;
                 if (!isDamagingPlayer) // Only start coroutine if it's not already running
                 {
                     StartCoroutine(DamagePlayerOverTime());
@@ -59,12 +62,14 @@ public class EnemyAI : MonoBehaviour
             }
             else
             {
+                goingToPlayer = true;
                 agent.isStopped = false;
                 agent.SetDestination(player.position); // if not go to player
             }
         }
         else if (playerSeen) // if player out of vision but enemy has seen them
         {
+            goingToPlayer = false;
             agent.isStopped = false;
             agent.SetDestination(lastKnownPlayerPosition); // go to last known position
 
@@ -75,13 +80,14 @@ public class EnemyAI : MonoBehaviour
                 playerSeen = false;
             }
         }
+        
     }
 
     private IEnumerator DamagePlayerOverTime()
     {
         if (playerInfo == null)
         {
-            Debug.LogError("playerInfo is null! Assign it before starting DamagePlayerOverTime.");
+            Debug.LogError("[ENEMYAI] playerInfo is null! Assign it before starting DamagePlayerOverTime.");
             yield break; // Exit coroutine to prevent errors
         }
 
