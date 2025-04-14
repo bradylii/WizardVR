@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3855103965260022689}
   - component: {fileID: 2344264287249958160}
   - component: {fileID: 5781249767355296421}
+  - component: {fileID: 1945427696741128812}
   - component: {fileID: 23251051448847455}
   m_Layer: 0
   m_Name: Spell
@@ -123,6 +124,19 @@ MonoBehaviour:
   velocity: 2
   sizePercentage: 1
   tagsToDetroyOn: []
+--- !u!114 &1945427696741128812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3525437064730614708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ee38fdae9a41a342ba8d9b150bfff52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!54 &23251051448847455
 Rigidbody:
   m_ObjectHideFlags: 0

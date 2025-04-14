@@ -20,14 +20,14 @@ public class Player : MonoBehaviour
     public void killedBadGuy()
     {
         kills++;
-        Debug.Log("kills: " + kills);
+        Debug.Log("[PLAYER] kills: " + kills);
     }
 
 
     public void lowerPlayerHealth(float damage)
     {
         playerHealth -= damage;
-        Debug.Log("player health = " + playerHealth);
+        Debug.Log("[PLAYER] player health = " + playerHealth);
     }
     
 
@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     {
         if (playing && playerHealth <= 0)
         {
-            Debug.Log("Player Died!");
+            Debug.Log("[PLAYER] Player Died!");
             gameStateManager.setGameState(GameState.GameOver);
             playing = false;
         }

@@ -8,7 +8,7 @@ public class EnemyAI : MonoBehaviour
     // How much damage enemy does
     public float damage;
     public float attackRate;
-    public float health;
+    public float health = 10;
     public bool isDamagingPlayer = false; // Flag to track if coroutine is running
     public bool goingToPlayer = false;
 
@@ -112,7 +112,7 @@ public class EnemyAI : MonoBehaviour
 
     private IEnumerator AttackCoolDown()
     {
-         canAttack = false;
+        canAttack = false;
 
         animator.SetTrigger("Attack1h1");
 
@@ -160,14 +160,16 @@ public class EnemyAI : MonoBehaviour
     }
     */
 
-    public void wasHit(float damage) 
+    public void wasHit(float damage, ItemDrop dropItemScript) 
     {
+        
         health -= damage;
 
         if (health <= 0) 
         {
             animator.SetTrigger("Fall1");
             playerInfo.killedBadGuy();
+            dropItemScript.dropItem();
             StartCoroutine(DestroyAfterDelay());
         }
         else 
