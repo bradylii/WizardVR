@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour
@@ -7,6 +8,8 @@ public class CollisionDetection : MonoBehaviour
     Player player;
     ItemDrop dropItemScript;
     private bool collided = false;
+
+    public float damage;
     private void Start()
     {
         player = GameObject.Find("Game Manager")?.GetComponent<Player>();

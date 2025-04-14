@@ -30,6 +30,16 @@ public class GameStateManager : MonoBehaviour
        setGameState(GameState.Playing);
     }
 
+    void Update()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            Debug.Log("A button pressed");
+            // do something like show Game Over screen
+            setGameState(GameState.GameOver);
+        }
+    }
+
     // To set game state and update accordingly
     public void setGameState(GameState newState)
     {
@@ -90,6 +100,7 @@ public class GameStateManager : MonoBehaviour
     public void gameOver()
     {
         gameOverInterface.SetActive(true);
+        Debug.Log("[GameState] Game Over");
     }
 
     // To preform actions and configurations when player wins

@@ -149,6 +149,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
+    /* 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "weapon" && !hasBeenHit)
@@ -156,6 +157,28 @@ public class EnemyAI : MonoBehaviour
             hasBeenHit = true;
             animator.SetTrigger("Fall1");
         }
+    }
+    */
+
+    public void wasHit(float damage) 
+    {
+        health -= damage;
+
+        if (health <= 0) 
+        {
+            animator.SetTrigger("Fall1");
+            playerInfo.killedBadGuy();
+            StartCoroutine(DestroyAfterDelay());
+        }
+        else 
+        {
+            animator.SetTrigger("Hit1");
+        }
+    }
+
+    private IEnumerator DestroyAfterDelay() {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 
     bool isInRange()
