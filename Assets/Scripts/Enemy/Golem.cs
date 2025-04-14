@@ -16,6 +16,7 @@ public class Golem : MonoBehaviour
     public Transform player;
     [SerializeField] private float distanceToPlayer;
     private Player playerInfo;
+    public GameStateManager gameStateManager;
 
     // Variables for checking if enemy can see player
     public float detectionRange = 10f;
@@ -73,11 +74,11 @@ public class Golem : MonoBehaviour
 
         }
 
-         if (Input.GetKeyDown(KeyCode.B))
-         {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
             Debug.Log("[GOLEM] Manula Throw");
             ThrowBoulder();
-         }
+        }
     }
 
 
@@ -98,7 +99,7 @@ public class Golem : MonoBehaviour
 
     private void ThrowBoulder()
     {
-        if(boulderPrefab != null)
+        if (boulderPrefab != null)
         {
             if (!useGravity)
             {
@@ -117,7 +118,7 @@ public class Golem : MonoBehaviour
 
                 Debug.Log("[GOLEM] Boulder thrown towards the player");
 
-                
+
             }
             else
             {
@@ -138,19 +139,19 @@ public class Golem : MonoBehaviour
 
                 Debug.Log("[GOLEM] Boulder thrown towards the player");
 
-               
+
             }
         }
     }
-   
 
 
-    public void wasHit(float damage, ItemDrop dropItemScript) 
+
+    public void wasHit(float damage, ItemDrop dropItemScript)
     {
-        
+
         health -= damage;
 
-        if (health <= 0) 
+        if (health <= 0)
         {
             isDead = true;
             canAttack = false;
@@ -158,20 +159,22 @@ public class Golem : MonoBehaviour
             playerInfo.killedBadGuy();
             dropItemScript.dropItem();
             StartCoroutine(DestroyAfterDelay());
+            gameStateManager.setGameState(GameState.GameOver);
         }
-        else 
+        else
         {
             hitCooldown();
         }
     }
 
-    private IEnumerator hitCooldown() 
+    private IEnumerator hitCooldown()
     {
         canAttack = false;
         yield return new WaitForSeconds(attackCoodldown);
         canAttack = true;
     }
-    private IEnumerator DestroyAfterDelay() {
+    private IEnumerator DestroyAfterDelay()
+    {
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
@@ -186,9 +189,9 @@ public class Golem : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 origin = transform.position + Vector3.up * 1.5f; // have raycast come from enemy eyes
-        Vector3 direction = (player.position - origin).normalized; 
+        Vector3 direction = (player.position - origin).normalized;
 
-        if(Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
+        if (Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
         {
             return (hit.transform.CompareTag("Player")); // return true if it hits player tag
         }
@@ -197,7 +200,7 @@ public class Golem : MonoBehaviour
 
     bool isFacingPlayer()
     {
-        directionToPlayer = (player.position - transform.position).normalized; 
+        directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         return angleToPlayer < angle;
@@ -224,7 +227,7 @@ public class Golem : MonoBehaviour
 
         // Draw Stopping Distance
         Gizmos.color = Color.red;
-       
+
 
         // Draw Raycast Line
         if (player != null)

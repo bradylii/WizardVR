@@ -29,22 +29,23 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-       setGameState(GameState.Playing);
+        setGameState(GameState.Playing);
     }
 
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.One))
+        if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("A button pressed");
             if (renderedUI)
             {
                 setGameState(GameState.Playing);
-                renderedUI = true;
+                renderedUI = false;
             }
-            else 
+            else
             {
                 setGameState(GameState.GameOver);
+                renderedUI = true;
             }
         }
     }
