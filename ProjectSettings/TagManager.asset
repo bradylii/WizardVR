@@ -11,6 +11,7 @@ TagManager:
   - Wand
   - wall
   - EnemyWeapon
+  - trap
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Grabbables
   - Enemy
   - Weapon
-  - 
+  - trap
   - 
   - 
   - 

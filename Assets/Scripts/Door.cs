@@ -23,8 +23,6 @@ public class Door : MonoBehaviour
         // Remove any enemies that have been destroyed (null)
         enemiesInRoom.RemoveAll(enemy => enemy == null);
 
-        Debug.Log("[DOOR] Enemies Left: " + enemiesInRoom.Count);
-
         // Check if all enemies are defeated and door hasn't already opened
         if (!doorOpened && enemiesInRoom.Count == 0)
         {
