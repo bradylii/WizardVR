@@ -8,7 +8,7 @@ public class CollisionDetection : MonoBehaviour
     Player player;
     ItemDrop dropItemScript;
     EnemyAI enemyAi;
-    private bool collided = false;
+    public bool collided = false;
 
     public float damage;
 

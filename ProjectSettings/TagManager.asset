@@ -10,6 +10,7 @@ TagManager:
   - Item
   - Wand
   - wall
+  - EnemyWeapon
   layers:
   - Default
   - TransparentFX

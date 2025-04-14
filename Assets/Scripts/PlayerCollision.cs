@@ -1,52 +1,32 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class PlayerCollision : MonoBehaviour
 {
-    public float playerHealth;
-    public float kills;
-    public GameStateManager gameStateManager;
-    public bool playing;
+    bool collided = false;
+    public float collisionCooldown = 0.5f;
 
-     public bool collided = false;
-     public float collisionCooldown = 0.5f;
+    Player playerInfo;
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = 100.0f;
-        kills = 0;
-        playing = true;
+        playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
     }
-
-    public void killedBadGuy()
-    {
-        kills++;
-        Debug.Log("[PLAYER] kills: " + kills);
-    }
-
-
-    public void lowerPlayerHealth(float damage)
-    {
-        playerHealth -= damage;
-        Debug.Log("[PLAYER] Damage Dealt = " + damage);
-        Debug.Log("[PLAYER] player health = " + playerHealth);
-    }
-    
 
     // Update is called once per frame
     void Update()
     {
-        if (playing && playerHealth <= 0)
-        {
-            Debug.Log("[PLAYER] Player Died!");
-            gameStateManager.setGameState(GameState.GameOver);
-            playing = false;
-        }
+        
     }
 
-/*
+    public void lowerPlayerHealth(float damage)
+        {
+            playerInfo.playerHealth -= damage;
+            Debug.Log("[PLAYER] Damage Dealt = " + damage);
+            Debug.Log("[PLAYER] player health = " + playerInfo.playerHealth);
+        }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "EnemyWeapon" && !collided)
@@ -64,7 +44,7 @@ public class Player : MonoBehaviour
             StartCoroutine(ResetCollisionCooldown());
         }
     }
-*/
+
     private IEnumerator ResetCollisionCooldown()
     {
         yield return new WaitForSeconds(collisionCooldown);

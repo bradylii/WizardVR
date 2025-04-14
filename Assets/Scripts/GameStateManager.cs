@@ -11,6 +11,8 @@ public class GameStateManager : MonoBehaviour
 
     public GameObject gameOverInterface;
 
+    bool renderedUI = false;
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,8 +37,15 @@ public class GameStateManager : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
             Debug.Log("A button pressed");
-            // do something like show Game Over screen
-            setGameState(GameState.GameOver);
+            if (renderedUI)
+            {
+                setGameState(GameState.Playing);
+                renderedUI = true;
+            }
+            else 
+            {
+                setGameState(GameState.GameOver);
+            }
         }
     }
 

@@ -4,26 +4,21 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
-public class EnemyAI : MonoBehaviour
+public class Golem : MonoBehaviour
 {
     // How much damage enemy does
-    public float damage;
-    public float attackRate;
-    public float health = 10;
+    public float health = 100;
     public bool isDamagingPlayer = false; // Flag to track if coroutine is running
-    public bool goingToPlayer = false;
 
     private bool isDead = false;
 
     // player positions and navmesh agent init
     public Transform player;
     [SerializeField] private float distanceToPlayer;
-    private NavMeshAgent agent;
     private Player playerInfo;
 
     // Variables for checking if enemy can see player
     public float detectionRange = 10f;
-    public float stoppingDistance = 2f;
     public float angle = 80;
 
     // variables for rotation
@@ -32,9 +27,7 @@ public class EnemyAI : MonoBehaviour
 
     // variables for going to last known location
     public bool playerSeen = false;
-    private Vector3 lastKnownPlayerPosition;
 
-    private Animator animator;
     private bool canAttack = true;
     public float attackCoodldown = 1.5f;
 
@@ -42,17 +35,17 @@ public class EnemyAI : MonoBehaviour
 
     private bool hasBeenHit;
 
+    public GameObject boulderPrefab;
+    public float chargeTime = 5f;
+    private bool isCharging = false;
+
     void Start()
     {
-        // Navmesh init
-        agent = GetComponent<NavMeshAgent>();
         playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
-
-        animator = GetComponent<Animator>();
     }
 
 
@@ -62,117 +55,53 @@ public class EnemyAI : MonoBehaviour
 
         if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
+
             playerSeen = true;
-            lastKnownPlayerPosition = player.position;
             RotateTowardsPlayer(); // rotate to player 
 
-            if (distanceToPlayer <= stoppingDistance) // if enemy is close to player stop movement
+            if (canAttack && !isDead && !isCharging)
             {
-                agent.isStopped = true;
-                goingToPlayer = false;
-
-                /*
-                if (!isDamagingPlayer && animator == null) // Only start coroutine if it's not already running
-                {
-                    StartCoroutine(DamagePlayerOverTime());
-                }
-                */
-                
-                
-                if (agent != null && animator != null && canAttack && !isDead)
-                {
-                   StartCoroutine(AttackCoolDown());
-                }
-                
-
-                agent.ResetPath();
-
+                StartCoroutine(ChargeAndThrowBoulder());
             }
-            else
+
+        }
+    }
+
+
+    private IEnumerator ChargeAndThrowBoulder()
+    {
+        isCharging = true;
+
+        Debug.Log("[GOLEM] Charging Boulder!");
+
+        yield return new WaitForSeconds(chargeTime);
+
+        ThrowBoulder();
+
+        canAttack = true;
+
+        isCharging = false;
+    }
+
+    private IEnumerator ThrowBoulder()
+    {
+        if(boulderPrefab != null)
+        {
+            GameObject boulder = Instantiate(boulderPrefab, transform.position + Vector3.up, Quaternion.identity);
+
+            Vector3 direction = (player.position - transform.position).normalized;
+            float throwSpeed = 10f;
+
+            Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
+            if (boulderRb != null)
             {
-                goingToPlayer = true;
-                agent.isStopped = false;
-                agent.SetDestination(player.position); // if not go to player
+                boulderRb.velocity = direction * throwSpeed;
             }
-        }
-        else if (playerSeen) // if player out of vision but enemy has seen them
-        {
-            goingToPlayer = false;
-            agent.isStopped = false;
-            agent.SetDestination(lastKnownPlayerPosition); // go to last known position
 
-            if (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance) // if enemy is close to last known position, stop
-            {
-                agent.isStopped = true;
-                agent.ResetPath();
-                playerSeen = false;
-            }
-        }
-        
-        if (agent != null && animator != null)
-        {
-            float speed = agent.velocity.magnitude;
-            animator.SetFloat("speedv", speed);
+            Debug.Log("[GOLEM] Boulder thrown towards the player");
         }
     }
-
-    private IEnumerator AttackCoolDown()
-    {
-        if (isDead) yield break;
-
-        canAttack = false;
-
-        if (!isDead)
-            animator.SetTrigger("Attack1h1");
-
-        yield return new WaitForSeconds(attackCoodldown);
-
-        if (!isDead)
-            canAttack = true;
-    }
-
-/*
-    private IEnumerator DamagePlayerOverTime()
-    {
-        if (playerInfo == null)
-        {
-            Debug.LogError("[ENEMYAI] playerInfo is null! Assign it before starting DamagePlayerOverTime.");
-            yield break; // Exit coroutine to prevent errors
-        }
-
-        isDamagingPlayer = true;
-
-        while (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
-        {
-            playerInfo.lowerPlayerHealth(damage);
-            yield return new WaitForSeconds(attackRate); // Wait for 1 second before dealing damage again
-        }
-
-        isDamagingPlayer = false; // Reset flag when enemy moves away
-    }
-*/
-/*
-    public void DamagePlayer() 
-    {
-        if (isDead) return;
-        if (Vector3.Distance(transform.position, player.position) <= stoppingDistance)
-        {
-            Debug.Log("[ENEMYAI] Damaged Player (animation)");
-            playerInfo?.lowerPlayerHealth(damage);
-        }
-    }
-*/
-
-    
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "weapon" && !hasBeenHit)
-        {
-            hasBeenHit = true;
-            animator.SetTrigger("Fall1");
-        }
-    }
-
+   
 
     public void wasHit(float damage, ItemDrop dropItemScript) 
     {
@@ -184,33 +113,13 @@ public class EnemyAI : MonoBehaviour
             isDead = true;
             canAttack = false;
 
-            StopAllCoroutines();
-            animator.ResetTrigger("Attack1h1");
-            animator.ResetTrigger("Hit1");
-            animator.SetFloat("speedv", 0);
-
-            if (agent != null)
-            {
-                agent.isStopped = true;
-                agent.ResetPath();
-                agent.enabled = false;
-            }
-
-            animator.SetTrigger("Fall1");
-            animator.applyRootMotion = false;
             playerInfo.killedBadGuy();
             dropItemScript.dropItem();
             StartCoroutine(DestroyAfterDelay());
         }
         else 
         {
-            if (agent != null)
-            {
-                agent.isStopped = true;
-                agent.ResetPath();
-            }
             hitCooldown();
-            animator.SetTrigger("Hit1");
         }
     }
 
@@ -218,10 +127,6 @@ public class EnemyAI : MonoBehaviour
     {
         canAttack = false;
         yield return new WaitForSeconds(attackCoodldown);
-        if (agent != null && health > 0)
-        {
-            agent.isStopped = false;
-        }
         canAttack = true;
     }
     private IEnumerator DestroyAfterDelay() {
@@ -277,7 +182,7 @@ public class EnemyAI : MonoBehaviour
 
         // Draw Stopping Distance
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stoppingDistance);
+       
 
         // Draw Raycast Line
         if (player != null)

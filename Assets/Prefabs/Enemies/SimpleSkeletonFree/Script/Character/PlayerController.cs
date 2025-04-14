@@ -50,10 +50,12 @@ namespace SkeletonEditor
             if (Input.GetMouseButtonUp(1)) {
                 startMouseRotate = false;
             }
+            /*
             if (Input.GetMouseButton(1)) {
                 transform.Rotate(new Vector3(0, (Input.mousePosition.x - prevMousePosition.x) * mouseRotateSpeed, 0));
                 prevMousePosition = Input.mousePosition;
             }
+            */
             if (Input.GetKeyDown(KeyCode.E)) {
                 animator.SetTrigger("Attack1h1");
             }
@@ -76,7 +78,7 @@ namespace SkeletonEditor
             if (Mathf.Abs(h) > 0.001f)
                 v = 0;
 
-
+            /*
             if (!startMouseRotate) {
                 if (h > 0.5f) {
                     transform.rotation = Quaternion.Euler(initRotation.eulerAngles + new Vector3(0, -90, 0));
@@ -91,7 +93,8 @@ namespace SkeletonEditor
                     transform.rotation = Quaternion.Euler(initRotation.eulerAngles);
                 }
             }
-
+            */
+            
             // var speed = Mathf.Max(Mathf.Abs(h), Mathf.Abs(v));
             // animator.SetFloat("speedv", speed);
         }
