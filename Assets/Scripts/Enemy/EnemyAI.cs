@@ -42,6 +42,9 @@ public class EnemyAI : MonoBehaviour
 
     private bool hasBeenHit;
 
+    public Door doorScript;
+    public bool lockDoor = false;
+
     void Start()
     {
         // Navmesh init
@@ -53,6 +56,11 @@ public class EnemyAI : MonoBehaviour
         }
 
         animator = GetComponent<Animator>();
+
+        if (lockDoor)
+        {
+            doorScript.RegisterEnemy(this.gameObject);
+        }
     }
 
 
@@ -77,13 +85,13 @@ public class EnemyAI : MonoBehaviour
                     StartCoroutine(DamagePlayerOverTime());
                 }
                 */
-                
-                
+
+
                 if (agent != null && animator != null && canAttack && !isDead)
                 {
-                   StartCoroutine(AttackCoolDown());
+                    StartCoroutine(AttackCoolDown());
                 }
-                
+
 
                 agent.ResetPath();
 
@@ -108,7 +116,7 @@ public class EnemyAI : MonoBehaviour
                 playerSeen = false;
             }
         }
-        
+
         if (agent != null && animator != null)
         {
             float speed = agent.velocity.magnitude;
@@ -131,37 +139,37 @@ public class EnemyAI : MonoBehaviour
             canAttack = true;
     }
 
-/*
-    private IEnumerator DamagePlayerOverTime()
-    {
-        if (playerInfo == null)
+    /*
+        private IEnumerator DamagePlayerOverTime()
         {
-            Debug.LogError("[ENEMYAI] playerInfo is null! Assign it before starting DamagePlayerOverTime.");
-            yield break; // Exit coroutine to prevent errors
+            if (playerInfo == null)
+            {
+                Debug.LogError("[ENEMYAI] playerInfo is null! Assign it before starting DamagePlayerOverTime.");
+                yield break; // Exit coroutine to prevent errors
+            }
+
+            isDamagingPlayer = true;
+
+            while (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
+            {
+                playerInfo.lowerPlayerHealth(damage);
+                yield return new WaitForSeconds(attackRate); // Wait for 1 second before dealing damage again
+            }
+
+            isDamagingPlayer = false; // Reset flag when enemy moves away
         }
-
-        isDamagingPlayer = true;
-
-        while (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance)
+    */
+    /*
+        public void DamagePlayer() 
         {
-            playerInfo.lowerPlayerHealth(damage);
-            yield return new WaitForSeconds(attackRate); // Wait for 1 second before dealing damage again
+            if (isDead) return;
+            if (Vector3.Distance(transform.position, player.position) <= stoppingDistance)
+            {
+                Debug.Log("[ENEMYAI] Damaged Player (animation)");
+                playerInfo?.lowerPlayerHealth(damage);
+            }
         }
-
-        isDamagingPlayer = false; // Reset flag when enemy moves away
-    }
-*/
-/*
-    public void DamagePlayer() 
-    {
-        if (isDead) return;
-        if (Vector3.Distance(transform.position, player.position) <= stoppingDistance)
-        {
-            Debug.Log("[ENEMYAI] Damaged Player (animation)");
-            playerInfo?.lowerPlayerHealth(damage);
-        }
-    }
-*/
+    */
 
     /*
     void OnTriggerEnter(Collider other)
@@ -174,14 +182,18 @@ public class EnemyAI : MonoBehaviour
     }
 */
 
-    public void wasHit(float damage, ItemDrop dropItemScript) 
+    public void wasHit(float damage, ItemDrop dropItemScript)
     {
         health -= damage;
 
-        if (health <= 0) 
+        if (health <= 0)
         {
             isDead = true;
             canAttack = false;
+            if (lockDoor)
+            {
+                doorScript.RegisterEnemy(null);
+            }
 
             StopAllCoroutines();
             animator.ResetTrigger("Attack1h1");
@@ -201,7 +213,7 @@ public class EnemyAI : MonoBehaviour
             dropItemScript.dropItem();
             StartCoroutine(DestroyAfterDelay());
         }
-        else 
+        else
         {
             if (agent != null)
             {
@@ -213,7 +225,7 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    private IEnumerator hitCooldown() 
+    private IEnumerator hitCooldown()
     {
         canAttack = false;
         yield return new WaitForSeconds(attackCoodldown);
@@ -223,7 +235,8 @@ public class EnemyAI : MonoBehaviour
         }
         canAttack = true;
     }
-    private IEnumerator DestroyAfterDelay() {
+    private IEnumerator DestroyAfterDelay()
+    {
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
@@ -238,9 +251,9 @@ public class EnemyAI : MonoBehaviour
     {
         RaycastHit hit;
         Vector3 origin = transform.position + Vector3.up * 1.5f; // have raycast come from enemy eyes
-        Vector3 direction = (player.position - origin).normalized; 
+        Vector3 direction = (player.position - origin).normalized;
 
-        if(Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
+        if (Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
         {
             return (hit.transform.CompareTag("Player")); // return true if it hits player tag
         }
@@ -249,7 +262,7 @@ public class EnemyAI : MonoBehaviour
 
     bool isFacingPlayer()
     {
-        directionToPlayer = (player.position - transform.position).normalized; 
+        directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
         return angleToPlayer < angle;
