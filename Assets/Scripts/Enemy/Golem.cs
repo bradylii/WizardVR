@@ -39,6 +39,13 @@ public class Golem : MonoBehaviour
     public float chargeTime = 5f;
     private bool isCharging = false;
 
+    public float boulderSpawnHeight = 2f;
+    public float boulderSpawnOffset = 2f;
+    public float throwSpeed = 15f;
+    public float targetPositionHeight = 0.5f;
+    public bool useGravity = false;
+    public float arcDirectionHeight = 0.5f;
+
     void Start()
     {
         playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
@@ -65,6 +72,12 @@ public class Golem : MonoBehaviour
             }
 
         }
+
+         if (Input.GetKeyDown(KeyCode.B))
+         {
+            Debug.Log("[GOLEM] Manula Throw");
+            ThrowBoulder();
+         }
     }
 
 
@@ -83,25 +96,54 @@ public class Golem : MonoBehaviour
         isCharging = false;
     }
 
-    private IEnumerator ThrowBoulder()
+    private void ThrowBoulder()
     {
         if(boulderPrefab != null)
         {
-            GameObject boulder = Instantiate(boulderPrefab, transform.position + Vector3.up, Quaternion.identity);
-
-            Vector3 direction = (player.position - transform.position).normalized;
-            float throwSpeed = 10f;
-
-            Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
-            if (boulderRb != null)
+            if (!useGravity)
             {
-                boulderRb.velocity = direction * throwSpeed;
-            }
+                Vector3 spawnPosition = transform.position + transform.forward * boulderSpawnOffset + Vector3.up * boulderSpawnHeight;
+                GameObject boulder = Instantiate(boulderPrefab, spawnPosition, Quaternion.identity);
 
-            Debug.Log("[GOLEM] Boulder thrown towards the player");
+                Vector3 targetPosition = player.position + Vector3.up * targetPositionHeight;
+                Vector3 direction = (targetPosition - transform.position).normalized;
+
+                Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
+                if (boulderRb != null)
+                {
+                    boulderRb.velocity = direction * throwSpeed;
+                    boulderRb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                }
+
+                Debug.Log("[GOLEM] Boulder thrown towards the player");
+
+                
+            }
+            else
+            {
+                Vector3 spawnPosition = transform.position + transform.forward * boulderSpawnOffset + Vector3.up * boulderSpawnHeight;
+                GameObject boulder = Instantiate(boulderPrefab, spawnPosition, Quaternion.identity);
+
+                Vector3 targetPosition = player.position + Vector3.up * targetPositionHeight;
+                Vector3 direction = (targetPosition - transform.position).normalized;
+
+                Vector3 arcDirection = direction + Vector3.up * arcDirectionHeight;
+
+                Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
+                if (boulderRb != null)
+                {
+                    boulderRb.useGravity = true;
+                    boulderRb.AddForce(arcDirection.normalized * throwSpeed, ForceMode.VelocityChange);
+                }
+
+                Debug.Log("[GOLEM] Boulder thrown towards the player");
+
+               
+            }
         }
     }
    
+
 
     public void wasHit(float damage, ItemDrop dropItemScript) 
     {

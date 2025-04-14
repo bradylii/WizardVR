@@ -163,7 +163,7 @@ public class EnemyAI : MonoBehaviour
     }
 */
 
-    
+    /*
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "weapon" && !hasBeenHit)
@@ -172,11 +172,10 @@ public class EnemyAI : MonoBehaviour
             animator.SetTrigger("Fall1");
         }
     }
-
+*/
 
     public void wasHit(float damage, ItemDrop dropItemScript) 
     {
-        
         health -= damage;
 
         if (health <= 0) 

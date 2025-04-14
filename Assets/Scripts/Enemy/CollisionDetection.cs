@@ -8,11 +8,13 @@ public class CollisionDetection : MonoBehaviour
     Player player;
     ItemDrop dropItemScript;
     EnemyAI enemyAi;
+    Golem golemAi;
     public bool collided = false;
 
     public float damage;
 
     public float collisionCooldown = 0.5f;
+    public bool isSkeleton = true;
 
 
 
@@ -21,7 +23,16 @@ public class CollisionDetection : MonoBehaviour
     {
         player = GameObject.Find("Game Manager")?.GetComponent<Player>();
         dropItemScript = GetComponent<ItemDrop>();
-        enemyAi = GetComponent<EnemyAI>();
+
+        if (isSkeleton)
+        {
+            enemyAi = GetComponent<EnemyAI>();  
+        }
+        else
+        {
+            golemAi = GetComponent<Golem>();
+        }
+        
     }
     void OnTriggerEnter(Collider other)
     {
@@ -35,7 +46,15 @@ public class CollisionDetection : MonoBehaviour
 
             if (weaponStats != null) 
             {
-                enemyAi.wasHit(weaponStats.damage, dropItemScript);
+                if (isSkeleton)
+                {
+                    enemyAi.wasHit(weaponStats.damage, dropItemScript);
+                }
+                else
+                {
+                    golemAi.wasHit(weaponStats.damage, dropItemScript);
+                }
+                
             }
 
             StartCoroutine(ResetCollisionCooldown());
