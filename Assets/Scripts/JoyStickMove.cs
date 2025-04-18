@@ -8,6 +8,13 @@ public class JoyStickMove : MonoBehaviour
     public GameObject controller;
     public float speed = 2.0f;
 
+    private Rigidbody rb;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Update()
     {
         // Get joystick input
@@ -19,8 +26,10 @@ public class JoyStickMove : MonoBehaviour
             Vector3 moveDirection = controller.transform.forward * joystickInput.y + controller.transform.right * joystickInput.x;
             moveDirection.y = 0; // Prevent vertical movement
 
+
+            rb.MovePosition(rb.position + moveDirection * speed * Time.fixedDeltaTime);
             // Apply movement
-            head.transform.position += moveDirection * speed * Time.deltaTime;
+            //head.transform.position += moveDirection * speed * Time.deltaTime;
         }
     }
 }
