@@ -18,6 +18,7 @@ public class GameStateManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -29,14 +30,14 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-        setGameState(GameState.Playing);
+        // setGameState(GameState.Playing);
     }
 
     void Update()
     {
         if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("A button pressed");
+            Debug.Log("[GAMESTATE] A button pressed");
             if (renderedUI)
             {
                 setGameState(GameState.Playing);
@@ -66,25 +67,35 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
+    private IEnumerator LoadPlaying()
+    {
+        Debug.Log("[GAMESTATE] LoadPlaying() started");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CastleScene"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
+    }
+
     // To handle calling actions when game state changes
     public void updateGameState()
     {
         switch (currentState)
         {
             case GameState.Lobby:
-                Debug.Log("Game is in loading screen");
+                Debug.Log("[GAMESTATE] Game is in loading screen");
                 lobby();
                 break;
             case GameState.Playing:
-                Debug.Log("Game is being played");
+                Debug.Log("[GAMESTATE] Game is being played");
                 playing();
                 break;
             case GameState.GameOver:
-                Debug.Log("Game Over");
+                Debug.Log("[GAMESTATE] Game Over");
                 gameOver();
                 break;
             case GameState.Victory:
-                Debug.Log("Victory!");
+                Debug.Log("[GAMESTATE] Victory!");
                 victory();
                 break;
         }
@@ -93,14 +104,25 @@ public class GameStateManager : MonoBehaviour
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
-        StartCoroutine(LoadLobby());
-        gameOverInterface.SetActive(false);
+        if (gameOverInterface != null)
+        {
+            gameOverInterface.SetActive(false);
+        }
+
+        StartCoroutine(LoadLobby());        
     }
 
     // To preform actions and configurations when playing game
     public void playing()
     {
-        gameOverInterface.SetActive(false);
+        if (gameOverInterface != null)
+        {
+            gameOverInterface.SetActive(false);
+        }
+
+        StartCoroutine(LoadPlaying());
+
+        
     }
 
     // To preform actions and configurations when game is over
@@ -109,7 +131,10 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void gameOver()
     {
-        gameOverInterface.SetActive(true);
+        if (gameOverInterface != null)
+        {
+            gameOverInterface.SetActive(true);
+        }
         Debug.Log("[GameState] Game Over");
     }
 
@@ -119,7 +144,10 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void victory()
     {
-        gameOverInterface.SetActive(true);
+        if (gameOverInterface != null)
+        {
+            gameOverInterface.SetActive(true);
+        }
     }
 
 }
