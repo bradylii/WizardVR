@@ -114,6 +114,7 @@ public class GameStateManager : MonoBehaviour
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
+        Debug.Log("[GameState] Lobby");
         if (gameOverInterface != null)
         {
             gameOverInterface.SetActive(false);

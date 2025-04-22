@@ -7,6 +7,14 @@ public class ReloadScene : MonoBehaviour
 {
     public GameStateManager gameStateManager;
 
+    private void Start()
+    {
+        if (gameStateManager == null)
+        {
+            gameStateManager = GameObject.Find("Game Manager")?.GetComponent<GameStateManager>();
+        }
+    }
+
     public void LoadSceneUsingName(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

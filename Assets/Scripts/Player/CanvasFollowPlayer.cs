@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadScene : MonoBehaviour
+public class CanvasFollowPlayer : MonoBehaviour
 {
     public Transform playerCamera;
     public float followSpeed = 5f;
