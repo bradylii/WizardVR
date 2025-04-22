@@ -12,6 +12,7 @@ TagManager:
   - wall
   - EnemyWeapon
   - trap
+  - Spawn
   layers:
   - Default
   - TransparentFX

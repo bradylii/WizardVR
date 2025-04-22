@@ -13,6 +13,8 @@ public class GameStateManager : MonoBehaviour
 
     bool renderedUI = false;
 
+    public GameObject player;
+
     private void Awake()
     {
         if (Instance == null)
@@ -24,13 +26,16 @@ public class GameStateManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        
     }
 
     // Start is called before the first frame update
     // start game state as loading screen
     void Start()
     {
-        // setGameState(GameState.Playing);
+        // setGameState(GameState.MainMenu);
+        currentState = GameState.MainMenu;
     }
 
     void Update()
@@ -49,6 +54,8 @@ public class GameStateManager : MonoBehaviour
                 renderedUI = true;
             }
         }
+
+
     }
 
     // To set game state and update accordingly
@@ -58,36 +65,7 @@ public class GameStateManager : MonoBehaviour
         updateGameState();
     }
 
-    private IEnumerator LoadLobby()
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
-        while (!asyncLoad.isDone)
-        {
-            yield return null; // Wait until the scene is fully loaded
-        }
-    }
-
-    private IEnumerator LoadPlaying()
-    {
-        Debug.Log("[GAMESTATE] LoadPlaying() started");
-
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CastleScene"); // Load the "Lobby" scene
-        while (!asyncLoad.isDone)
-        {
-            yield return null; // Wait until the scene is fully loaded
-        }
-
-        GameObject gameManager = gameObject;
-        if (gameManager.GetComponent<Player>() == null)
-            gameManager.AddComponent<Player>();
-        if (gameManager.GetComponent<Wand>() == null)
-            gameManager.AddComponent<Wand>();
-        if (gameManager.GetComponent<CustomControllerModels>() == null)
-            gameManager.AddComponent<CustomControllerModels>();
-        
-    }
-
-    // To handle calling actions when game state changes
+        // To handle calling actions when game state changes
     public void updateGameState()
     {
         switch (currentState)
@@ -108,9 +86,15 @@ public class GameStateManager : MonoBehaviour
                 Debug.Log("[GAMESTATE] Victory!");
                 victory();
                 break;
+            case GameState.MainMenu:
+                Debug.Log("[GAMESTATE] Main Menu is being played");
+                mainMenu();
+                break;
+
         }
     }
 
+    
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
@@ -123,7 +107,62 @@ public class GameStateManager : MonoBehaviour
         StartCoroutine(LoadLobby());        
     }
 
-    // To preform actions and configurations when playing game
+
+    private IEnumerator LoadLobby()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
+
+        currentState = GameState.Lobby;
+
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
+
+        if (player != null && spawn != null)
+        {
+            player.transform.position = spawn.transform.position;
+        }
+    }
+
+    public void mainMenu()
+    {
+        Debug.Log("[GameState] Lobby");
+        if (gameOverInterface != null)
+        {
+            gameOverInterface.SetActive(false);
+        }
+
+        StartCoroutine(LoadMainMenu());        
+    }
+
+    private IEnumerator LoadMainMenu()
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
+
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
+
+        if (player != null && spawn != null)
+        {
+            player.transform.position = spawn.transform.position;
+        }
+    }
+
+
+   // To preform actions and configurations when playing game
     public void playing()
     {
         if (gameOverInterface != null)
@@ -135,6 +174,31 @@ public class GameStateManager : MonoBehaviour
 
         
     }
+    private IEnumerator LoadPlaying()
+    {
+        Debug.Log("[GAMESTATE] LoadPlaying() started");
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CastleScene"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
+
+        currentState = GameState.Playing;
+
+        GameObject gameManager = gameObject;
+        if (gameManager.GetComponent<Player>() == null)
+            gameManager.AddComponent<Player>();
+        if (gameManager.GetComponent<Wand>() == null)
+            gameManager.AddComponent<Wand>();
+        if (gameManager.GetComponent<CustomControllerModels>() == null)
+            gameManager.AddComponent<CustomControllerModels>();
+        
+    }
+
+
+
+ 
 
     // To preform actions and configurations when game is over
     // loss confetti
@@ -160,5 +224,6 @@ public class GameStateManager : MonoBehaviour
             gameOverInterface.SetActive(true);
         }
     }
+
 
 }
