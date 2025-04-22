@@ -14,7 +14,7 @@ public class SnapInteractableVisuals : MonoBehaviour
     private GameObject currentInteractorGameObject;
     private SnapInteractor currentInteractor;
 
-    public float imageSize;
+    public float imageSize = 0.5f;
 
     private void OnEnable()
     {
@@ -64,7 +64,48 @@ public class SnapInteractableVisuals : MonoBehaviour
         currentInteractorGameObject.transform.SetParent(snapInteractable.transform, false);
         currentInteractorGameObject.transform.localPosition = Vector3.zero;
         currentInteractorGameObject.transform.localRotation = Quaternion.identity;
-        currentInteractorGameObject.transform.localScale = Vector3.one; // Optional: scale control
+        currentInteractorGameObject.transform.localScale = Vector3.one * imageSize; // Optional: scale control
+
+        //GameObject visualSource = snapInteractable.gameObject;
+
+        //Debug.Log("[SnapVisual] Using object: " + visualSource.name);
+
+
+        //var rootMesh = visualSource.GetComponent<MeshFilter>();
+        //if (rootMesh != null)
+        //{
+        //    var rootGO = new GameObject("RootVisual");
+        //    rootGO.transform.SetParent(currentInteractorGameObject.transform, false);
+        //    rootGO.transform.localPosition = Vector3.zero;
+        //    rootGO.transform.localRotation = Quaternion.identity;
+        //    rootGO.transform.localScale = Vector3.one;
+
+        //    var mf = rootGO.AddComponent<MeshFilter>();
+        //    mf.sharedMesh = rootMesh.sharedMesh;
+
+        //    var mr = rootGO.AddComponent<MeshRenderer>();
+        //    mr.material = hoverMaterial;
+        //}
+
+        //// Handle child meshes
+        //var childMeshes = visualSource.GetComponentsInChildren<MeshFilter>();
+        //foreach (var item in childMeshes)
+        //{
+        //    if (item.gameObject == visualSource) continue; // skip self if already added
+
+        //    var newGo = new GameObject(item.name);
+        //    newGo.transform.SetParent(currentInteractorGameObject.transform, false);
+        //    newGo.transform.localPosition = item.transform.localPosition;
+        //    newGo.transform.localRotation = item.transform.localRotation;
+        //    newGo.transform.localScale = item.transform.localScale;
+
+        //    var mf = newGo.AddComponent<MeshFilter>();
+        //    mf.sharedMesh = item.sharedMesh;
+
+        //    var mr = newGo.AddComponent<MeshRenderer>();
+        //    mr.material = hoverMaterial;
+        //}
+
 
         // Try to copy the mesh from the interactor's parent
         var parentMesh = interactor.transform.parent.GetComponent<MeshFilter>();
@@ -87,7 +128,7 @@ public class SnapInteractableVisuals : MonoBehaviour
             newGo.transform.SetParent(currentInteractorGameObject.transform, false);
             newGo.transform.localPosition = item.transform.localPosition;
             newGo.transform.localRotation = item.transform.localRotation;
-            newGo.transform.localScale = item.transform.localScale;
+            newGo.transform.localScale = item.transform.localScale * imageSize; 
 
             var mf = newGo.AddComponent<MeshFilter>();
             mf.mesh = item.mesh;

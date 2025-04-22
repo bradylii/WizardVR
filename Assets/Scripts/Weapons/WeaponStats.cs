@@ -5,15 +5,31 @@ using UnityEngine;
 public class WeaponStats : MonoBehaviour
 {
     public float damage;
-    // Start is called before the first frame update
-    void Start()
+    Collider swordCollider;
+    Rigidbody swordRigidbody;
+
+    private void Start()
     {
-        
+        if (swordCollider == null)
+        {
+            swordCollider = GetComponent<Collider>();
+        }
+
+        if (swordRigidbody == null)
+        {
+            swordRigidbody = GetComponent<Rigidbody>();
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnGrabbed()
     {
-        
+        swordCollider.isTrigger = true;
+        swordRigidbody.isKinematic = true;
+    }
+
+    public void OnReleased()
+    {
+        swordCollider.isTrigger = false;
+        swordRigidbody.isKinematic = false;
     }
 }
