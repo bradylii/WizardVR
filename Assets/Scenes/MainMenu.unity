@@ -17681,6 +17681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   gameOverInterface: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &1400172283
 GameObject:
   m_ObjectHideFlags: 0
@@ -26341,6 +26342,26 @@ PrefabInstance:
     - target: {fileID: 5668990942424438860, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
       propertyPath: m_Name
       value: MainMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405593171695869877, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 63cb6bd87a3beb741bef1df8331feae4, type: 3}
+    - target: {fileID: 7405593171695869877, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405593171695869877, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405593171695869877, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7405593171695869877, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8341795022913231342, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
       propertyPath: m_Name
