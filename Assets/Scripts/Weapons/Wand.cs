@@ -21,6 +21,20 @@ public class Wand : MonoBehaviour
 
         audioSource.playOnAwake = false;
         audioSource.spatialBlend = 1f; // 3D soun
+
+
+        if (castSound == null)
+        {
+            Debug.Log("[WAND] castSound is null... trying to find now");
+            castSound = Resources.Load<AudioClip>("Audio/PewSound");
+        }
+
+        if (wandTipTransform == null)
+        {
+            Debug.Log("[WAND] wandTipTransform is null... trying to find now");
+            wandTipTransform = GameObject.Find("[BuildingBlock] Camera Rig");
+        }
+
     }
 
     private void Update()

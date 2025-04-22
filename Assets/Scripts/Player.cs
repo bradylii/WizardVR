@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
         playerHealth = 100.0f;
         kills = 0;
         playing = true;
+
+        if (gameStateManager == null)
+            gameStateManager = GetComponent<GameStateManager>();
+
     }
 
     public void killedBadGuy()

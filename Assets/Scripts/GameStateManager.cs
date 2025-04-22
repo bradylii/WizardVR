@@ -70,11 +70,21 @@ public class GameStateManager : MonoBehaviour
     private IEnumerator LoadPlaying()
     {
         Debug.Log("[GAMESTATE] LoadPlaying() started");
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CastleScene"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
         {
             yield return null; // Wait until the scene is fully loaded
         }
+
+        GameObject gameManager = gameObject;
+        if (gameManager.GetComponent<Player>() == null)
+            gameManager.AddComponent<Player>();
+        if (gameManager.GetComponent<Wand>() == null)
+            gameManager.AddComponent<Wand>();
+        if (gameManager.GetComponent<CustomControllerModels>() == null)
+            gameManager.AddComponent<CustomControllerModels>();
+        
     }
 
     // To handle calling actions when game state changes

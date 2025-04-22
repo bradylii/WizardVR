@@ -8,15 +8,38 @@ public class CustomControllerModels : MonoBehaviour
 
     void Start()
     {
+        if (rightControllerModelPrefab == null)
+        {
+            Debug.Log("[CustomController] Rightcontrollermodel null... tyring to find");
+            rightControllerModelPrefab = Resources.Load<GameObject>("Prefabs/Wand Pivot Variant");
+
+            if (rightControllerModelPrefab == null)
+                Debug.Log("[CustomController] RightControllerModel Couldn't be assigned");
+        }
+        
+
         if (rightControllerModelPrefab != null)
         {
             rightControllerInstance = Instantiate(rightControllerModelPrefab);
             rightControllerInstance.SetActive(true);
+            Debug.Log("[CustomController] Instantiated model");
         }
+
         // Hide the default controller models if needed
         GameObject defaultRightController = GameObject.Find("RightController");
         if (defaultRightController != null)
             defaultRightController.SetActive(false);
+        else 
+            Debug.Log("[CustomController] DefaultRightController null");
+
+        if (trackingSpace == null)
+            {
+                Debug.Log("[CustomController] trackingSpace is null... trying to find now");
+                trackingSpace = GameObject.Find("TrackingSpace").transform;
+
+                if (trackingSpace == null)
+                    Debug.Log("[CustomController] trackingSpace couldnt' be assigned");
+            }
     }
 
     void Update()
