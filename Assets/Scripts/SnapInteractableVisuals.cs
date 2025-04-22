@@ -1,4 +1,4 @@
-using Oculus.Interaction;
+﻿using Oculus.Interaction;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +13,8 @@ public class SnapInteractableVisuals : MonoBehaviour
 
     private GameObject currentInteractorGameObject;
     private SnapInteractor currentInteractor;
+
+    public float imageSize;
 
     private void OnEnable()
     {
@@ -56,32 +58,42 @@ public class SnapInteractableVisuals : MonoBehaviour
 
     private void SetupGhostModel(SnapInteractor interactor)
     {
-        currentInteractorGameObject = new GameObject(interactor.transform.parent?.name);
-        currentInteractorGameObject.transform.parent = transform;
-        currentInteractorGameObject.transform.localScale = interactor.transform.parent.localScale;
+        currentInteractorGameObject = new GameObject("GhostModel");
+
+        // 👇 Parent it to the SnapInteractable so it inherits its local position & rotation
+        currentInteractorGameObject.transform.SetParent(snapInteractable.transform, false);
         currentInteractorGameObject.transform.localPosition = Vector3.zero;
         currentInteractorGameObject.transform.localRotation = Quaternion.identity;
+        currentInteractorGameObject.transform.localScale = Vector3.one; // Optional: scale control
 
+        // Try to copy the mesh from the interactor's parent
         var parentMesh = interactor.transform.parent.GetComponent<MeshFilter>();
         if (parentMesh != null)
         {
-            currentInteractorGameObject.AddComponent<MeshFilter>().mesh = parentMesh.mesh;
-            currentInteractorGameObject.AddComponent<MeshRenderer>().material = hoverMaterial;
+            var mf = currentInteractorGameObject.AddComponent<MeshFilter>();
+            mf.mesh = parentMesh.mesh;
+
+            var mr = currentInteractorGameObject.AddComponent<MeshRenderer>();
+            mr.material = hoverMaterial;
         }
 
+        // Also clone any children meshes
         var childMesh = interactor.transform.parent.GetComponentsInChildren<MeshFilter>();
-        if (childMesh != null)
+        foreach (var item in childMesh)
         {
-            foreach (var item in childMesh)
-            {
-                var newGo = new GameObject(item.name);
-                newGo.transform.parent = currentInteractorGameObject.transform;
-                newGo.transform.localPosition = item.transform.localPosition;
-                newGo.transform.localRotation = item.transform.localRotation;
-                newGo.transform.localScale = item.transform.localScale;
-                newGo.AddComponent<MeshFilter>().mesh = item.mesh;
-                newGo.AddComponent<MeshRenderer>().material = hoverMaterial;
-            }
+            if (item == parentMesh) continue; // avoid duplicating the root
+
+            var newGo = new GameObject(item.name);
+            newGo.transform.SetParent(currentInteractorGameObject.transform, false);
+            newGo.transform.localPosition = item.transform.localPosition;
+            newGo.transform.localRotation = item.transform.localRotation;
+            newGo.transform.localScale = item.transform.localScale;
+
+            var mf = newGo.AddComponent<MeshFilter>();
+            mf.mesh = item.mesh;
+
+            var mr = newGo.AddComponent<MeshRenderer>();
+            mr.material = hoverMaterial;
         }
     }
 }
