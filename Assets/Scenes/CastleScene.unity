@@ -3510,6 +3510,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1907998817}
     m_Modifications:
+    - target: {fileID: 3347593865848292555, guid: eab70a528a3005345a7954db9b07ba89, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3347593865848292555, guid: eab70a528a3005345a7954db9b07ba89, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3639351176086383000, guid: eab70a528a3005345a7954db9b07ba89, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.312841
@@ -3549,6 +3557,10 @@ PrefabInstance:
     - target: {fileID: 3639351176086383000, guid: eab70a528a3005345a7954db9b07ba89, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3849686636310560592, guid: eab70a528a3005345a7954db9b07ba89, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4164213580812989218, guid: eab70a528a3005345a7954db9b07ba89, type: 3}
       propertyPath: m_Name
@@ -47204,41 +47216,16 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2094458648}
   m_SourcePrefab: {fileID: 100100000, guid: 23af01ce0bc2c694486121badcac101b, type: 3}
---- !u!1 &2094458646
+--- !u!1 &2094458646 stripped
 GameObject:
-  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 23af01ce0bc2c694486121badcac101b, type: 3}
   m_PrefabInstance: {fileID: 2094458645}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2094458647}
-  - component: {fileID: 2094458649}
-  - component: {fileID: 2094458648}
-  m_Layer: 0
-  m_Name: 'Wall outlet.007 (Missing Prefab with guid: 23af01ce0bc2c694486121badcac101b)'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2094458647
+--- !u!4 &2094458647 stripped
 Transform:
-  m_ObjectHideFlags: 8
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 23af01ce0bc2c694486121badcac101b, type: 3}
   m_PrefabInstance: {fileID: 2094458645}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2094458646}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.6931462, z: -0, w: 0.72079706}
-  m_LocalPosition: {x: 22.41061, y: -0.65929997, z: -6.0908256}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 141816612}
-  - {fileID: 716921911}
-  m_Father: {fileID: 1907998817}
-  m_LocalEulerAnglesHint: {x: 0, y: 87.759, z: 0}
 --- !u!65 &2094458648
 BoxCollider:
   m_ObjectHideFlags: 0
