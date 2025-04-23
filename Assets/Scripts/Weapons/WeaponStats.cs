@@ -5,8 +5,9 @@ using UnityEngine;
 public class WeaponStats : MonoBehaviour
 {
     public float damage;
-    Collider swordCollider;
+    public Collider swordCollider;
     Rigidbody swordRigidbody;
+    public Collider playerCollider;
 
     private void Start()
     {
@@ -19,17 +20,12 @@ public class WeaponStats : MonoBehaviour
         {
             swordRigidbody = GetComponent<Rigidbody>();
         }
-    }
 
-    public void OnGrabbed()
-    {
-        swordCollider.isTrigger = true;
-        swordRigidbody.isKinematic = true;
-    }
+        playerCollider = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider>();
 
-    public void OnReleased()
-    {
-        swordCollider.isTrigger = false;
-        swordRigidbody.isKinematic = false;
+        if (swordCollider != null && playerCollider != null)
+        {
+            Physics.IgnoreCollision(swordCollider, playerCollider, true);
+        }
     }
 }
