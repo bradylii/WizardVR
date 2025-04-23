@@ -188,17 +188,21 @@ public class EnemyAI : MonoBehaviour
 
         if (health <= 0)
         {
+            Debug.Log("[ENEMYAI] Enemy Died");
             isDead = true;
             canAttack = false;
             if (lockDoor)
             {
                 doorScript.RegisterEnemy(null);
             }
+            Debug.Log("[ENEMYAI] Door RegisterEnemy");
 
             StopAllCoroutines();
             animator.ResetTrigger("Attack1h1");
             animator.ResetTrigger("Hit1");
             animator.SetFloat("speedv", 0);
+
+            Debug.Log("[ENEMYAI] Enemy Reset Animators");
 
             if (agent != null)
             {
@@ -207,11 +211,18 @@ public class EnemyAI : MonoBehaviour
                 agent.enabled = false;
             }
 
+            Debug.Log("[ENEMYAI] Enemy agent reset");
+
             animator.SetTrigger("Fall1");
+            Debug.Log("[ENEMYAI] Enemy Fall Animation");
             animator.applyRootMotion = false;
+            Debug.Log("[ENEMYAI] Enemy Root Motion False");
             playerInfo.killedBadGuy();
+            Debug.Log("[ENEMYAI] PlayerInfo Altered");
             dropItemScript.dropItem();
+            Debug.Log("[ENEMYAI] Enemy Dropped item");
             StartCoroutine(DestroyAfterDelay());
+            Debug.Log("[ENEMYAI] Starting Destruction");
         }
         else
         {
@@ -237,6 +248,7 @@ public class EnemyAI : MonoBehaviour
     }
     private IEnumerator DestroyAfterDelay()
     {
+        Debug.Log("[ENEMYAI] Going to destroy");
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
@@ -270,6 +282,7 @@ public class EnemyAI : MonoBehaviour
 
     void RotateTowardsPlayer()
     {
+        if (isDead) return;
         directionToPlayer.y = 0; // make sure the enemy doesnt rotate head up and down (can change this if we have verticality in game)
 
         targetRotation = Quaternion.LookRotation(directionToPlayer); // figure out where to rotate to
