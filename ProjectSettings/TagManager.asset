@@ -13,6 +13,8 @@ TagManager:
   - EnemyWeapon
   - trap
   - Spawn
+  - RoomManager
+  - RoomDoor
   layers:
   - Default
   - TransparentFX

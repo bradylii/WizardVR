@@ -793,7 +793,6 @@ GameObject:
   - component: {fileID: 1266620920315756154}
   - component: {fileID: 5766174507696274109}
   - component: {fileID: 2313916527963638187}
-  - component: {fileID: 5546970525212124208}
   - component: {fileID: 8512144732253462512}
   - component: {fileID: 6698878439760984427}
   - component: {fileID: 2058997125690219271}
@@ -881,7 +880,7 @@ MonoBehaviour:
   playerSeen: 0
   attackCoodldown: 1.5
   showDebugGizmos: 0
-  doorScript: {fileID: 0}
+  door: {fileID: 0}
   lockDoor: 1
 --- !u!114 &8908671992824960585
 MonoBehaviour:
@@ -963,24 +962,8 @@ MonoBehaviour:
   playerSeen: 0
   attackCoodldown: 1.5
   showDebugGizmos: 0
-  doorScript: {fileID: 0}
+  door: {fileID: 0}
   lockDoor: 0
---- !u!114 &5546970525212124208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349150361055734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f35e73a8858b4e74fad96e97d3ada300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemPrefabs:
-  - {fileID: 178174409553277362, guid: 68f3e97c3efd4064b9e8fbd1bb5d1536, type: 3}
-  - {fileID: 5274330834453439365, guid: 153497f44566dc94dba64ea0bb4581f1, type: 3}
-  spawnHeight: 1
 --- !u!114 &8512144732253462512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1006,7 +989,7 @@ MonoBehaviour:
   playerSeen: 0
   attackCoodldown: 1.5
   showDebugGizmos: 0
-  doorScript: {fileID: 0}
+  door: {fileID: 0}
   lockDoor: 0
 --- !u!114 &6698878439760984427
 MonoBehaviour:

@@ -42,8 +42,8 @@ public class EnemyAI : MonoBehaviour
 
     private bool hasBeenHit;
 
-    public Door doorScript;
-    public bool lockDoor = false;
+    //public RoomEventManager roomManager;
+    //public int roomNumber = 1;
 
     void Start()
     {
@@ -57,10 +57,19 @@ public class EnemyAI : MonoBehaviour
 
         animator = GetComponent<Animator>();
 
-        if (lockDoor)
+        /*
+        if (roomManager == null)
         {
-            doorScript.RegisterEnemy(this.gameObject);
+            GameObject[] allRoomManagers = GameObject.FindGameObjectsWithTag("RoomManager");
+
+            foreach (GameObject roomEventManager in allRoomManagers)
+            {
+                if (roomEventManager.name.Contains($"Room{roomNumber}"))
+                    roomManager = roomEventManager.GetComponent<RoomEventManager>();
+            }
         }
+        */
+        
     }
 
 
@@ -191,18 +200,23 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("[ENEMYAI] Enemy Died");
             isDead = true;
             canAttack = false;
-            if (lockDoor)
+            
+            Debug.Log("[ENEMYAI] Telling Door Script I died");
+            //doorScript.RegisterEnemy(null);
+
+            /*
+            if (roomManager != null)
             {
-                doorScript.RegisterEnemy(null);
+                roomManager.removeEnemy();
             }
-            Debug.Log("[ENEMYAI] Door RegisterEnemy");
+            else
+                Debug.Log("[ENEMYAI] RoomManager null");
+            */
 
             StopAllCoroutines();
             animator.ResetTrigger("Attack1h1");
             animator.ResetTrigger("Hit1");
             animator.SetFloat("speedv", 0);
-
-            Debug.Log("[ENEMYAI] Enemy Reset Animators");
 
             if (agent != null)
             {
@@ -211,18 +225,12 @@ public class EnemyAI : MonoBehaviour
                 agent.enabled = false;
             }
 
-            Debug.Log("[ENEMYAI] Enemy agent reset");
 
             animator.SetTrigger("Fall1");
-            Debug.Log("[ENEMYAI] Enemy Fall Animation");
             animator.applyRootMotion = false;
-            Debug.Log("[ENEMYAI] Enemy Root Motion False");
             playerInfo.killedBadGuy();
-            Debug.Log("[ENEMYAI] PlayerInfo Altered");
             dropItemScript.dropItem();
-            Debug.Log("[ENEMYAI] Enemy Dropped item");
             StartCoroutine(DestroyAfterDelay());
-            Debug.Log("[ENEMYAI] Starting Destruction");
         }
         else
         {
