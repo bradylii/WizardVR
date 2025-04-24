@@ -815,7 +815,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.27706262, y: 0.27706262, z: 0.27706262}
+  m_LocalScale: {x: 0.41825345, y: 0.41825345, z: 0.41825345}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4816483894402762}
@@ -875,12 +875,14 @@ MonoBehaviour:
   goingToPlayer: 0
   player: {fileID: 0}
   distanceToPlayer: 0
-  detectionRange: 7.06
-  stoppingDistance: 1.33
+  detectionRange: 5.31
+  stoppingDistance: 1.28
   angle: 80
   playerSeen: 0
   attackCoodldown: 1.5
-  showDebugGizmos: 1
+  showDebugGizmos: 0
+  doorScript: {fileID: 0}
+  lockDoor: 1
 --- !u!114 &8908671992824960585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,6 +963,8 @@ MonoBehaviour:
   playerSeen: 0
   attackCoodldown: 1.5
   showDebugGizmos: 0
+  doorScript: {fileID: 0}
+  lockDoor: 0
 --- !u!114 &5546970525212124208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1002,6 +1006,8 @@ MonoBehaviour:
   playerSeen: 0
   attackCoodldown: 1.5
   showDebugGizmos: 0
+  doorScript: {fileID: 0}
+  lockDoor: 0
 --- !u!114 &6698878439760984427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1377,6 +1383,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  swordCollider: {fileID: 0}
+  playerCollider: {fileID: 0}
 --- !u!54 &4767494350797704103
 Rigidbody:
   m_ObjectHideFlags: 0
