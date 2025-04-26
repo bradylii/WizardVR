@@ -9,14 +9,19 @@ public class CollisionDetection : MonoBehaviour
     ItemDrop dropItemScript;
     EnemyAI enemyAi;
     Golem golemAi;
-    public bool collided = false;
+    BoulderHealth BoulderHealth;
 
-    public float damage;
+    WeaponStats weaponStats;
+
+    public bool collided = false;
 
     public float collisionCooldown = 0.5f;
     public bool isSkeleton = true;
+    public bool isGolem;
 
+    [SerializeField] private EnemyType enemyType;
 
+    [SerializeField] private Component enemyScript;
 
     
     private void Start()
@@ -24,14 +29,27 @@ public class CollisionDetection : MonoBehaviour
         player = GameObject.Find("Game Manager")?.GetComponent<Player>();
         dropItemScript = GetComponent<ItemDrop>();
 
-        if (isSkeleton)
+    
+        switch (enemyType)
         {
-            enemyAi = GetComponent<EnemyAI>();  
+            case EnemyType.Skeleton:
+                enemyAi = GetComponent<EnemyAI>(); 
+                enemyScript = enemyAi;
+                break;
+            case EnemyType.Golem:
+                golemAi = GetComponent<Golem>();
+                enemyScript = golemAi;
+                break;
+            case EnemyType.GolemBoulders:
+                BoulderHealth = GetComponent<BoulderHealth>();
+                break;
+                enemyScript = BoulderHealth;
+            default:
+                defaultEnemyType();
+                break;
         }
-        else
-        {
-            golemAi = GetComponent<Golem>();
-        }
+
+
         
     }
     void OnTriggerEnter(Collider other)
@@ -42,19 +60,26 @@ public class CollisionDetection : MonoBehaviour
             Debug.Log("[Collision] Collided with weapon, processing damage." );
             collided = true;
 
-            WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
+            weaponStats = other.gameObject.GetComponent<WeaponStats>();
 
             if (weaponStats != null) 
             {
-                if (isSkeleton)
+                switch(enemyType)
                 {
-                    enemyAi.wasHit(weaponStats.damage, dropItemScript);
+                    case EnemyType.Skeleton:
+                       enemyAi.wasHit(weaponStats.damage, dropItemScript);
+                       break;
+                    case EnemyType.Golem:
+                        golemAi.wasHit(weaponStats.damage, dropItemScript);
+                        break;
+                    case EnemyType.GolemBoulders:
+                        BoulderHealth.wasHit(weaponStats.damage);
+                        break;
+                        enemyScript = BoulderHealth;
+                    default:
+                        defaultEnemyType();
+                        break;
                 }
-                else
-                {
-                    golemAi.wasHit(weaponStats.damage, dropItemScript);
-                }
-                
             }
 
             StartCoroutine(ResetCollisionCooldown());
@@ -65,5 +90,37 @@ public class CollisionDetection : MonoBehaviour
     {
         yield return new WaitForSeconds(collisionCooldown);
         collided = false;
+    }
+
+    private void defaultEnemyType()
+    {
+        if (isSkeleton)
+        {
+            enemyAi = GetComponent<EnemyAI>();  
+        }
+        else if (isGolem)
+        {
+            golemAi = GetComponent<Golem>();
+        }
+        else
+        {
+            BoulderHealth = GetComponent<BoulderHealth>();
+        }
+    }
+
+    private void defaultEnemyHit()
+    {
+        if (isSkeleton)
+        {
+            enemyAi.wasHit(weaponStats.damage, dropItemScript);
+        }
+        else if (isGolem)
+        {
+            golemAi.wasHit(weaponStats.damage, dropItemScript);
+        }
+        else
+        {
+            BoulderHealth.wasHit(weaponStats.damage);
+        }
     }
 }
