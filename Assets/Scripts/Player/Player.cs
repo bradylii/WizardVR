@@ -10,8 +10,8 @@ public class Player : MonoBehaviour
     public GameStateManager gameStateManager;
     public bool playing;
 
-     public bool collided = false;
-     public float collisionCooldown = 0.5f;
+    public bool collided = false;
+    public float collisionCooldown = 0.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         Debug.Log("[PLAYER] Damage Dealt = " + damage);
         Debug.Log("[PLAYER] player health = " + playerHealth);
     }
-    
+
 
     // Update is called once per frame
     void Update()
@@ -50,25 +50,25 @@ public class Player : MonoBehaviour
         }
     }
 
-/*
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "EnemyWeapon" && !collided)
+    /*
+        void OnTriggerEnter(Collider other)
         {
-            Debug.Log("[PLAYER] Collided with weapon, processing damage." );
-            collided = true;
-
-            WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
-
-            if (weaponStats != null) 
+            if (other.gameObject.tag == "EnemyWeapon" && !collided)
             {
-                lowerPlayerHealth(weaponStats.damage);
-            }
+                Debug.Log("[PLAYER] Collided with weapon, processing damage." );
+                collided = true;
 
-            StartCoroutine(ResetCollisionCooldown());
+                WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
+
+                if (weaponStats != null) 
+                {
+                    lowerPlayerHealth(weaponStats.damage);
+                }
+
+                StartCoroutine(ResetCollisionCooldown());
+            }
         }
-    }
-*/
+    */
     private IEnumerator ResetCollisionCooldown()
     {
         yield return new WaitForSeconds(collisionCooldown);
