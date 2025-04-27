@@ -27,6 +27,6 @@ public class ReloadScene : MonoBehaviour
 
     public void goToLobby()
     {
-        gameStateManager.setGameState(GameState.Lobby);
+        gameStateManager.setGameState(GameState.MainMenu);
     }
 }
