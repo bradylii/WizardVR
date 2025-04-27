@@ -243,16 +243,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2977127}
   - component: {fileID: 2977126}
-  - component: {fileID: 2977133}
+  - component: {fileID: 2977128}
+  - component: {fileID: 2977131}
+  - component: {fileID: 2977130}
+  - component: {fileID: 2977132}
+  - component: {fileID: 2977134}
   - component: {fileID: 2977125}
   - component: {fileID: 2977124}
   - component: {fileID: 2977123}
   - component: {fileID: 2977135}
-  - component: {fileID: 2977128}
-  - component: {fileID: 2977130}
-  - component: {fileID: 2977131}
-  - component: {fileID: 2977134}
-  - component: {fileID: 2977132}
   m_Layer: 3
   m_Name: '[BuildingBlock] Camera Rig'
   m_TagString: Player
@@ -408,7 +407,7 @@ Transform:
   m_GameObject: {fileID: 2977122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.646, y: 0.5, z: -0.658}
+  m_LocalPosition: {x: -23.302, y: 0.5, z: 9.816}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -432,6 +431,7 @@ MonoBehaviour:
   head: {fileID: 2977122}
   controller: {fileID: 908734806}
   speed: 2
+  lockMovement: 0
 --- !u!136 &2977130
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -495,22 +495,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!114 &2977133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2977122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160dac7b770a6402ca8454bac3201d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  x: -23.88
-  y: -6.15
-  z: 6.762
-  teleport: 0
 --- !u!114 &2977134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35523,19 +35507,27 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1907998817}
     m_Modifications:
     - target: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.20000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.20000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -19.88
+      value: 2.5988426
       objectReference: {fileID: 0}
     - target: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.377
+      value: 0.65270007
       objectReference: {fileID: 0}
     - target: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.837
+      value: -4.501302
       objectReference: {fileID: 0}
     - target: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -35568,6 +35560,10 @@ PrefabInstance:
     - target: {fileID: 3525437064730614708, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
       propertyPath: m_Name
       value: Spell
+      objectReference: {fileID: 0}
+    - target: {fileID: 3525437064730614708, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5781249767355296421, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
       propertyPath: tagsToDetroyOn.Array.size
@@ -38705,6 +38701,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 301546877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &956049978 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1516014055504908039, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
+  m_PrefabInstance: {fileID: 874868472}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &957274679
 GameObject:
   m_ObjectHideFlags: 0
@@ -74743,6 +74744,7 @@ Transform:
   - {fileID: 1086543984}
   - {fileID: 146005415}
   - {fileID: 186729830}
+  - {fileID: 956049978}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1908969145
@@ -78155,6 +78157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monsterScript: {fileID: 1194955898}
   playerInPit: 0
+  joyStickMove: {fileID: 0}
 --- !u!1001 &1986973188
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85607,4 +85610,3 @@ SceneRoots:
   - {fileID: 500036370}
   - {fileID: 957964466}
   - {fileID: 1726882960}
-  - {fileID: 874868472}

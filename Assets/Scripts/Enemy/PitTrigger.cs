@@ -8,11 +8,18 @@ public class PitTrigger : MonoBehaviour
 
     [SerializeField] private bool playerInPit = false;
 
+    public JoyStickMove joyStickMove;
+
     private void Start()
     {
         if (monsterScript == null)
         {
             monsterScript = GameObject.FindGameObjectWithTag("PitEnemy").GetComponent<AlienMonsterInPit>();
+        }
+
+        if (joyStickMove == null)
+        {
+            joyStickMove = GameObject.FindGameObjectWithTag("Player").GetComponent<JoyStickMove>();
         }
     }
 
@@ -25,6 +32,8 @@ public class PitTrigger : MonoBehaviour
             playerInPit = true;
 
             monsterScript.runToPlayer();
+
+            joyStickMove.lockMovement = true;
         }
     }
 }

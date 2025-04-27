@@ -10,6 +10,8 @@ public class JoyStickMove : MonoBehaviour
 
     private Rigidbody rb;
 
+    public bool lockMovement = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -20,7 +22,7 @@ public class JoyStickMove : MonoBehaviour
         // Get joystick input
         Vector2 joystickInput = OVRInput.Get(OVRInput.Axis2D.PrimaryThumbstick, OVRInput.Controller.LTouch);
 
-        if (joystickInput.magnitude > 0.1f) // Deadzone threshold
+        if (joystickInput.magnitude > 0.1f && !lockMovement) // Deadzone threshold
         {
             // Get movement direction based on controller's forward direction
             Vector3 moveDirection = controller.transform.forward * joystickInput.y + controller.transform.right * joystickInput.x;

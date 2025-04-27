@@ -36,7 +36,15 @@ public class CanvasFollowPlayer : MonoBehaviour
             Vector3 targetPosition = playerCamera.position + playerCamera.forward * 2.0f;
 
             targetPosition += playerCamera.right * horizontalOffset;
-            targetPosition.y = Mathf.Max(targetPosition.y, minimumHeight);
+
+            if (playerCamera.position.y > minimumHeight)
+            {
+                targetPosition.y = Mathf.Max(targetPosition.y, minimumHeight);
+            }
+            else
+            {
+                targetPosition.y = playerCamera.position.y;
+            }
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
         }
     }
