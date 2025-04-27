@@ -6,7 +6,7 @@ public class Spell : MonoBehaviour
     [SerializeField] private float lifetime = 2;
     [SerializeField] private float velocity = 50;
     [SerializeField] private float sizePercentage = 1;
-    [SerializeField] private List<string> tagsToDetroyOn = new List<string>();
+    [SerializeField] private List<string> tagsToDestroyOn = new List<string>();
 
     private Rigidbody rb;
     private Vector3 launchForce = Vector3.right;
@@ -62,11 +62,12 @@ public class Spell : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if ("wall" == other.gameObject.tag || "Enemy" == other.gameObject.tag)
-        {
-           Destroy(gameObject);
-        }
+        GameObject hitObject = other.gameObject;
+        Transform hitParent = hitObject.transform.parent;
 
-        
+        if (tagsToDestroyOn.Contains(hitObject.tag) || (hitParent != null && tagsToDestroyOn.Contains(hitParent.tag)))
+        {
+            Destroy(gameObject);
+        }
     }
 }

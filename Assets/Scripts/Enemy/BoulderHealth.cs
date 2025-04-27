@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class BoulderHealth : MonoBehaviour
 {
+    Golem golemAi;
 
+    public float damage = 30;
 
-    public void wasHit(float damage)
+    private void Start()
+    {
+        golemAi = GameObject.FindGameObjectWithTag("Golem").GetComponent<Golem>();
+    }
+
+    public void wasHit()
     {
         Debug.Log("[Boulder] was hit");
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        rb.useGravity = true;
+
+        golemAi.wasHit(damage);
     }   
 }

@@ -70,10 +70,11 @@ public class CollisionDetection : MonoBehaviour
                        enemyAi.wasHit(weaponStats.damage, dropItemScript);
                        break;
                     case EnemyType.Golem:
-                        golemAi.wasHit(weaponStats.damage, dropItemScript);
+                        golemAi.wasHit(weaponStats.damage);
                         break;
                     case EnemyType.GolemBoulders:
-                        BoulderHealth.wasHit(weaponStats.damage);
+                        Debug.Log("[Collision] Golem Type Enemy" );
+                        BoulderHealth.wasHit();
                         break;
                         enemyScript = BoulderHealth;
                     default:
@@ -116,11 +117,11 @@ public class CollisionDetection : MonoBehaviour
         }
         else if (isGolem)
         {
-            golemAi.wasHit(weaponStats.damage, dropItemScript);
+            golemAi.wasHit(weaponStats.damage);
         }
         else
         {
-            BoulderHealth.wasHit(weaponStats.damage);
+            BoulderHealth.wasHit();
         }
     }
 }

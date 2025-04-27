@@ -47,12 +47,19 @@ public class Golem : MonoBehaviour
     public bool useGravity = false;
     public float arcDirectionHeight = 0.5f;
 
+    ItemDrop dropItemScript;
+
     void Start()
     {
         playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
+        if (dropItemScript == null)
+        {
+            dropItemScript = GetComponent<ItemDrop>();
         }
     }
 
@@ -146,7 +153,7 @@ public class Golem : MonoBehaviour
 
 
 
-    public void wasHit(float damage, ItemDrop dropItemScript)
+    public void wasHit(float damage)
     {
 
         health -= damage;

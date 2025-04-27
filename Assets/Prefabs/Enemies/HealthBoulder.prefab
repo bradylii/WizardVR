@@ -368,6 +368,7 @@ GameObject:
   - component: {fileID: 7445868111931633491}
   - component: {fileID: 4325148116545014867}
   - component: {fileID: 8446528457539695734}
+  - component: {fileID: 709829045056886395}
   m_Layer: 0
   m_Name: StylRocksMagic_1_LOD1
   m_TagString: Untagged
@@ -507,6 +508,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &709829045056886395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6467893659134435045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3856802f009694bac8d3fd7595adf53b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 30
 --- !u!1 &6689891957505723815
 GameObject:
   m_ObjectHideFlags: 0
