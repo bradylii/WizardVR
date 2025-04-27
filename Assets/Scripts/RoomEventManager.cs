@@ -92,7 +92,7 @@ public class RoomEventManager : MonoBehaviour
             if (enemy != null)
                 return false;
         }
-        
+
         Debug.Log("[RoomManager] All Enemies Defeated");
         return true;
     }

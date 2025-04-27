@@ -25,7 +25,7 @@ public class ReloadScene : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void goToLobby()
+    public void goToMainMenu()
     {
         gameStateManager.setGameState(GameState.MainMenu);
     }

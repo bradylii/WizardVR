@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 7369848192660033388}
   - component: {fileID: 1487631274261509793}
   - component: {fileID: 7407916176326330581}
-  - component: {fileID: 490005678863112719}
-  - component: {fileID: 1847135559004062807}
   m_Layer: 0
   m_Name: Wall_1M
   m_TagString: Untagged
@@ -109,45 +107,6 @@ BoxCollider:
   m_Size: {x: 1, y: 4, z: 0.37000003}
   m_Center: {x: -0.5, y: 2, z: 0.014999986}
 --- !u!114 &7407916176326330581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2871496218428760916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_OverrideArea: 0
-  m_Area: 0
-  m_OverrideGenerateLinks: 0
-  m_GenerateLinks: 0
-  m_IgnoreFromBuild: 1
-  m_ApplyToChildren: 1
-  m_AffectedAgents: ffffffff
---- !u!114 &490005678863112719
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2871496218428760916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 055587a5d34a4494aa433a591fdb6a1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  enemyCount: 0
-  moveDownAmount: 10
-  speed: 1
-  targetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &1847135559004062807
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
