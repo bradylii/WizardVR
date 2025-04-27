@@ -18,7 +18,7 @@ public class RoomEventManager : MonoBehaviour
     public float doorMoveDownAmount = 10f;
     public float speed = 1f;
 
-    [SerializeField] private bool doorsOpened = false;
+    public bool doorsOpened = false;
 
     // Start is called before the first frame update
     void Start()
@@ -102,6 +102,12 @@ public class RoomEventManager : MonoBehaviour
         if (!doorsOpened && allEnemiesDefeated())
         {
             StartCoroutine(openDoors());
+
+            if (gameObject.name.Contains("BossRoom"))
+            {
+                GameStateManager stateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+                stateManager.setGameState(GameState.Victory);
+            }
         }
     }
 }

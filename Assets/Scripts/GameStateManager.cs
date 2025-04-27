@@ -9,11 +9,11 @@ public class GameStateManager : MonoBehaviour
 
     public static GameStateManager Instance;
 
-    public GameObject gameOverInterface;
-
     bool renderedUI = false;
 
     public GameObject player;
+
+    public GameObject secretText;
 
     private void Awake()
     {
@@ -27,7 +27,7 @@ public class GameStateManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+
     }
 
     // Start is called before the first frame update
@@ -36,23 +36,21 @@ public class GameStateManager : MonoBehaviour
     {
         // setGameState(GameState.MainMenu);
         currentState = GameState.MainMenu;
+
+        secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
+        secretText.SetActive(false);
     }
 
     void Update()
     {
-        if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log("[GAMESTATE] A button pressed");
-            if (renderedUI)
-            {
-                setGameState(GameState.Playing);
-                renderedUI = false;
-            }
-            else
-            {
-                setGameState(GameState.GameOver);
-                renderedUI = true;
-            }
+            setGameState(GameState.Playing);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            setGameState(GameState.Victory);
         }
 
 
@@ -65,7 +63,12 @@ public class GameStateManager : MonoBehaviour
         updateGameState();
     }
 
-        // To handle calling actions when game state changes
+    public GameState getGameState()
+    {
+        return currentState;
+    }
+
+    // To handle calling actions when game state changes
     public void updateGameState()
     {
         switch (currentState)
@@ -94,17 +97,11 @@ public class GameStateManager : MonoBehaviour
         }
     }
 
-    
+
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
-        Debug.Log("[GameState] Lobby");
-        if (gameOverInterface != null)
-        {
-            gameOverInterface.SetActive(false);
-        }
-
-        StartCoroutine(LoadLobby());        
+        StartCoroutine(LoadLobby());
     }
 
 
@@ -133,12 +130,8 @@ public class GameStateManager : MonoBehaviour
     public void mainMenu()
     {
         Debug.Log("[GameState] Lobby");
-        if (gameOverInterface != null)
-        {
-            gameOverInterface.SetActive(false);
-        }
 
-        StartCoroutine(LoadMainMenu());        
+        StartCoroutine(LoadMainMenu());
     }
 
     private IEnumerator LoadMainMenu()
@@ -162,17 +155,10 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-   // To preform actions and configurations when playing game
+    // To preform actions and configurations when playing game
     public void playing()
     {
-        if (gameOverInterface != null)
-        {
-            gameOverInterface.SetActive(false);
-        }
-
         StartCoroutine(LoadPlaying());
-
-        
     }
     private IEnumerator LoadPlaying()
     {
@@ -193,12 +179,14 @@ public class GameStateManager : MonoBehaviour
             gameManager.AddComponent<Wand>();
         if (gameManager.GetComponent<CustomControllerModels>() == null)
             gameManager.AddComponent<CustomControllerModels>();
-        
+        if (gameManager.GetComponent<TurnOffOnUI>() == null)
+            gameManager.AddComponent<TurnOffOnUI>();
+
     }
 
 
 
- 
+
 
     // To preform actions and configurations when game is over
     // loss confetti
@@ -206,10 +194,6 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void gameOver()
     {
-        if (gameOverInterface != null)
-        {
-            gameOverInterface.SetActive(true);
-        }
         Debug.Log("[GameState] Game Over");
     }
 
@@ -219,10 +203,7 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void victory()
     {
-        if (gameOverInterface != null)
-        {
-            gameOverInterface.SetActive(true);
-        }
+        secretText.SetActive(true);
     }
 
 

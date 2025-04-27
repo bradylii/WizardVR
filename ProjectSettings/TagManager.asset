@@ -38,6 +38,10 @@ TagManager:
   - QDSUISection
   - PitEnemy
   - Golem
+  - RetryUI
+  - VictoryUI
+  - GameManager
+  - SecretTextUI
   layers:
   - Default
   - TransparentFX

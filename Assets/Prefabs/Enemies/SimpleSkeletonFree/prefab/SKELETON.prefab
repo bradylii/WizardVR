@@ -792,7 +792,6 @@ GameObject:
   - component: {fileID: 8908671992824960585}
   - component: {fileID: 1266620920315756154}
   - component: {fileID: 5766174507696274109}
-  - component: {fileID: 2313916527963638187}
   - component: {fileID: 6698878439760984427}
   - component: {fileID: 2058997125690219271}
   - component: {fileID: 7732992947256230589}
@@ -873,12 +872,12 @@ MonoBehaviour:
   goingToPlayer: 0
   player: {fileID: 0}
   distanceToPlayer: 0
-  detectionRange: 8.79
+  detectionRange: 3.21
   stoppingDistance: 1.28
   angle: 80
   playerSeen: 0
   attackCoodldown: 1.5
-  showDebugGizmos: 0
+  showDebugGizmos: 1
 --- !u!114 &8908671992824960585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -936,31 +935,7 @@ MonoBehaviour:
   isGolem: 0
   enemyType: 0
   enemyScript: {fileID: 0}
---- !u!114 &2313916527963638187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1349150361055734}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d10aca6e9ed143d78125c38da888e3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  attackRate: 0
-  health: 10
-  isDamagingPlayer: 0
-  goingToPlayer: 0
-  player: {fileID: 0}
-  distanceToPlayer: 0
-  detectionRange: 6.8
-  stoppingDistance: 0.78
-  angle: 80
-  playerSeen: 0
-  attackCoodldown: 1.5
-  showDebugGizmos: 0
+  boulderAlreadyHit: 0
 --- !u!114 &6698878439760984427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1008,7 +983,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349150361055734}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: 1
   m_Radius: 0.5
   m_Speed: 0.93
   m_Acceleration: 8
