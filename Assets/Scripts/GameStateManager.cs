@@ -50,6 +50,11 @@ public class GameStateManager : MonoBehaviour
             setGameState(GameState.Playing);
         }
 
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            setGameState(GameState.Lobby);
+        }
+
         if (Input.GetKeyDown(KeyCode.V))
         {
             setGameState(GameState.Victory);
