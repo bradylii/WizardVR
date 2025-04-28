@@ -128,6 +128,7 @@ public class GameStateManager : MonoBehaviour
 
         if (player == null)
         {
+            Debug.Log("[GAMESTATE] player is null... finding");
             player = GameObject.FindGameObjectWithTag("Player");
         }
         GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");

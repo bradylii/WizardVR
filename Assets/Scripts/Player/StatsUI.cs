@@ -21,15 +21,30 @@ public class StatsUI : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (player == null)
+       if (player == null)
         {
             Debug.Log("[Stats] Player is null... trying to find it now");
+
             player = GameObject.FindGameObjectWithTag("GameManager").GetComponent<Player>();
+            if (player == null)
+                Debug.Log("[Stats] Player couldn't be found is null");
         }
+    }
+
+    private void manualSceneInit()
+    {
+        
     }
 
     void Update()
     {
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("GameManager").GetComponent<Player>();
+            if (player == null)
+                Debug.Log("[Stats] -Update()- Player couldn't be found is null"); 
+        }
+
         if (player != null)
         {
             healthText.text = $"Health: {Mathf.RoundToInt(player.playerHealth)}";
