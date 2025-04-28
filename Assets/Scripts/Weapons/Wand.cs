@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Wand : MonoBehaviour
 {
@@ -10,6 +11,16 @@ public class Wand : MonoBehaviour
     [Header("Audio")]
     [SerializeField] AudioClip castSound;
     private AudioSource audioSource;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     private void Start()
     {
@@ -29,11 +40,7 @@ public class Wand : MonoBehaviour
             castSound = Resources.Load<AudioClip>("Audio/PewSound");
         }
 
-        if (wandTipTransform == null)
-        {
-            Debug.Log("[WAND] wandTipTransform is null... trying to find now");
-            wandTipTransform = GameObject.Find("[BuildingBlock] Camera Rig");
-        }
+
 
     }
 
@@ -64,7 +71,14 @@ public class Wand : MonoBehaviour
         }
     }
 
-
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (wandTipTransform == null)
+        {
+            Debug.Log("[WAND] wandTipTransform is null... trying to find now");
+            wandTipTransform = GameObject.Find("[BuildingBlock] Camera Rig");
+        }
+    }
 
 }
 

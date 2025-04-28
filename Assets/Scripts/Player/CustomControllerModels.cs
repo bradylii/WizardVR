@@ -1,10 +1,21 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CustomControllerModels : MonoBehaviour
 {
     public GameObject rightControllerModelPrefab; // Your custom right controller model
     public Transform trackingSpace;
     private GameObject rightControllerInstance;
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     void Start()
     {
@@ -16,7 +27,7 @@ public class CustomControllerModels : MonoBehaviour
             if (rightControllerModelPrefab == null)
                 Debug.Log("[CustomController] RightControllerModel Couldn't be assigned");
         }
-        
+
 
         if (rightControllerModelPrefab != null)
         {
@@ -29,17 +40,10 @@ public class CustomControllerModels : MonoBehaviour
         GameObject defaultRightController = GameObject.Find("RightController");
         if (defaultRightController != null)
             defaultRightController.SetActive(false);
-        else 
+        else
             Debug.Log("[CustomController] DefaultRightController null");
 
-        if (trackingSpace == null)
-            {
-                Debug.Log("[CustomController] trackingSpace is null... trying to find now");
-                trackingSpace = GameObject.Find("TrackingSpace").transform;
 
-                if (trackingSpace == null)
-                    Debug.Log("[CustomController] trackingSpace couldnt' be assigned");
-            }
     }
 
     void Update()
@@ -49,6 +53,20 @@ public class CustomControllerModels : MonoBehaviour
             // Set the position and rotation of the custom right controller model
             rightControllerInstance.transform.position = trackingSpace.TransformPoint(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));
             rightControllerInstance.transform.rotation = OVRInput.GetLocalControllerRotation(OVRInput.Controller.RTouch);
+        }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("[CustomController] Scene Loaded: " + scene.name);
+
+        if (trackingSpace == null)
+        {
+            Debug.Log("[CustomController] trackingSpace is null... trying to find now");
+            trackingSpace = GameObject.Find("TrackingSpace").transform;
+
+            if (trackingSpace == null)
+                Debug.Log("[CustomController] trackingSpace couldnt' be assigned");
         }
     }
 }
