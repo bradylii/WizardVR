@@ -62,12 +62,26 @@ public class Spell : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        GameObject hitObject = other.gameObject;
-        Transform hitParent = hitObject.transform.parent;
+        // GameObject hitObject = other.gameObject;
+        // Transform hitParent = hitObject.transform.parent;
+        
 
-        if (tagsToDestroyOn.Contains(hitObject.tag) || (hitParent != null && tagsToDestroyOn.Contains(hitParent.tag)))
+        // if (tagsToDestroyOn.Contains(hitObject.tag) || (hitParent != null && tagsToDestroyOn.Contains(hitParent.tag)))
+        // {
+        //     Destroy(gameObject);
+        // }
+
+        Transform current = other.transform;
+        
+        while (current != null)
         {
-            Destroy(gameObject);
+            if (tagsToDestroyOn.Contains(current.tag))
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            current = current.parent;
         }
     }
 }
