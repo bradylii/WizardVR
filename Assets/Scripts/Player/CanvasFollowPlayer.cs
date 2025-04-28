@@ -13,6 +13,10 @@ public class CanvasFollowPlayer : MonoBehaviour
     public float horizontalOffset = 0.5f;
 
     public bool followPlayer = true;
+
+    public float forwardOffset = 4f;
+
+    public bool isMenu = false;
     private void Start()
     {
         if (!followPlayer)
@@ -22,10 +26,10 @@ public class CanvasFollowPlayer : MonoBehaviour
             targetPosition += playerCamera.right * horizontalOffset;
             targetPosition.y = Mathf.Max(targetPosition.y, minimumHeight);
         }
-        //if (playerCamera == null)
-        //{
-        //    playerCamera = Camera.main.transform;
-        //}
+        if (playerCamera == null)
+        {
+           playerCamera = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        }
     }
 
     private void Update()
@@ -34,6 +38,9 @@ public class CanvasFollowPlayer : MonoBehaviour
         {
             transform.rotation = Quaternion.LookRotation(transform.position - playerCamera.position);
             Vector3 targetPosition = playerCamera.position + playerCamera.forward * 2.0f;
+
+            if (isMenu)
+                targetPosition = playerCamera.position + playerCamera.forward * forwardOffset;
 
             targetPosition += playerCamera.right * horizontalOffset;
 
@@ -47,5 +54,8 @@ public class CanvasFollowPlayer : MonoBehaviour
             }
             transform.position = Vector3.Lerp(transform.position, targetPosition, followSpeed * Time.deltaTime);
         }
+
+        
+
     }
 }
