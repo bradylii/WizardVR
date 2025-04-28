@@ -19,7 +19,7 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     [SerializeField] private float distanceToPlayer;
     private NavMeshAgent agent;
-    private Player playerInfo;
+    public Player playerInfo;
 
     // Variables for checking if enemy can see player
     public float detectionRange = 10f;
@@ -76,6 +76,13 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         if (isDead) return;
+
+        if (playerInfo == null)
+        {
+            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+            if (playerInfo == null)
+                Debug.Log("[ENEMYAI] -UPDATE()- Couldnt find player script in game manager" );
+        }
 
         if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
@@ -201,7 +208,6 @@ public class EnemyAI : MonoBehaviour
             isDead = true;
             canAttack = false;
             
-            Debug.Log("[ENEMYAI] Telling Door Script I died");
             //doorScript.RegisterEnemy(null);
 
             /*
