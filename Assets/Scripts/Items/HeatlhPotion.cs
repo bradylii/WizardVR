@@ -18,6 +18,9 @@ public class HeatlhPotion : MonoBehaviour
     public Transform playerHead;
     Player playerInfo;
 
+    [SerializeField] private AudioClip drinkSound;
+    private AudioSource audioSource;
+
 
 
     private void Start()
@@ -45,6 +48,13 @@ public class HeatlhPotion : MonoBehaviour
         }
 
         playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
+
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void Update()
@@ -71,6 +81,11 @@ public class HeatlhPotion : MonoBehaviour
         playerInfo.playerHealth = Mathf.Min(playerInfo.playerHealth + healAmount, 100f);
         used = true;
         Debug.Log("[POTION] Potion Used. Player Healed.");
+
+        if (drinkSound != null)
+        {
+            audioSource.PlayOneShot(drinkSound);
+        }
 
         StartCoroutine(DestroyPotion());
     }

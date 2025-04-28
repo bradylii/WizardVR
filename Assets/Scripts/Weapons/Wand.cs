@@ -37,7 +37,7 @@ public class Wand : MonoBehaviour
         if (castSound == null)
         {
             Debug.Log("[WAND] castSound is null... trying to find now");
-            castSound = Resources.Load<AudioClip>("Audio/PewSound");
+            castSound = Resources.Load<AudioClip>("Audio/Pew (mp3cut.net)");
         }
 
 

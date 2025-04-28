@@ -9,6 +9,7 @@ public class InventoryFollowCamera : MonoBehaviour
     public float minimumHeight = 1f;
     public float verticalOffset = 0.5f;
     public float forwardOffset = 0.5f;
+    public float rotationSpeed = 5f;
 
     private bool initialPositionSet = false;
     private Vector3 lockedPosition;
@@ -35,8 +36,10 @@ public class InventoryFollowCamera : MonoBehaviour
             initialPositionSet = true;
         }
 
-        Vector3 headUeler = playerHead.rotation.eulerAngles;
-        transform.rotation = Quaternion.Euler(0f, headUeler.y, 0f);
+        Vector3 headEuler = playerHead.rotation.eulerAngles;
+        Quaternion targetRotation = Quaternion.Euler(0f, headEuler.y, 0f);
+        
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         Vector3 offset = transform.forward * forwardOffset;
 
