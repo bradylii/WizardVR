@@ -33,7 +33,8 @@ public class PitTrigger : MonoBehaviour
 
             monsterScript.runToPlayer();
 
-            joyStickMove.lockMovement = true;
+            if (joyStickMove != null)
+                joyStickMove.lockMovement = true;
         }
     }
 }

@@ -50,7 +50,7 @@ public class AlienMonsterInPit : MonoBehaviour
 
         if (player != null)
         {
-            Vector3 targetPosition = new Vector3(player.position.x, player.position.y, (player.position.z - offset));
+            Vector3 targetPosition = new Vector3(player.position.x, player.position.y, player.position.z + offset);
             agent.SetDestination(targetPosition);
 
             chasingPlayer = true;

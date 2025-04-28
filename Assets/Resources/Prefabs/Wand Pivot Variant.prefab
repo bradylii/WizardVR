@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wand Pivot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3067486981518501683, guid: 6373eb13bfa87d541af7091ae4af9304, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3497891796817906864, guid: 6373eb13bfa87d541af7091ae4af9304, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
