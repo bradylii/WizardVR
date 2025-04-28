@@ -74,4 +74,10 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(collisionCooldown);
         collided = false;
     }
+
+    public void resetStats()
+    {
+        playerHealth = 100;
+        kills = 0;
+    }
 }

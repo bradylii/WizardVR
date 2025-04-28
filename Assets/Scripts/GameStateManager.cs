@@ -214,6 +214,14 @@ public class GameStateManager : MonoBehaviour
             uiManager.manualSceneInit();
         }
 
+        Player playerInfo = GetComponent<Player>();
+        if (playerInfo != null)
+        {
+            playerInfo.resetStats();
+        }
+        else
+            Debug.Log("[GameState] No playerInfo Found");
+
     }
 
 

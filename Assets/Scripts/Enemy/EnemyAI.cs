@@ -17,6 +17,7 @@ public class EnemyAI : MonoBehaviour
 
     // player positions and navmesh agent init
     public Transform player;
+    public Transform playerHead;
     [SerializeField] private float distanceToPlayer;
     private NavMeshAgent agent;
     public Player playerInfo;
@@ -55,6 +56,11 @@ public class EnemyAI : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").transform;
         }
 
+        if (playerHead == null)
+        {
+            playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        }
+
         animator = GetComponent<Animator>();
 
         /*
@@ -81,11 +87,29 @@ public class EnemyAI : MonoBehaviour
         {
             playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
             if (playerInfo == null)
+            {
                 Debug.Log("[ENEMYAI] -UPDATE()- Couldnt find player script in game manager" );
+            }
         }
+
+        if (player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            if (player == null)
+            {
+                 Debug.Log("[ENEMYAI] -UPDATE()- Couldnt find player" );
+            }
+        }
+
+        if (playerHead == null)
+        {
+            playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        }
+    
 
         if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
+            Debug.Log("[ENEMYAI] Spots Player" );
             playerSeen = true;
             lastKnownPlayerPosition = player.position;
             RotateTowardsPlayer(); // rotate to player 
@@ -234,7 +258,12 @@ public class EnemyAI : MonoBehaviour
 
             animator.SetTrigger("Fall1");
             animator.applyRootMotion = false;
-            playerInfo.killedBadGuy();
+            
+            if (playerInfo != null)
+                playerInfo.killedBadGuy();
+            else   
+                Debug.Log("[ENEMYAI] Playerinfo null");
+
             dropItemScript.dropItem();
             StartCoroutine(DestroyAfterDelay());
         }
@@ -269,15 +298,17 @@ public class EnemyAI : MonoBehaviour
 
     bool isInRange()
     {
+        if (player == null) return false;
         distanceToPlayer = Vector3.Distance(transform.position, player.position);
         return (distanceToPlayer <= detectionRange);
     }
 
     bool inLineOfSight()
     {
+        if (player == null) return false;
         RaycastHit hit;
         Vector3 origin = transform.position + Vector3.up * 1.5f; // have raycast come from enemy eyes
-        Vector3 direction = (player.position - origin).normalized;
+        Vector3 direction = (playerHead.position - origin).normalized;
 
         if (Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
         {
@@ -288,6 +319,7 @@ public class EnemyAI : MonoBehaviour
 
     bool isFacingPlayer()
     {
+        if (player == null) return false;
         directionToPlayer = (player.position - transform.position).normalized;
         float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
 
