@@ -51,7 +51,7 @@ public class Golem : MonoBehaviour
 
     void Start()
     {
-        playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
+        playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -67,6 +67,16 @@ public class Golem : MonoBehaviour
     void Update()
     {
         if (isDead) return;
+
+        if (gameStateManager == null)
+        {
+            gameStateManager = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<GameStateManager>();
+        }
+
+        if (playerInfo == null)
+        {
+            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+        }
 
         if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
