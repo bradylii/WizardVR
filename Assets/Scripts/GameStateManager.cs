@@ -35,7 +35,7 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         // setGameState(GameState.MainMenu);
-        currentState = GameState.MainMenu;
+        currentState = GameState.Playing;
 
         secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
         secretText.SetActive(false);
