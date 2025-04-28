@@ -41,6 +41,8 @@ public class GameStateManager : MonoBehaviour
         secretText.SetActive(false);
 
         OVRManager.display.RecenterPose();
+
+
     }
 
     void Update()
@@ -108,12 +110,14 @@ public class GameStateManager : MonoBehaviour
     // To preform actions and configurations in loading screen/lobby
     public void lobby()
     {
+        Debug.Log("[GAMESTATE] Lobby()");
         StartCoroutine(LoadLobby());
     }
 
 
     private IEnumerator LoadLobby()
     {
+        Debug.Log("[GAMESTATE] LoadLobby()");
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
         {
@@ -136,13 +140,14 @@ public class GameStateManager : MonoBehaviour
 
     public void mainMenu()
     {
-        Debug.Log("[GameState] Lobby");
+        Debug.Log("[GameState] mainMenu()");
 
         StartCoroutine(LoadMainMenu());
     }
 
     private IEnumerator LoadMainMenu()
     {
+        Debug.Log("[GAMESTATE] LoadMainMenu()");
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
         {
@@ -165,11 +170,12 @@ public class GameStateManager : MonoBehaviour
     // To preform actions and configurations when playing game
     public void playing()
     {
+        Debug.Log("[GAMESTATE] playing()");
         StartCoroutine(LoadPlaying());
     }
     private IEnumerator LoadPlaying()
     {
-        Debug.Log("[GAMESTATE] LoadPlaying() started");
+        Debug.Log("[GAMESTATE] LoadPlaying()");
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CastleScene"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
@@ -185,9 +191,15 @@ public class GameStateManager : MonoBehaviour
         if (gameManager.GetComponent<Wand>() == null)
             gameManager.AddComponent<Wand>();
         if (gameManager.GetComponent<CustomControllerModels>() == null)
-            gameManager.AddComponent<CustomControllerModels>();
+        {
+            CustomControllerModels customControllers = gameManager.AddComponent<CustomControllerModels>();
+            customControllers.manualSceneInit();
+        }
         if (gameManager.GetComponent<TurnOffOnUI>() == null)
-            gameManager.AddComponent<TurnOffOnUI>();
+        {
+            TurnOffOnUI uiManager =  gameManager.AddComponent<TurnOffOnUI>();
+            uiManager.manualSceneInit();
+        }
 
     }
 
@@ -201,7 +213,7 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void gameOver()
     {
-        Debug.Log("[GameState] Game Over");
+        Debug.Log("[GameState] gameOver()");
     }
 
     // To preform actions and configurations when player wins
@@ -210,6 +222,8 @@ public class GameStateManager : MonoBehaviour
     // option to go back to lobby
     public void victory()
     {
+        Debug.Log("[GAMESTATE] victory()");
+
         secretText.SetActive(true);
     }
 

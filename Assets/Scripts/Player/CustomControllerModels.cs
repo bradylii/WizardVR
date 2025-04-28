@@ -32,6 +32,14 @@ public class CustomControllerModels : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("[CustomController] Scene Loaded: " + scene.name);
+        manualSceneInit();
+    }
+
+    public void manualSceneInit()
+    {
+        Debug.Log("[CustomController] Manually initializing CustomController after scene load.");
+
+        
 
         if (trackingSpace == null)
         {
@@ -65,5 +73,6 @@ public class CustomControllerModels : MonoBehaviour
             defaultRightController.SetActive(false);
         else
             Debug.Log("[CustomController] DefaultRightController null");
+       
     }
 }

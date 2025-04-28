@@ -2,10 +2,13 @@ using UnityEngine;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
 using UnityEditor.Build.Content;
+using System.Collections;
 
 public class GrabTracker : MonoBehaviour
 {
     public GameStateManager gameManager;
+
+    private bool grabbedTriggered = false;
 
     private void Start()
     {
@@ -22,7 +25,12 @@ public class GrabTracker : MonoBehaviour
     public void grabbed()
     {
         Debug.Log("[GRABTRACKER] Grabbed");
-        
-        gameManager.setGameState(GameState.Playing);
+
+        if (!grabbedTriggered)
+        {
+            grabbedTriggered = true;
+            gameManager.setGameState(GameState.Playing);
+        }
     }
+
 }
