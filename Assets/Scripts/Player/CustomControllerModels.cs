@@ -7,12 +7,12 @@ public class CustomControllerModels : MonoBehaviour
     public Transform trackingSpace;
     private GameObject rightControllerInstance;
 
-    private void OnEnable()
+    private void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -48,7 +48,7 @@ public class CustomControllerModels : MonoBehaviour
 
     void Update()
     {
-        if (rightControllerInstance != null && OVRInput.IsControllerConnected(OVRInput.Controller.RTouch))
+        if (rightControllerInstance != null && trackingSpace != null && OVRInput.IsControllerConnected(OVRInput.Controller.RTouch))
         {
             // Set the position and rotation of the custom right controller model
             rightControllerInstance.transform.position = trackingSpace.TransformPoint(OVRInput.GetLocalControllerPosition(OVRInput.Controller.RTouch));

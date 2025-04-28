@@ -15,6 +15,8 @@ public class JoyStickMove : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        
     }
 
     void Update()

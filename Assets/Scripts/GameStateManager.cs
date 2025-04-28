@@ -39,6 +39,8 @@ public class GameStateManager : MonoBehaviour
 
         secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
         secretText.SetActive(false);
+
+        OVRManager.display.RecenterPose();
     }
 
     void Update()
