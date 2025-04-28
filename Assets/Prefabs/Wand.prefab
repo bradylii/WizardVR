@@ -122,7 +122,7 @@ MonoBehaviour:
   spells:
   - {fileID: 5781249767355296421, guid: b330d12502c4de941aa1180dff4104dc, type: 3}
   wandTipTransform: {fileID: 5729367616958595569}
-  castSound: {fileID: 8300000, guid: e6f3d0c349a32456787386edd69fe365, type: 3}
+  castSound: {fileID: 8300000, guid: 17a4de4f7f68e6144b6de03d1c060b25, type: 3}
 --- !u!1 &5729367616958595569
 GameObject:
   m_ObjectHideFlags: 0

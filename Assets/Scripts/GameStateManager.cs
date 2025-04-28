@@ -185,6 +185,18 @@ public class GameStateManager : MonoBehaviour
         }
 
         currentState = GameState.Playing;
+        if (player == null)
+        {
+            Debug.Log("[GAMESTATE] player is null... finding");
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+         if (secretText == null)
+        {
+            Debug.Log("[GAMESTATE] secretText is null... finding");
+            secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
+            secretText.SetActive(false);
+        }
+
 
         GameObject gameManager = gameObject;
         if (gameManager.GetComponent<Player>() == null)

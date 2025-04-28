@@ -24,6 +24,9 @@ public class SpeedPotion : MonoBehaviour
 
     public string manualButton;
 
+    [SerializeField] private AudioClip drinkSound;
+    private AudioSource audioSource;
+
     private void Start()
     {
         if (player == null)
@@ -53,6 +56,15 @@ public class SpeedPotion : MonoBehaviour
         {
             Debug.Log("[POTION] JoystickMove component not found");
         }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+
+        if (drinkSound == null)
+            drinkSound = Resources.Load<AudioClip>("Audio/DrinkingMP3");
     }
 
     private void Update()
@@ -84,6 +96,11 @@ public class SpeedPotion : MonoBehaviour
         playerMovement.speed += speedBoost;
         used = true;
         Debug.Log("[POTION] Speed Potion Used. Player Faster.");
+
+         if (drinkSound != null)
+        {
+            audioSource.PlayOneShot(drinkSound);
+        }
 
         // StartCoroutine(RemoveObject());    
         // StartCoroutine(ResetSpeed());

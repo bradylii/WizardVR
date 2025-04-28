@@ -6,19 +6,22 @@ public class InventoryFollowCamera : MonoBehaviour
 {
     public Transform playerHead;
 
-    public float minimumHeight = 1f;
-    public float verticalOffset = 0.5f;
     public float forwardOffset = 0.5f;
-    public float rotationSpeed = 5f;
+    public float rotationSpeed = 2f;
+    public float initialDelay = 0.5f;
+    [Range(0f, 1f)]
+    public float beltHeightPercent = 0.35f;
 
     private bool initialPositionSet = false;
     private Vector3 lockedPosition;
+    private float delayTimer = 0f;
 
     private void LateUpdate()
     {
         if (playerHead == null)
         {
-            playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
+            Debug.Log("[Inventory] PlayerHead is still null, trying to find...");
+            playerHead = GameObject.FindGameObjectWithTag("MainCamera")?.transform;
 
             if (playerHead == null)
                 Debug.Log("[Inventory] Couldnt find player head");
@@ -27,23 +30,34 @@ public class InventoryFollowCamera : MonoBehaviour
 
         if (!initialPositionSet)
         {
-            float desiredY = playerHead.position.y - verticalOffset;
-            float finalY = Mathf.Max(desiredY, minimumHeight);
+            delayTimer += Time.deltaTime;
 
-            lockedPosition = new Vector3(playerHead.position.x, finalY, playerHead.position.z);
-            transform.position = lockedPosition;
+            if (delayTimer >= initialDelay)
+            {
+                Debug.Log("[Inventory] Setting position");
 
-            initialPositionSet = true;
+                float playerHeight = playerHead.position.y;
+                float beltHeight = playerHeight * (beltHeightPercent);
+
+                lockedPosition = new Vector3(playerHead.position.x, beltHeight, playerHead.position.z);
+                transform.position = lockedPosition;
+
+                initialPositionSet = true;
+            }
+            
         }
 
-        Vector3 headEuler = playerHead.rotation.eulerAngles;
-        Quaternion targetRotation = Quaternion.Euler(0f, headEuler.y, 0f);
-        
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        if (initialPositionSet)
+        {
+            Vector3 headEuler = playerHead.rotation.eulerAngles;
+            Quaternion targetRotation = Quaternion.Euler(0f, headEuler.y, 0f);
+            
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        Vector3 offset = transform.forward * forwardOffset;
+            Vector3 offset = transform.forward * forwardOffset;
 
-        transform.position = new Vector3(playerHead.position.x, lockedPosition.y, playerHead.position.z) + offset;
+            transform.position = new Vector3(playerHead.position.x, lockedPosition.y, playerHead.position.z) + offset;
+        }
     }
 
 

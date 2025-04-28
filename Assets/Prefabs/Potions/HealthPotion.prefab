@@ -353,6 +353,7 @@ MonoBehaviour:
   angle: 0
   player: {fileID: 0}
   playerHead: {fileID: 0}
+  drinkSound: {fileID: 8300000, guid: 27ec9b3866ca3b14083a481490a4ef18, type: 3}
 --- !u!4 &662820806208563976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}

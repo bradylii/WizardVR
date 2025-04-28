@@ -258,6 +258,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerHead: {fileID: 0}
   manualButton: S
+  drinkSound: {fileID: 8300000, guid: 27ec9b3866ca3b14083a481490a4ef18, type: 3}
 --- !u!54 &658172092960406120
 Rigidbody:
   m_ObjectHideFlags: 0

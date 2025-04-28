@@ -16,7 +16,7 @@ public class HeatlhPotion : MonoBehaviour
 
     public Transform player;
     public Transform playerHead;
-    Player playerInfo;
+    public Player playerInfo;
 
     [SerializeField] private AudioClip drinkSound;
     private AudioSource audioSource;
@@ -55,11 +55,21 @@ public class HeatlhPotion : MonoBehaviour
         {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+
+        if (drinkSound == null)
+            drinkSound = Resources.Load<AudioClip>("Audio/DrinkingMP3");
     }
 
     private void Update()
     {
-       
+        if (playerInfo == null)
+        {
+            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+            if (playerInfo == null)
+                Debug.Log("[POTION] -UPDATE()- Couldnt find player script in game manager" );
+        }
+
+
         if (used || player == null || playerInfo == null) return;
 
         distance = Vector3.Distance(transform.position, playerHead.position);

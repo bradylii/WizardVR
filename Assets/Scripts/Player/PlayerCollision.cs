@@ -7,17 +7,28 @@ public class PlayerCollision : MonoBehaviour
     bool collided = false;
     public float collisionCooldown = 0.5f;
 
-    Player playerInfo;
+    public Player playerInfo;
     // Start is called before the first frame update
     void Start()
     {
-        playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
+        
+        if (playerInfo == null)
+        {
+            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+            if (playerInfo == null)
+                Debug.Log("[PLAYER] Couldnt find player script in game manager" );
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerInfo == null)
+        {
+            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+            if (playerInfo == null)
+                Debug.Log("[PLAYER] -UPDATE()- Couldnt find player script in game manager" );
+        }
     }
 
     public void lowerPlayerHealth(float damage)
@@ -35,6 +46,7 @@ public class PlayerCollision : MonoBehaviour
             collided = true;
 
             WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
+            Debug.Log("[PLAYER] Weapon did " + weaponStats.damage + " damage" );
 
             if (weaponStats != null) 
             {

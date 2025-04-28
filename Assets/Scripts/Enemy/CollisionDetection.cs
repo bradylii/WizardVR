@@ -29,7 +29,7 @@ public class CollisionDetection : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Game Manager")?.GetComponent<Player>();
+        player = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
         dropItemScript = GetComponent<ItemDrop>();
 
 
