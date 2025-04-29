@@ -1,7 +1,9 @@
 using UnityEngine;
 using Oculus.Interaction;
 using Oculus.Interaction.HandGrab;
-using UnityEditor.Build.Content;
+#if UNITY_EDITOR
+using UnityEditor.Build;
+#endif
 using System.Collections;
 
 public class GrabTracker : MonoBehaviour
