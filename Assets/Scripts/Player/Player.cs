@@ -77,7 +77,10 @@ public class Player : MonoBehaviour
 
     public void resetStats()
     {
-        playerHealth = 100;
-        kills = 0;
+        Debug.Log("[Player] Resetting Stats");
+        this.playerHealth = 100;
+        this.kills = 0;
+        Debug.Log("[Player] PlayerHealth: " + playerHealth);
+        Debug.Log("[Player] PlayerKills: " + kills);
     }
 }

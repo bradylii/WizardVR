@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -35,13 +38,22 @@ public class GameStateManager : MonoBehaviour
     void Start()
     {
         // setGameState(GameState.MainMenu);
-        currentState = GameState.Playing;
+        currentState = GameState.MainMenu;
 
         secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
         secretText.SetActive(false);
 
         OVRManager.display.RecenterPose();
 
+        if (currentState == GameState.MainMenu)
+        {
+            UnityEngine.UI.Button playButton = GameObject.Find("PlayButton")?.GetComponent<UnityEngine.UI.Button>();
+            if (playButton != null)
+            {
+                playButton.onClick.RemoveAllListeners();
+                playButton.onClick.AddListener(() => setGameState(GameState.Playing));
+            }    
+        }
 
     }
 
@@ -62,6 +74,8 @@ public class GameStateManager : MonoBehaviour
             setGameState(GameState.Victory);
         }
 
+
+        
 
     }
 
@@ -155,6 +169,8 @@ public class GameStateManager : MonoBehaviour
             yield return null; // Wait until the scene is fully loaded
         }
 
+        yield return null;
+
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
@@ -165,6 +181,18 @@ public class GameStateManager : MonoBehaviour
         {
             player.transform.position = spawn.transform.position;
         }
+
+        
+        Debug.Log("[GameState] Attempting to work with MenuUi");
+        UnityEngine.UI.Button playButton = GameObject.Find("PlayButton")?.GetComponent<UnityEngine.UI.Button>();
+        if (playButton != null)
+        {
+            playButton.onClick.RemoveAllListeners();
+            playButton.onClick.AddListener(() => setGameState(GameState.Playing));
+        }    
+        else
+            Debug.Log("[GameState] PlayButton Null");
+        
     }
 
 
@@ -218,6 +246,8 @@ public class GameStateManager : MonoBehaviour
         if (playerInfo != null)
         {
             playerInfo.resetStats();
+            Debug.Log("[GameState] Reset Player Stats");
+
         }
         else
             Debug.Log("[GameState] No playerInfo Found");

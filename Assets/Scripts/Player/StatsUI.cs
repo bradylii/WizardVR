@@ -47,9 +47,19 @@ public class StatsUI : MonoBehaviour
 
         if (player != null)
         {
+            Debug.Log("[Stats] -UPDATE- Setting Health");
             healthText.text = $"Health: {Mathf.RoundToInt(player.playerHealth)}";
             killsText.text = $"Kills: {player.kills}";
+
+            Debug.Log("[Stats] -UPDATE- PlayerHealth: " + player.playerHealth + " | PlayerKills: " + player.kills);
         }
+    }
+
+    public void manualResetStats()
+    {
+         Debug.Log("[Stats] -Manual- Setting Health");
+        healthText.text = $"Health: {Mathf.RoundToInt(player.playerHealth)}";
+        killsText.text = $"Kills: {player.kills}";
     }
 
 

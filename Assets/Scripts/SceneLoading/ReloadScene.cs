@@ -17,12 +17,21 @@ public class ReloadScene : MonoBehaviour
 
     public void LoadSceneUsingName(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        GameState stateToLoad;
+
+        if (System.Enum.TryParse(sceneName, out stateToLoad))
+        {
+            gameStateManager.setGameState(stateToLoad);
+        }
+        else
+        {
+            Debug.Log("[ReloadScene] Invalid gamestate: " + sceneName);
+        }
     }
 
     public void ReloadCurrentScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gameStateManager.setGameState(GameState.Playing);
     }
 
     public void goToMainMenu()

@@ -16,7 +16,7 @@ public class PlayerCollision : MonoBehaviour
         {
             playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
             if (playerInfo == null)
-                Debug.Log("[PLAYER] Couldnt find player script in game manager" );
+                Debug.Log("[PlayerCollision] Couldnt find player script in game manager" );
         }
     }
 
@@ -27,26 +27,26 @@ public class PlayerCollision : MonoBehaviour
         {
             playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
             if (playerInfo == null)
-                Debug.Log("[PLAYER] -UPDATE()- Couldnt find player script in game manager" );
+                Debug.Log("[PlayerCollision] -UPDATE()- Couldnt find player script in game manager" );
         }
     }
 
     public void lowerPlayerHealth(float damage)
         {
             playerInfo.playerHealth -= damage;
-            Debug.Log("[PLAYER] Damage Dealt = " + damage);
-            Debug.Log("[PLAYER] player health = " + playerInfo.playerHealth);
+            Debug.Log("[PlayerCollision] Damage Dealt = " + damage);
+            Debug.Log("[PlayerCollision] player health = " + playerInfo.playerHealth);
         }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "EnemyWeapon" && !collided)
         {
-            Debug.Log("[PLAYER] Collided with weapon, processing damage." );
+            Debug.Log("[PlayerCollision] Collided with weapon, processing damage." );
             collided = true;
 
             WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
-            Debug.Log("[PLAYER] Weapon did " + weaponStats.damage + " damage" );
+            Debug.Log("[PlayerCollision] Weapon did " + weaponStats.damage + " damage" );
 
             if (weaponStats != null) 
             {
