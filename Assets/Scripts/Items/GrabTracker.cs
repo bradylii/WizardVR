@@ -8,20 +8,15 @@ using System.Collections;
 
 public class GrabTracker : MonoBehaviour
 {
-    public GameStateManager gameManager;
+    public StartingWandToEnterGame wandScript;
 
     private bool grabbedTriggered = false;
 
     private void Start()
     {
-        if (gameManager == null)
+        if (wandScript == null)
         {
-            Debug.Log("[GRABTRACKER] GameStateManager not set... trying to find now");
-            gameManager = FindObjectOfType<GameStateManager>();
-            if (gameManager == null)
-            {
-                Debug.Log("[GRABTRACKER] No GameStateManager Found");
-            }
+            wandScript = GetComponent<StartingWandToEnterGame>();
         }
     }
     public void grabbed()
@@ -31,7 +26,13 @@ public class GrabTracker : MonoBehaviour
         if (!grabbedTriggered)
         {
             grabbedTriggered = true;
-            gameManager.setGameState(GameState.Playing);
+            
+            if (wandScript != null)
+            {
+                wandScript.LoadGame();
+            }
+            else
+                Debug.LogError("[GrabTracker] wandScript null");
         }
     }
 

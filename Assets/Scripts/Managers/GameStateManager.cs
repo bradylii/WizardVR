@@ -23,14 +23,11 @@ public class GameStateManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
-
-
     }
 
     // Start is called before the first frame update
@@ -121,38 +118,6 @@ public class GameStateManager : MonoBehaviour
     }
 
 
-    // To preform actions and configurations in loading screen/lobby
-    public void lobby()
-    {
-        Debug.Log("[GAMESTATE] Lobby()");
-        StartCoroutine(LoadLobby());
-    }
-
-
-    private IEnumerator LoadLobby()
-    {
-        Debug.Log("[GAMESTATE] LoadLobby()");
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
-        while (!asyncLoad.isDone)
-        {
-            yield return null; // Wait until the scene is fully loaded
-        }
-
-        currentState = GameState.Lobby;
-
-        if (player == null)
-        {
-            Debug.Log("[GAMESTATE] player is null... finding");
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
-        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
-
-        if (player != null && spawn != null)
-        {
-            player.transform.position = spawn.transform.position;
-        }
-    }
-
     public void mainMenu()
     {
         Debug.Log("[GameState] mainMenu()");
@@ -194,6 +159,40 @@ public class GameStateManager : MonoBehaviour
             Debug.Log("[GameState] PlayButton Null");
         
     }
+
+    // To preform actions and configurations in loading screen/lobby
+    public void lobby()
+    {
+        Debug.Log("[GAMESTATE] Lobby()");
+        StartCoroutine(LoadLobby());
+    }
+
+
+    private IEnumerator LoadLobby()
+    {
+        Debug.Log("[GAMESTATE] LoadLobby()");
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
+        while (!asyncLoad.isDone)
+        {
+            yield return null; // Wait until the scene is fully loaded
+        }
+
+        currentState = GameState.Lobby;
+
+        if (player == null)
+        {
+            Debug.Log("[GAMESTATE] player is null... finding");
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
+
+        if (player != null && spawn != null)
+        {
+            player.transform.position = spawn.transform.position;
+        }
+    }
+
+   
 
 
     // To preform actions and configurations when playing game

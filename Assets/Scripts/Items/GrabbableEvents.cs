@@ -8,12 +8,18 @@ public class GrabbableEvents : MonoBehaviour
 
     private void OnEnable()
     {
-        _grabbable.WhenPointerEventRaised += HandlePointerEvent;
+        if (_grabbable != null)
+            _grabbable.WhenPointerEventRaised += HandlePointerEvent;
+        else 
+            Debug.LogError("[GrabbableEvents] grabbable null");
     }
 
     private void OnDisable()
     {
-        _grabbable.WhenPointerEventRaised -= HandlePointerEvent;
+         if (_grabbable != null)
+            _grabbable.WhenPointerEventRaised -= HandlePointerEvent;
+        else 
+            Debug.LogError("[GrabbableEvents] grabbable null");
     }
 
     private void HandlePointerEvent(PointerEvent evt)
@@ -22,5 +28,7 @@ public class GrabbableEvents : MonoBehaviour
         {
             _grabTracker.grabbed();
         }
+        else 
+            Debug.LogError("[GrabbableEvents] grabTracker null");
     }
 }

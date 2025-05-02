@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Transform))]
 public class StartingWandToEnterGame : MonoBehaviour
 {
+    public GameStateManager gameStateManager;
+
     private Vector3 objectPos;
     private float changingValue = 1;
     private float maxPercent = 1.2f;
@@ -15,6 +17,11 @@ public class StartingWandToEnterGame : MonoBehaviour
     private void Start()
     {
         objectPos = this.transform.position;
+
+        if (gameStateManager == null)
+        {
+            gameStateManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameStateManager>();
+        }
     }
 
     private void Update()
@@ -30,12 +37,11 @@ public class StartingWandToEnterGame : MonoBehaviour
     }
 
     // Load with StartCoroutine(LoadSceneAsync());
-    private IEnumerator LoadGame()
+    public void LoadGame()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Game"); // TODO Replace with game scene name
-        while (!asyncLoad.isDone)
+        if (gameStateManager != null)
         {
-            yield return null;
+            gameStateManager.setGameState(GameState.Playing);
         }
     }
 }
