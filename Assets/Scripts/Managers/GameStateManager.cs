@@ -12,8 +12,6 @@ public class GameStateManager : MonoBehaviour
 
     public static GameStateManager Instance;
 
-    bool renderedUI = false;
-
     public GameObject player;
 
     public GameObject secretText;
@@ -34,47 +32,43 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-        // setGameState(GameState.MainMenu);
-        currentState = GameState.MainMenu;
 
         secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
-        secretText.SetActive(false);
+        if (secretText != null)
+            secretText.SetActive(false);
+        else    
+            Debug.Log("[GameStatemanager] Secret Text Null");
 
         OVRManager.display.RecenterPose();
 
-        if (currentState == GameState.MainMenu)
-        {
-            UnityEngine.UI.Button playButton = GameObject.Find("PlayButton")?.GetComponent<UnityEngine.UI.Button>();
-            if (playButton != null)
-            {
-                playButton.onClick.RemoveAllListeners();
-                playButton.onClick.AddListener(() => setGameState(GameState.Playing));
-            }    
-        }
+        // if (currentState == GameState.MainMenu)
+        // {
+        //     UnityEngine.UI.Button playButton = GameObject.Find("PlayButton")?.GetComponent<UnityEngine.UI.Button>();
+        //     if (playButton != null)
+        //     {
+        //         playButton.onClick.RemoveAllListeners();
+        //         playButton.onClick.AddListener(() => setGameState(GameState.Playing));
+        //     }    
+        // }
 
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("Player");
+        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
+
+        if (player != null && spawn != null)
+        {
+            player.transform.position = spawn.transform.position;
+        }
+        else 
+            Debug.Log("[GameStateManager] Player or spawn null");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            setGameState(GameState.Playing);
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            setGameState(GameState.Lobby);
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            setGameState(GameState.Victory);
-        }
-
-
-        
-
+        keyboardInput();
     }
+
+  
 
     // To set game state and update accordingly
     public void setGameState(GameState newState)
@@ -113,7 +107,6 @@ public class GameStateManager : MonoBehaviour
                 Debug.Log("[GAMESTATE] Main Menu is being played");
                 mainMenu();
                 break;
-
         }
     }
 
@@ -121,10 +114,8 @@ public class GameStateManager : MonoBehaviour
     public void mainMenu()
     {
         Debug.Log("[GameState] mainMenu()");
-
         StartCoroutine(LoadMainMenu());
     }
-
     private IEnumerator LoadMainMenu()
     {
         Debug.Log("[GAMESTATE] LoadMainMenu()");
@@ -136,28 +127,7 @@ public class GameStateManager : MonoBehaviour
 
         yield return null;
 
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
-        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
-
-        if (player != null && spawn != null)
-        {
-            player.transform.position = spawn.transform.position;
-        }
-
-        
-        Debug.Log("[GameState] Attempting to work with MenuUi");
-        UnityEngine.UI.Button playButton = GameObject.Find("PlayButton")?.GetComponent<UnityEngine.UI.Button>();
-        if (playButton != null)
-        {
-            playButton.onClick.RemoveAllListeners();
-            playButton.onClick.AddListener(() => setGameState(GameState.Playing));
-        }    
-        else
-            Debug.Log("[GameState] PlayButton Null");
-        
+        currentState = GameState.MainMenu; 
     }
 
     // To preform actions and configurations in loading screen/lobby
@@ -166,8 +136,6 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("[GAMESTATE] Lobby()");
         StartCoroutine(LoadLobby());
     }
-
-
     private IEnumerator LoadLobby()
     {
         Debug.Log("[GAMESTATE] LoadLobby()");
@@ -178,18 +146,6 @@ public class GameStateManager : MonoBehaviour
         }
 
         currentState = GameState.Lobby;
-
-        if (player == null)
-        {
-            Debug.Log("[GAMESTATE] player is null... finding");
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
-        GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
-
-        if (player != null && spawn != null)
-        {
-            player.transform.position = spawn.transform.position;
-        }
     }
 
    
@@ -212,45 +168,34 @@ public class GameStateManager : MonoBehaviour
         }
 
         currentState = GameState.Playing;
-        if (player == null)
-        {
-            Debug.Log("[GAMESTATE] player is null... finding");
-            player = GameObject.FindGameObjectWithTag("Player");
-        }
-         if (secretText == null)
-        {
-            Debug.Log("[GAMESTATE] secretText is null... finding");
-            secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
-            secretText.SetActive(false);
-        }
 
 
+        // Set Game Manager Components if null
+        
         GameObject gameManager = gameObject;
-        if (gameManager.GetComponent<Player>() == null)
-            gameManager.AddComponent<Player>();
+
+        Player playerInfo = GetComponent<Player>();
+        if (playerInfo == null)
+            playerInfo = gameManager.AddComponent<Player>();
+
         if (gameManager.GetComponent<Wand>() == null)
             gameManager.AddComponent<Wand>();
+
         if (gameManager.GetComponent<CustomControllerModels>() == null)
         {
             CustomControllerModels customControllers = gameManager.AddComponent<CustomControllerModels>();
             customControllers.manualSceneInit();
         }
-        if (gameManager.GetComponent<TurnOffOnUI>() == null)
+
+        TurnOffOnUI uiManager =  gameManager.GetComponent<TurnOffOnUI>();
+        if (uiManager == null)
         {
-            TurnOffOnUI uiManager =  gameManager.AddComponent<TurnOffOnUI>();
-            uiManager.manualSceneInit();
+            uiManager = gameManager.AddComponent<TurnOffOnUI>();
         }
 
-        Player playerInfo = GetComponent<Player>();
-        if (playerInfo != null)
-        {
-            playerInfo.resetStats();
-            Debug.Log("[GameState] Reset Player Stats");
-
-        }
-        else
-            Debug.Log("[GameState] No playerInfo Found");
-
+        // Reset 
+        playerInfo.resetStats();
+        uiManager.manualSceneInit();
     }
 
 
@@ -277,5 +222,22 @@ public class GameStateManager : MonoBehaviour
         secretText.SetActive(true);
     }
 
+    private void keyboardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            setGameState(GameState.Playing);
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            setGameState(GameState.Lobby);
+        }
+
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            setGameState(GameState.Victory);
+        }
+    }
 
 }

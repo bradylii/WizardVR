@@ -45,8 +45,8 @@ public class CollisionDetection : MonoBehaviour
                 break;
             case EnemyType.GolemBoulders:
                 BoulderHealth = GetComponent<BoulderHealth>();
-                break;
                 enemyScript = BoulderHealth;
+                break;
             default:
                 defaultEnemyType();
                 break;

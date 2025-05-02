@@ -8,59 +8,22 @@ public class StatsUI : MonoBehaviour
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI killsText;
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-       if (player == null)
-        {
-            Debug.Log("[Stats] Player is null... trying to find it now");
-
-            player = GameObject.FindGameObjectWithTag("GameManager").GetComponent<Player>();
-            if (player == null)
-                Debug.Log("[Stats] Player couldn't be found is null");
-        }
-    }
-
-    private void manualSceneInit()
-    {
-        
-    }
-
-    void Update()
+    private void Start()
     {
         if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("GameManager").GetComponent<Player>();
             if (player == null)
-                Debug.Log("[Stats] -Update()- Player couldn't be found is null"); 
+                Debug.LogError("[Stats] Player couldn't be found is null"); 
         }
+    }
 
+    void Update()
+    {
         if (player != null)
         {
-            Debug.Log("[Stats] -UPDATE- Setting Health");
             healthText.text = $"Health: {Mathf.RoundToInt(player.playerHealth)}";
             killsText.text = $"Kills: {player.kills}";
-
-            Debug.Log("[Stats] -UPDATE- PlayerHealth: " + player.playerHealth + " | PlayerKills: " + player.kills);
         }
     }
-
-    public void manualResetStats()
-    {
-         Debug.Log("[Stats] -Manual- Setting Health");
-        healthText.text = $"Health: {Mathf.RoundToInt(player.playerHealth)}";
-        killsText.text = $"Kills: {player.kills}";
-    }
-
-
 }

@@ -7,40 +7,45 @@ using UnityEngine.UIElements;
 public class EnemyAI : MonoBehaviour
 {
     // How much damage enemy does
+    [Header("Stats")]
     public float damage;
     public float attackRate;
     public float health = 10;
-    public bool isDamagingPlayer = false; // Flag to track if coroutine is running
-    public bool goingToPlayer = false;
+    public float attackCoodldown = 1.5f;
+    [SerializeField] private bool isDamagingPlayer = false; // Flag to track if coroutine is running
+    [SerializeField] private bool goingToPlayer = false;
 
-    private bool isDead = false;
+    [SerializeField] private bool isDead = false;
+
 
     // player positions and navmesh agent init
+    [Header("Player Info")]
     public Transform player;
     public Transform playerHead;
     [SerializeField] private float distanceToPlayer;
-    private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
     public Player playerInfo;
 
     // Variables for checking if enemy can see player
+    [Header("Detection")]
     public float detectionRange = 10f;
     public float stoppingDistance = 2f;
     public float angle = 80;
 
     // variables for rotation
+    [Header("Rotation")]
     private Vector3 directionToPlayer;
     private Quaternion targetRotation;
 
     // variables for going to last known location
+    [Header("Last Known Location of Player")]
     public bool playerSeen = false;
     private Vector3 lastKnownPlayerPosition;
 
-    private Animator animator;
+    [Header("Misc")]
+    [SerializeField] private Animator animator;
     private bool canAttack = true;
-    public float attackCoodldown = 1.5f;
-
     public bool showDebugGizmos = false;
-
     private bool hasBeenHit;
 
     //public RoomEventManager roomManager;
@@ -48,64 +53,23 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        // Navmesh init
-        agent = GetComponent<NavMeshAgent>();
-        playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
+        // Get Components if Null
         if (player == null)
-        {
             player = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-
+        if (playerInfo == null)
+            playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
         if (playerHead == null)
-        {
             playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        }
-
-        animator = GetComponent<Animator>();
-
-        /*
-        if (roomManager == null)
-        {
-            GameObject[] allRoomManagers = GameObject.FindGameObjectsWithTag("RoomManager");
-
-            foreach (GameObject roomEventManager in allRoomManagers)
-            {
-                if (roomEventManager.name.Contains($"Room{roomNumber}"))
-                    roomManager = roomEventManager.GetComponent<RoomEventManager>();
-            }
-        }
-        */
-        
+        if (agent == null)
+            agent = GetComponent<NavMeshAgent>();
+        if (animator == null)
+            animator = GetComponent<Animator>();
     }
 
 
     void Update()
     {
         if (isDead) return;
-
-        if (playerInfo == null)
-        {
-            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
-            if (playerInfo == null)
-            {
-                Debug.Log("[ENEMYAI] -UPDATE()- Couldnt find player script in game manager" );
-            }
-        }
-
-        if (player == null)
-        {
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-            if (player == null)
-            {
-                 Debug.Log("[ENEMYAI] -UPDATE()- Couldnt find player" );
-            }
-        }
-
-        if (playerHead == null)
-        {
-            playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        }
-    
 
         if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
@@ -126,15 +90,12 @@ public class EnemyAI : MonoBehaviour
                 }
                 */
 
-
                 if (agent != null && animator != null && canAttack && !isDead)
                 {
                     StartCoroutine(AttackCoolDown());
                 }
 
-
                 agent.ResetPath();
-
             }
             else
             {
@@ -231,17 +192,6 @@ public class EnemyAI : MonoBehaviour
             Debug.Log("[ENEMYAI] Enemy Died");
             isDead = true;
             canAttack = false;
-            
-            //doorScript.RegisterEnemy(null);
-
-            /*
-            if (roomManager != null)
-            {
-                roomManager.removeEnemy();
-            }
-            else
-                Debug.Log("[ENEMYAI] RoomManager null");
-            */
 
             StopAllCoroutines();
             animator.ResetTrigger("Attack1h1");

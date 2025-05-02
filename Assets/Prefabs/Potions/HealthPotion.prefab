@@ -198,15 +198,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.296
+      value: -2.171
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.57006
+      value: 1.343
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.307
+      value: 0.323
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalRotation.w
@@ -272,19 +272,59 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 3912645913816988488}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5741929483595172583}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 3558983064851924557}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5451099131327775855}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5741929483595172583}
   m_SourcePrefab: {fileID: 100100000, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
 --- !u!1 &178174409553277362 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
   m_PrefabInstance: {fileID: 1060713708867669219}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3912645913816988488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178174409553277362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563bfdfe0dd9d8e49bef5d9ad1b3d62b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionType: 0
+  drinkDistance: 0.3
+  drinkAngleThreshold: 60
+  distance: 0
+  angle: 0
+  used: 0
+  playerHead: {fileID: 0}
+  player: {fileID: 0}
+  drinkSound: {fileID: 0}
+--- !u!114 &5741929483595172583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178174409553277362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 488323bf43830f2478bf0b07b1ac05a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  potionsScript: {fileID: 0}
+  playerInfo: {fileID: 0}
+  destroyDelay: 1
+  healAmount: 25
 --- !u!54 &3558983064851924557
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -333,27 +373,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.494605, y: 3.6655967, z: 2.494605}
   m_Center: {x: 0, y: 1.8327984, z: -0.00000023841858}
---- !u!114 &5741929483595172583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178174409553277362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 488323bf43830f2478bf0b07b1ac05a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healAmount: 25
-  drinkDistance: 0.4
-  drinkAngleThreshold: 85
-  destroyDelay: 1
-  distance: 0
-  angle: 0
-  player: {fileID: 0}
-  playerHead: {fileID: 0}
-  drinkSound: {fileID: 8300000, guid: 27ec9b3866ca3b14083a481490a4ef18, type: 3}
 --- !u!4 &662820806208563976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}

@@ -50,25 +50,25 @@ public class Player : MonoBehaviour
         }
     }
 
-    /*
-        void OnTriggerEnter(Collider other)
+    
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "EnemyWeapon" && !collided)
         {
-            if (other.gameObject.tag == "EnemyWeapon" && !collided)
+            Debug.Log("[PLAYER] Collided with weapon, processing damage." );
+            collided = true;
+
+            WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
+
+            if (weaponStats != null) 
             {
-                Debug.Log("[PLAYER] Collided with weapon, processing damage." );
-                collided = true;
-
-                WeaponStats weaponStats = other.gameObject.GetComponent<WeaponStats>();
-
-                if (weaponStats != null) 
-                {
-                    lowerPlayerHealth(weaponStats.damage);
-                }
-
-                StartCoroutine(ResetCollisionCooldown());
+                lowerPlayerHealth(weaponStats.damage);
             }
+
+            StartCoroutine(ResetCollisionCooldown());
         }
-    */
+    }
+    
     private IEnumerator ResetCollisionCooldown()
     {
         yield return new WaitForSeconds(collisionCooldown);
