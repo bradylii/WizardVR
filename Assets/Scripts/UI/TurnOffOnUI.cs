@@ -7,86 +7,45 @@ public class TurnOffOnUI : MonoBehaviour
 {
     public GameObject victoryUI;
     public GameObject retryUI;
+    public GameObject secretTextUI;
     [SerializeField] private bool victoryActive = false;
     [SerializeField] private bool retryActive = false;
+    [SerializeField] private bool secretTextActive = false;
 
-    [SerializeField] private GameStateManager stateManager;
-
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        Debug.Log("[TurnOffOn] Scene Loaded: " + scene.name);
-
-        victoryUI = GameObject.FindGameObjectWithTag("VictoryUI");
-        if (victoryUI == null)
-            Debug.Log("[TurnOffOn] VictoryUI not found");
-        victoryUI.SetActive(false);
-
-        retryUI = GameObject.FindGameObjectWithTag("RetryUI");
-        if (victoryUI == null)
-            Debug.Log("[TurnOffOn] RetryUI not found");
-        retryUI.SetActive(false);
-
-        stateManager = GetComponent<GameStateManager>();
-    }
 
     private void Start()
     {
+        Debug.Log("[TurnOffOn] Scene Loaded");
 
+        
+        if (victoryUI == null)
+            retryUI = GameObject.FindGameObjectWithTag("UI").transform.Find("RetryScreen")?.gameObject;
+        victoryUI.SetActive(false);
+
+        
+        if (victoryUI == null)
+            retryUI = GameObject.FindGameObjectWithTag("UI").transform.Find("VictoryScreen")?.gameObject;
+        retryUI.SetActive(false);
+
+        if (secretTextUI == null)
+            secretTextUI = GameObject.FindGameObjectWithTag("UI").transform.Find("SecretText")?.gameObject;
+        secretTextUI.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.Q))
-        {
-            Debug.Log("[TurnOffOnUI] A button pressed");
-            if (stateManager.getGameState() == GameState.Playing || stateManager.getGameState() == GameState.GameOver)
-            {
-                turnOnRetry();
-            }
-            else if (stateManager.getGameState() == GameState.Victory)
-            {
-                turnOnVictory();
-            }
-            else
-            {
-                Debug.Log("[TurnOffOnUI] Couldn't match gamestate");
-            }
-        }
-    }
 
-    public void turnOnRetry()
+    public void SwitchRetryUI()
     {
         retryUI.SetActive(!retryUI.activeSelf);
     }
 
-    public void turnOnVictory()
+    public void SwitchVictoryUI()
     {
         victoryUI.SetActive(!victoryUI.activeSelf);
     }
 
-    public void manualSceneInit()
+    public void SwitchSecretTextUI()
     {
-        Debug.Log("[TurnOffOnUI] Manually initializing UI after scene load.");
-
-        victoryUI = GameObject.FindGameObjectWithTag("VictoryUI");
-        if (victoryUI != null)
-            victoryUI.SetActive(false);
-
-        retryUI = GameObject.FindGameObjectWithTag("RetryUI");
-        if (retryUI != null)
-            retryUI.SetActive(false);
-
-        stateManager = GetComponent<GameStateManager>();
+        if (secretTextUI != null)
+            secretTextUI.SetActive(true);
     }
 }

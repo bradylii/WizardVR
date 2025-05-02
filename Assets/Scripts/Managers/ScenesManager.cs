@@ -6,6 +6,13 @@ using UnityEngine.SceneManagement;
 public class ScenesManager : MonoBehaviour
 {
     public GameState currentState;
+    public GameStateManager gameStateManager;
+
+    private void Start()
+    {
+        if (gameStateManager == null)
+            gameStateManager = GetComponent<GameStateManager>();
+    }
 
     private void Update()
     {
@@ -14,11 +21,11 @@ public class ScenesManager : MonoBehaviour
 
     public void MainMenu()
     {
-        Debug.Log("[GameState] mainMenu()");
+        Debug.Log("[ScenesManager] mainMenu()");
         StartCoroutine(LoadMainMenu());
     }
 
-    private IEnumerator LoadMainMenu()
+    public IEnumerator LoadMainMenu()
     {
         Debug.Log("[GAMESTATE] LoadMainMenu()");
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu"); // Load the "Lobby" scene
@@ -30,6 +37,8 @@ public class ScenesManager : MonoBehaviour
         yield return null;
 
         currentState = GameState.MainMenu; 
+        gameStateManager.MainMenuScene();
+        
     }
 
 
@@ -52,6 +61,8 @@ public class ScenesManager : MonoBehaviour
         Transform playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
         Transform headTarget = GameObject.Find("HeadPosition").transform;
         playerHead.position = headTarget.position;
+
+        gameStateManager.LobbyScene();
     }
 
 

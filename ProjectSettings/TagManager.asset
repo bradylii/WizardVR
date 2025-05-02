@@ -42,6 +42,7 @@ TagManager:
   - VictoryUI
   - GameManager
   - SecretTextUI
+  - UI
   layers:
   - Default
   - TransparentFX

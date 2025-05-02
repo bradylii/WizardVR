@@ -5018,10 +5018,11 @@ GameObject:
   m_Component:
   - component: {fileID: 80478383}
   - component: {fileID: 80478382}
+  - component: {fileID: 80478384}
   - component: {fileID: 80478381}
   - component: {fileID: 80478380}
   - component: {fileID: 80478379}
-  - component: {fileID: 80478378}
+  - component: {fileID: 80478385}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -5029,23 +5030,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &80478378
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80478377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d904497ceb8d4051b7c8bd4469c7c06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  victoryUI: {fileID: 5752107546161917410}
-  retryUI: {fileID: 945647852874344930}
-  victoryActive: 0
-  retryActive: 0
-  stateManager: {fileID: 80478382}
 --- !u!114 &80478379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5106,8 +5090,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  sceneManager: {fileID: 0}
   player: {fileID: 2977122}
-  secretText: {fileID: 1490789158}
 --- !u!4 &80478383
 Transform:
   m_ObjectHideFlags: 0
@@ -5123,6 +5107,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &80478384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80478377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ff0d6b243fea147a7dc3edb50ad9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  gameStateManager: {fileID: 80478382}
+--- !u!114 &80478385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80478377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2157e19ed35c7a4fb40824d4cae8266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameStateManager: {fileID: 80478382}
+  turnOffOnUI: {fileID: 1842670127}
 --- !u!1001 &82627824
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -68795,7 +68807,7 @@ GameObject:
   - component: {fileID: 1726882960}
   m_Layer: 0
   m_Name: UI
-  m_TagString: Untagged
+  m_TagString: UI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68819,6 +68831,7 @@ Transform:
   - {fileID: 451787920}
   - {fileID: 1791397494}
   - {fileID: 16608547}
+  - {fileID: 1842670126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1729853332
@@ -73222,6 +73235,56 @@ MonoBehaviour:
   installationRoutineCheckpoint:
     _installationRoutineId: 
     _installationVariants: []
+--- !u!1 &1842670125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1842670126}
+  - component: {fileID: 1842670127}
+  m_Layer: 0
+  m_Name: UIManagers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1842670126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842670125}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1726882960}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1842670127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1842670125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d904497ceb8d4051b7c8bd4469c7c06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  victoryUI: {fileID: 5752107546161917410}
+  retryUI: {fileID: 945647852874344930}
+  secretTextUI: {fileID: 1490789158}
+  victoryActive: 0
+  retryActive: 0
+  secretTextActive: 0
 --- !u!1001 &1843639227
 PrefabInstance:
   m_ObjectHideFlags: 0

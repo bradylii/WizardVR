@@ -16,8 +16,6 @@ public class GameStateManager : MonoBehaviour
 
     public GameObject player;
 
-    public GameObject secretText;
-
     private void Awake()
     {
         if (Instance == null)
@@ -34,13 +32,6 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     void Start()
     {
-
-        secretText = GameObject.FindGameObjectWithTag("SecretTextUI");
-        if (secretText != null)
-            secretText.SetActive(false);
-        else    
-            Debug.Log("[GameStatemanager] Secret Text Null");
-
         OVRManager.display.RecenterPose();
 
         if (player == null)
@@ -74,25 +65,53 @@ public class GameStateManager : MonoBehaviour
         switch (currentState)
         {
             case GameState.MainMenu:
-                Debug.Log("[GAMESTATE] Main Menu is being played");
                 sceneManager.MainMenu();
                 break;
             case GameState.Lobby:
-                Debug.Log("[GAMESTATE] Game is in loading screen");
                 sceneManager.Lobby();
                 break;
             case GameState.Playing:
-                Debug.Log("[GAMESTATE] Game is being played");
                 sceneManager.Playing();
                 break;
             case GameState.GameOver:
-                Debug.Log("[GAMESTATE] Game Over");
                 sceneManager.GameOver();
                 break;
             case GameState.Victory:
-                Debug.Log("[GAMESTATE] Victory!");
                 sceneManager.Victory();
                 break;
         }
     }
+
+    public void MainMenuScene()
+    {
+        Debug.Log("[GAMESTATE] Main Menu is being played");
+        currentState = GameState.MainMenu; 
+    }
+
+    public void LobbyScene()
+    {
+        Debug.Log("[GAMESTATE] Game is in loading screen");
+        currentState = GameState.Lobby;
+    }
+
+    public void PlayingScene()
+    {
+        Debug.Log("[GAMESTATE] Game is being played");
+        currentState = GameState.Playing;
+    }
+
+    public void GameOverScene()
+    {
+        Debug.Log("[GAMESTATE] Game Over");
+        currentState = GameState.GameOver;
+    }
+
+    public void VictoryScene()
+    {
+        Debug.Log("[GAMESTATE] Victory!");
+        currentState = GameState.Victory;
+    }
+
+   
+
 }
