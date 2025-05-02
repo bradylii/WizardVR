@@ -48,6 +48,7 @@ public class EnemyAI : MonoBehaviour
     public bool showDebugGizmos = false;
     private bool hasBeenHit;
 
+
     //public RoomEventManager roomManager;
     //public int roomNumber = 1;
 
@@ -73,7 +74,7 @@ public class EnemyAI : MonoBehaviour
 
         if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
         {
-            Debug.Log("[ENEMYAI] Spots Player" );
+            // Debug.Log("[ENEMYAI] Spots Player" );
             playerSeen = true;
             lastKnownPlayerPosition = player.position;
             RotateTowardsPlayer(); // rotate to player 
@@ -133,12 +134,17 @@ public class EnemyAI : MonoBehaviour
 
         if (!isDead)
             animator.SetTrigger("Attack1h1");
-
+        
+        yield return new WaitForSeconds(0.4f);
+     
         yield return new WaitForSeconds(attackCoodldown);
 
         if (!isDead)
             canAttack = true;
+        
     }
+
+
 
     /*
         private IEnumerator DamagePlayerOverTime()

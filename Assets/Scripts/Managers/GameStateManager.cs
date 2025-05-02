@@ -5,6 +5,7 @@ using Meta.XR.ImmersiveDebugger.UserInterface.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class GameStateManager : MonoBehaviour
 {
@@ -146,6 +147,10 @@ public class GameStateManager : MonoBehaviour
         }
 
         currentState = GameState.Lobby;
+
+        Transform playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        Transform headTarget = GameObject.Find("HeadPosition").transform;
+        playerHead.position = headTarget.position;
     }
 
    
