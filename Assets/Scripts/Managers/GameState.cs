@@ -6,3 +6,4 @@ public enum GameState
     Victory,
     MainMenu
 }
+
