@@ -28,7 +28,11 @@ public class GrabbableEvents : MonoBehaviour
         {
             _grabTracker.grabbed();
         }
-        else 
+    }
+
+    private void Start()
+    {
+        if (_grabTracker == null) 
             Debug.LogError("[GrabbableEvents] grabTracker null");
     }
 }
