@@ -8,9 +8,6 @@ public class TurnOffOnUI : MonoBehaviour
     public GameObject victoryUI;
     public GameObject retryUI;
     public GameObject secretTextUI;
-    [SerializeField] private bool victoryActive = false;
-    [SerializeField] private bool retryActive = false;
-    [SerializeField] private bool secretTextActive = false;
 
 
     private void Start()
@@ -33,11 +30,15 @@ public class TurnOffOnUI : MonoBehaviour
 
     public void SwitchRetryUI()
     {
+        victoryUI.SetActive(false); // turn off victory ui
+
         retryUI.SetActive(!retryUI.activeSelf);
     }
 
     public void SwitchVictoryUI()
     {
+        retryUI.SetActive(false); // turn off retry ui
+
         victoryUI.SetActive(!victoryUI.activeSelf);
     }
 

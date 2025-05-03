@@ -33,8 +33,6 @@ public class GameStateManager : MonoBehaviour
     // start game state as loading screen
     private void Start()
     {
-        OVRManager.display.RecenterPose();
-
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player");
         GameObject spawn = GameObject.FindGameObjectWithTag("Spawn");
@@ -84,6 +82,7 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.Victory:
                 sceneManager.Victory();
+                Debug.Log("[GameStateManager] scenemanager.Victory()");
                 break;
         }
     }
@@ -91,41 +90,40 @@ public class GameStateManager : MonoBehaviour
     public void MainMenuScene()
     {
         Debug.Log("[GAMESTATE] Main Menu is being played");
-        currentState = GameState.MainMenu;
     }
 
     public void LobbyScene()
     {
         Debug.Log("[GAMESTATE] Game is in loading screen");
-        currentState = GameState.Lobby;
+
+        Transform playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
+        Transform headTarget = GameObject.Find("HeadPosition").transform;
+        playerHead.position = headTarget.position;
     }
 
     public void PlayingScene()
     {
         Debug.Log("[GAMESTATE] Game is being played");
-        currentState = GameState.Playing;
     }
 
     public void GameOverScene()
     {
         Debug.Log("[GAMESTATE] Game Over");
-        currentState = GameState.GameOver;
         uiManager.ManageGameOverUI();
     }
 
     public void VictoryScene()
     {
         Debug.Log("[GAMESTATE] Victory!");
-        currentState = GameState.Victory;
         uiManager.ManageVictoryUI();
     }
 
     private void ManualInput()
     {
         if (Input.GetKeyDown(KeyCode.G))
-            GameOverScene();
+            setGameState(GameState.GameOver);
         else if (Input.GetKeyDown(KeyCode.V))
-            VictoryScene();
+            setGameState(GameState.Victory);
     }
 
 }

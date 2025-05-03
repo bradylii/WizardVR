@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
 {
-    public GameState currentState;
+    [SerializeField] private GameState currentState;
     public GameStateManager gameStateManager;
 
     private void Start()
@@ -14,10 +14,6 @@ public class ScenesManager : MonoBehaviour
             gameStateManager = GetComponent<GameStateManager>();
     }
 
-    private void Update()
-    {
-        KeyboardInput();
-    }
 
     public void MainMenu()
     {
@@ -27,7 +23,8 @@ public class ScenesManager : MonoBehaviour
 
     public IEnumerator LoadMainMenu()
     {
-        Debug.Log("[GAMESTATE] LoadMainMenu()");
+        Debug.Log("[ScenesManager] LoadMainMenu()");
+
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("MainMenu"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
         {
@@ -37,6 +34,7 @@ public class ScenesManager : MonoBehaviour
         yield return null;
 
         currentState = GameState.MainMenu; 
+
         gameStateManager.MainMenuScene();
         
     }
@@ -44,12 +42,13 @@ public class ScenesManager : MonoBehaviour
 
     public void Lobby()
     {
-        Debug.Log("[GAMESTATE] Lobby()");
+        Debug.Log("[ScenesManager] Lobby()");
         StartCoroutine(LoadLobby());
+        
     }
     private IEnumerator LoadLobby()
     {
-        Debug.Log("[GAMESTATE] LoadLobby()");
+        Debug.Log("[ScenesManager] LoadLobby()");
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Lobby"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
         {
@@ -58,22 +57,18 @@ public class ScenesManager : MonoBehaviour
 
         currentState = GameState.Lobby;
 
-        Transform playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
-        Transform headTarget = GameObject.Find("HeadPosition").transform;
-        playerHead.position = headTarget.position;
-
         gameStateManager.LobbyScene();
     }
 
 
     public void Playing()
     {
-        Debug.Log("[GAMESTATE] playing()");
+        Debug.Log("[ScenesManager] playing()");
         StartCoroutine(LoadPlaying());
     }
     private IEnumerator LoadPlaying()
     {
-        Debug.Log("[GAMESTATE] LoadPlaying()");
+        Debug.Log("[ScenesManager] LoadPlaying()");
 
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("CastleScene"); // Load the "Lobby" scene
         while (!asyncLoad.isDone)
@@ -86,32 +81,19 @@ public class ScenesManager : MonoBehaviour
 
     public void GameOver()
     {
-        Debug.Log("[GameState] gameOver()");
+        Debug.Log("[ScenesManager] gameOver()");
+        currentState = GameState.GameOver;
+
+        gameStateManager.GameOverScene();
     }
 
 
     public void Victory()
     {
-        Debug.Log("[GAMESTATE] victory()");
+        Debug.Log("[ScenesManager] victory()");
+        currentState = GameState.Victory;
 
+        gameStateManager.VictoryScene();
         
-    }
-
-    private void KeyboardInput()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Playing();
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Lobby();
-        }
-
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            Victory();
-        }
     }
 }

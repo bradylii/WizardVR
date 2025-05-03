@@ -22,6 +22,7 @@ public class UImanager : MonoBehaviour
             switch (gameStateManager.currentState)
             {
                 case GameState.GameOver:
+                case GameState.Playing:
                     ManageGameOverUI();
                     break;
                 case GameState.Victory:
@@ -29,18 +30,18 @@ public class UImanager : MonoBehaviour
                     break;
             }
 
-            if (gameStateManager.getGameState() == GameState.Playing || gameStateManager.getGameState() == GameState.GameOver)
-            {
-                turnOffOnUI.SwitchRetryUI();
-            }
-            else if (gameStateManager.getGameState() == GameState.Victory)
-            {
-                turnOffOnUI.SwitchVictoryUI();
-            }
-            else
-            {
-                Debug.Log("[UIManager] Couldn't match gamestate");
-            }
+            // if (gameStateManager.getGameState() == GameState.Playing || gameStateManager.getGameState() == GameState.GameOver)
+            // {
+            //     turnOffOnUI.SwitchRetryUI();
+            // }
+            // else if (gameStateManager.getGameState() == GameState.Victory)
+            // {
+            //     turnOffOnUI.SwitchVictoryUI();
+            // }
+            // else
+            // {
+            //     Debug.Log("[UIManager] Couldn't match gamestate");
+            // }
         }
     }
 
@@ -51,6 +52,7 @@ public class UImanager : MonoBehaviour
 
     public void ManageVictoryUI()
     {
+        Debug.Log("[UIManager] ManageVictoryUI()");
         turnOffOnUI.SwitchSecretTextUI();
         turnOffOnUI.SwitchVictoryUI();
     }
