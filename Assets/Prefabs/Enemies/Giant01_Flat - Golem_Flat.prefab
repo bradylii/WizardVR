@@ -645,8 +645,9 @@ MonoBehaviour:
   collisionCooldown: 0.5
   isSkeleton: 0
   isGolem: 1
-  enemyType: 0
+  enemyType: 1
   enemyScript: {fileID: 0}
+  boulderAlreadyHit: 0
 --- !u!114 &6231342626894126313
 MonoBehaviour:
   m_ObjectHideFlags: 0
