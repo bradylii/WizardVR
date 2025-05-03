@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
-public class EnemyAI : MonoBehaviour
+public class _TestEnemyAI : MonoBehaviour
 {
     // How much damage enemy does
     [Header("Stats")]
@@ -21,16 +21,13 @@ public class EnemyAI : MonoBehaviour
     // player positions and navmesh agent init
     [Header("Player Info")]
     public Transform player;
-    public Transform playerHead;
     [SerializeField] private float distanceToPlayer;
     [SerializeField] private NavMeshAgent agent;
     public Player playerInfo;
 
     // Variables for checking if enemy can see player
     [Header("Detection")]
-    public float detectionRange = 10f;
     public float stoppingDistance = 2f;
-    public float angle = 80;
 
     // variables for rotation
     [Header("Rotation")]
@@ -40,13 +37,14 @@ public class EnemyAI : MonoBehaviour
     // variables for going to last known location
     [Header("Last Known Location of Player")]
     public bool playerSeen = false;
+    [SerializeField]private bool playerCurrentlyVisible = false;
     private Vector3 lastKnownPlayerPosition;
 
     [Header("Misc")]
     [SerializeField] private Animator animator;
     private bool canAttack = true;
-    public bool showDebugGizmos = false;
-    private bool hasBeenHit;
+
+    public bool showDebugGizmos = true;
 
 
     //public RoomEventManager roomManager;
@@ -59,23 +57,25 @@ public class EnemyAI : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player").transform;
         if (playerInfo == null)
             playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
-        if (playerHead == null)
-            playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
         if (agent == null)
             agent = GetComponent<NavMeshAgent>();
         if (animator == null)
             animator = GetComponent<Animator>();
     }
 
+    public void OnPlayerSpotted(Vector3 playerPosition)
+    {
+        playerSeen = true;
+        lastKnownPlayerPosition = playerPosition;
+    }
 
     void Update()
     {
         if (isDead) return;
 
-        if (!isDead && isInRange() && isFacingPlayer() && inLineOfSight()) // check if player is visible
+        if (playerSeen) // check if player is visible
         {
-            // Debug.Log("[ENEMYAI] Spots Player" );
-            playerSeen = true;
+            playerCurrentlyVisible = true;
             lastKnownPlayerPosition = player.position;
             RotateTowardsPlayer(); // rotate to player 
 
@@ -98,8 +98,9 @@ public class EnemyAI : MonoBehaviour
                 agent.SetDestination(player.position); // if not go to player
             }
         }
-        else if (playerSeen) // if player out of vision but enemy has seen them
+        else if (playerCurrentlyVisible) // if player out of vision but enemy has seen them
         {
+            playerCurrentlyVisible = false;
             goingToPlayer = false;
             agent.isStopped = false;
             agent.SetDestination(lastKnownPlayerPosition); // go to last known position
@@ -127,14 +128,11 @@ public class EnemyAI : MonoBehaviour
 
         if (!isDead)
             animator.SetTrigger("Attack1h1");
-        
-        yield return new WaitForSeconds(0.4f);
      
         yield return new WaitForSeconds(attackCoodldown);
 
         if (!isDead)
             canAttack = true;
-        
     }
 
     public void wasHit(float damage, ItemDrop dropItemScript)
@@ -143,7 +141,7 @@ public class EnemyAI : MonoBehaviour
 
         if (health <= 0)
         {
-            Debug.Log("[ENEMYAI] Enemy Died");
+            Debug.Log("[ENEMYAI] Skeleton Died");
             isDead = true;
             canAttack = false;
 
@@ -165,19 +163,18 @@ public class EnemyAI : MonoBehaviour
             
             if (playerInfo != null)
                 playerInfo.killedBadGuy();
-            else   
-                Debug.Log("[ENEMYAI] Playerinfo null");
 
             dropItemScript.dropItem();
             StartCoroutine(DestroyAfterDelay());
         }
-        else
+        else // if alive
         {
             if (agent != null)
             {
                 agent.isStopped = true;
                 agent.ResetPath();
             }
+
             hitCooldown();
             animator.SetTrigger("Hit1");
         }
@@ -187,47 +184,20 @@ public class EnemyAI : MonoBehaviour
     {
         canAttack = false;
         yield return new WaitForSeconds(attackCoodldown);
+
         if (agent != null && health > 0)
         {
             agent.isStopped = false;
         }
+
         canAttack = true;
     }
+
     private IEnumerator DestroyAfterDelay()
     {
-        Debug.Log("[ENEMYAI] Going to destroy");
+        Debug.Log("[ENEMYAI] Skeleton going to be destroyed");
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
-    }
-
-    bool isInRange()
-    {
-        if (player == null) return false;
-        distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        return (distanceToPlayer <= detectionRange);
-    }
-
-    bool inLineOfSight()
-    {
-        if (player == null) return false;
-        RaycastHit hit;
-        Vector3 origin = transform.position + Vector3.up * 1.5f; // have raycast come from enemy eyes
-        Vector3 direction = (playerHead.position - origin).normalized;
-
-        if (Physics.Raycast(origin, direction, out hit, detectionRange)) // check if raycast hits something within the detection range
-        {
-            return (hit.transform.CompareTag("Player")); // return true if it hits player tag
-        }
-        return false;
-    }
-
-    bool isFacingPlayer()
-    {
-        if (player == null) return false;
-        directionToPlayer = (player.position - transform.position).normalized;
-        float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
-
-        return angleToPlayer < angle;
     }
 
     void RotateTowardsPlayer()
@@ -239,44 +209,12 @@ public class EnemyAI : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f); // smoothly rotate to player 
     }
 
-
-    // copy pasted code for visualizing detection range, line to player, and stopping distance. does not affect code at all just visual 
     void OnDrawGizmosSelected()
     {
-
-        if (!showDebugGizmos) return;
-
-        // Draw Detection Range
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
-
-        // Draw Stopping Distance
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, stoppingDistance);
-
-        // Draw Raycast Line
-        if (player != null)
+        if (showDebugGizmos)
         {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawLine(transform.position, player.position);
-
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, (player.position - transform.position).normalized, out hit, detectionRange))
-            {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(transform.position, hit.point);
-            }
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, stoppingDistance);
         }
-
-        Gizmos.color = Color.cyan;
-        Vector3 forward = transform.forward * detectionRange;
-        Vector3 leftBoundary = Quaternion.Euler(0, -angle, 0) * forward;
-        Vector3 rightBoundary = Quaternion.Euler(0, angle, 0) * forward;
-
-        Vector3 startPos = transform.position + Vector3.up * 1.5f;
-
-        Gizmos.DrawLine(startPos, startPos + leftBoundary);
-        Gizmos.DrawLine(startPos, startPos + rightBoundary);
-        Gizmos.DrawLine(startPos + leftBoundary, startPos + rightBoundary);
     }
 }

@@ -23,8 +23,6 @@ public class CollisionDetection : MonoBehaviour
 
     [SerializeField] private EnemyType enemyType;
 
-    [SerializeField] private Component enemyScript;
-
     [SerializeField] private bool boulderAlreadyHit = false;
 
     private void Start()
@@ -37,15 +35,12 @@ public class CollisionDetection : MonoBehaviour
         {
             case EnemyType.Skeleton:
                 enemyAi = GetComponent<EnemyAI>();
-                enemyScript = enemyAi;
                 break;
             case EnemyType.Golem:
                 golemAi = GetComponent<Golem>();
-                enemyScript = golemAi;
                 break;
             case EnemyType.GolemBoulders:
                 BoulderHealth = GetComponent<BoulderHealth>();
-                enemyScript = BoulderHealth;
                 break;
             default:
                 defaultEnemyType();
@@ -81,7 +76,7 @@ public class CollisionDetection : MonoBehaviour
                         boulderAlreadyHit = true;
                         break;
                     default:
-                        defaultEnemyType();
+                        defaultEnemyHit();
                         break;
                 }
             }
