@@ -59581,7 +59581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.52
+      value: -5.65
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalPosition.y
@@ -59589,7 +59589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.76
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalRotation.w
@@ -78414,7 +78414,6 @@ MonoBehaviour:
   playerHead: {fileID: 963781058}
   distanceToPlayer: 0
   detectionRange: 3.76
-  stoppingDistance: 1.36
   angle: 80
   playerSeen: 0
   showDebugGizmos: 1
@@ -78442,10 +78441,11 @@ MonoBehaviour:
   distanceToPlayer: 0
   agent: {fileID: 1508192265}
   playerInfo: {fileID: 80478381}
-  stoppingDistance: 2
+  stoppingDistance: 1.07
   playerSeen: 0
   playerCurrentlyVisible: 0
   animator: {fileID: 1508192266}
+  showDebugGizmos: 1
 --- !u!1001 &1958480275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87085,7 +87085,6 @@ MonoBehaviour:
   playerHead: {fileID: 0}
   distanceToPlayer: 0
   detectionRange: 10
-  stoppingDistance: 2
   angle: 80
   playerSeen: 0
   showDebugGizmos: 0

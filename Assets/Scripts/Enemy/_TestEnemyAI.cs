@@ -72,6 +72,7 @@ public class _TestEnemyAI : MonoBehaviour
     void Update()
     {
         if (isDead) return;
+        distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (playerSeen) // check if player is visible
         {
@@ -203,6 +204,7 @@ public class _TestEnemyAI : MonoBehaviour
     void RotateTowardsPlayer()
     {
         if (isDead) return;
+        directionToPlayer = (player.position - transform.position).normalized;
         directionToPlayer.y = 0; // make sure the enemy doesnt rotate head up and down (can change this if we have verticality in game)
 
         targetRotation = Quaternion.LookRotation(directionToPlayer); // figure out where to rotate to
