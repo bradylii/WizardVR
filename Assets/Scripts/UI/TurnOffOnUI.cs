@@ -17,12 +17,10 @@ public class TurnOffOnUI : MonoBehaviour
     {
         Debug.Log("[TurnOffOn] Scene Loaded");
 
-        
         if (victoryUI == null)
             retryUI = GameObject.FindGameObjectWithTag("UI").transform.Find("RetryScreen")?.gameObject;
         victoryUI.SetActive(false);
 
-        
         if (victoryUI == null)
             retryUI = GameObject.FindGameObjectWithTag("UI").transform.Find("VictoryScreen")?.gameObject;
         retryUI.SetActive(false);
@@ -46,6 +44,6 @@ public class TurnOffOnUI : MonoBehaviour
     public void SwitchSecretTextUI()
     {
         if (secretTextUI != null)
-            secretTextUI.SetActive(true);
+            secretTextUI.SetActive(!secretTextUI.activeSelf);
     }
 }

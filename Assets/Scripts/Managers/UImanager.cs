@@ -18,6 +18,17 @@ public class UImanager : MonoBehaviour
         if (OVRInput.GetDown(OVRInput.Button.One) || Input.GetKeyDown(KeyCode.Q))
         {
             Debug.Log("[TurnOffOnUI] A button pressed");
+
+            switch (gameStateManager.currentState)
+            {
+                case GameState.GameOver:
+                    ManageGameOverUI();
+                    break;
+                case GameState.Victory:
+                    ManageVictoryUI();
+                    break;
+            }
+
             if (gameStateManager.getGameState() == GameState.Playing || gameStateManager.getGameState() == GameState.GameOver)
             {
                 turnOffOnUI.SwitchRetryUI();
@@ -33,9 +44,15 @@ public class UImanager : MonoBehaviour
         }
     }
 
-    public void VictoryUI()
+    public void ManageGameOverUI()
+    {
+        turnOffOnUI.SwitchRetryUI();
+    }
+
+    public void ManageVictoryUI()
     {
         turnOffOnUI.SwitchSecretTextUI();
+        turnOffOnUI.SwitchVictoryUI();
     }
 
 

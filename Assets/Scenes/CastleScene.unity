@@ -5089,8 +5089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59292ce3438a52f4ba4759896e29f052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
-  sceneManager: {fileID: 0}
+  currentState: 1
+  sceneManager: {fileID: 80478384}
+  uiManager: {fileID: 80478385}
   player: {fileID: 2977122}
 --- !u!4 &80478383
 Transform:
@@ -5119,7 +5120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ff0d6b243fea147a7dc3edb50ad9af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 1
   gameStateManager: {fileID: 80478382}
 --- !u!114 &80478385
 MonoBehaviour:

@@ -11,6 +11,7 @@ public class GameStateManager : MonoBehaviour
 {
     public GameState currentState;
     public ScenesManager sceneManager;
+    public UImanager uiManager;
 
     public static GameStateManager Instance;
 
@@ -30,7 +31,7 @@ public class GameStateManager : MonoBehaviour
 
     // Start is called before the first frame update
     // start game state as loading screen
-    void Start()
+    private void Start()
     {
         OVRManager.display.RecenterPose();
 
@@ -42,8 +43,13 @@ public class GameStateManager : MonoBehaviour
         {
             player.transform.position = spawn.transform.position;
         }
-        else 
+        else
             Debug.Log("[GameStateManager] Player or spawn null");
+    }
+
+    private void Update()
+    {
+        ManualInput();
     }
 
 
@@ -85,7 +91,7 @@ public class GameStateManager : MonoBehaviour
     public void MainMenuScene()
     {
         Debug.Log("[GAMESTATE] Main Menu is being played");
-        currentState = GameState.MainMenu; 
+        currentState = GameState.MainMenu;
     }
 
     public void LobbyScene()
@@ -104,14 +110,22 @@ public class GameStateManager : MonoBehaviour
     {
         Debug.Log("[GAMESTATE] Game Over");
         currentState = GameState.GameOver;
+        uiManager.ManageGameOverUI();
     }
 
     public void VictoryScene()
     {
         Debug.Log("[GAMESTATE] Victory!");
         currentState = GameState.Victory;
+        uiManager.ManageVictoryUI();
     }
 
-   
+    private void ManualInput()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+            GameOverScene();
+        else if (Input.GetKeyDown(KeyCode.V))
+            VictoryScene();
+    }
 
 }
