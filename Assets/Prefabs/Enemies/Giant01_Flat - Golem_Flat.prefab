@@ -616,11 +616,11 @@ MonoBehaviour:
   player: {fileID: 0}
   distanceToPlayer: 0
   gameStateManager: {fileID: 0}
-  detectionRange: 11.65
+  detectionRange: 10
   angle: 80
   playerSeen: 0
   attackCoodldown: 5
-  showDebugGizmos: 1
+  showDebugGizmos: 0
   boulderPrefab: {fileID: 197490, guid: 1d77346b4070ec44891030fb3fd3a897, type: 3}
   chargeTime: 5
   boulderSpawnHeight: 2
@@ -645,9 +645,8 @@ MonoBehaviour:
   collisionCooldown: 0.5
   isSkeleton: 0
   isGolem: 1
-  enemyType: 1
+  enemyType: 0
   enemyScript: {fileID: 0}
-  boulderAlreadyHit: 0
 --- !u!114 &6231342626894126313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -676,7 +675,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
