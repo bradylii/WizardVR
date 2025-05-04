@@ -6,45 +6,49 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 public class _TestGolem : MonoBehaviour
 {
-    // How much damage enemy does
-    public float health = 100;
-    public bool isDamagingPlayer = false; // Flag to track if coroutine is running
-
+    #region Combat Stats
+    [Header("Combat Stats")]
+    public float health = 100f;
+    [SerializeField] private float attackCoodldown = 1.5f;
     private bool isDead = false;
+    private bool canAttack = true;
+    [SerializeField] private bool isDamagingPlayer = false; // Tracks if coroutine is running
+    #endregion
 
-    // player positions and navmesh agent init
-    public Transform player;
-    [SerializeField] private float distanceToPlayer;
-    private Player playerInfo;
-    public GameStateManager gameStateManager;
+    #region References
+    [Header("References")]
+    [SerializeField] private Transform player;
+    [SerializeField] private Player playerInfo;
+    [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] private DetectPlayer detectionScript;
+    [SerializeField] private ItemDrop dropItemScript;
+    #endregion
 
-    // Variables for checking if enemy can see player
-    public float detectionRange = 10f;
-    public float angle = 80;
+    #region Detection
+    [Header("Detection")]
+    [SerializeField] private float detectionRange = 10f;
+    [SerializeField] private float angle = 80f;
+    [SerializeField] private bool playerVisible = false;
+    #endregion
 
-    // variables for rotation
+    #region Rotation
+    [Header("Rotation")]
     private Vector3 directionToPlayer;
     private Quaternion targetRotation;
+    #endregion
 
-    // variables for going to last known location
-    [SerializeField] private bool playerVisible = false;
-    public DetectPlayer detectionScript;
-
-    private bool canAttack = true;
-    public float attackCoodldown = 1.5f;
-
-    public GameObject boulderPrefab;
-    public float chargeTime = 5f;
+    #region Boulder Attack
+    [Header("Boulder Attack")]
+    [SerializeField] private GameObject boulderPrefab;
+    [SerializeField] private float chargeTime = 5f;
     [SerializeField] private bool isCharging = false;
-
-    public float boulderSpawnHeight = 2f;
-    public float boulderSpawnOffset = 2f;
-    public float throwSpeed = 15f;
-    public float targetPositionHeight = 0.5f;
-    public bool useGravity = false;
-    public float arcDirectionHeight = 0.5f;
-
-    public ItemDrop dropItemScript;
+    [SerializeField] private float boulderSpawnHeight = 2f;
+    [SerializeField] private float boulderSpawnOffset = 2f;
+    [SerializeField] private float throwSpeed = 15f;
+    [SerializeField] private float targetPositionHeight = 0.5f;
+    [SerializeField] private bool useGravity = false;
+    [SerializeField] private float arcDirectionHeight = 0.5f;
+    #endregion
 
     void Start()
     {
@@ -72,10 +76,10 @@ public class _TestGolem : MonoBehaviour
 
         playerVisible = detectionScript.playerVisible;
 
-        if (playerVisible) // check if player is visible
+        if (playerVisible)
         {
             directionToPlayer = (player.position - transform.position).normalized;
-            RotateTowardsPlayer(); // rotate to player 
+            RotateTowardsPlayer();
 
             if (canAttack && !isDead && !isCharging)
             {
@@ -83,7 +87,7 @@ public class _TestGolem : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+        if (Input.GetKeyDown(KeyCode.B)) // Manual testing 
         {
             Debug.Log("[GOLEM] Manula Throw");
             StartCoroutine(ChargeAndThrowBoulder());
@@ -135,15 +139,11 @@ public class _TestGolem : MonoBehaviour
                 Vector3 spawnPosition = transform.position + transform.forward * boulderSpawnOffset + Vector3.up * boulderSpawnHeight;
 
                 Vector3 targetPosition = player.position + Vector3.up * targetPositionHeight;
-                // Vector3 direction = (targetPosition - transform.position).normalized;
-
-                // Vector3 arcDirection = direction + Vector3.up * arcDirectionHeight;
 
                 Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
                 if (boulderRb != null)
                 {
                     boulderRb.useGravity = true;
-                    // boulderRb.AddForce(arcDirection.normalized * throwSpeed, ForceMode.VelocityChange);
                     boulderRb.velocity = CalculateProjectileVelocity(spawnPosition, targetPosition, 1.2f);
                 }
 

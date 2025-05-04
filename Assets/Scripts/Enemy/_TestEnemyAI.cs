@@ -7,50 +7,51 @@ using UnityEngine.AI;
 using UnityEngine.UIElements;
 public class _TestEnemyAI : MonoBehaviour
 {
-    // How much damage enemy does
-    [Header("Stats")]
-    public float damage;
-    public float attackRate;
-    public float health = 10;
-    public float attackCoodldown = 1.5f;
-    [SerializeField] private bool isDamagingPlayer = false; // Flag to track if coroutine is running
-    [SerializeField] private bool goingToPlayer = false;
-
-    [SerializeField] private bool isDead = false;
-
-
-    // player positions and navmesh agent init
-    [Header("Player Info")]
-    public Transform player;
+    //=========================//
+    #region components
+    [Header("Components")]
+     public Transform player;
     [SerializeField] private NavMeshAgent agent;
-    public Player playerInfo;
+    [SerializeField] private Player playerInfo;
+    [SerializeField] private Animator animator;
 
-    // Variables for checking if enemy can see player
+    [SerializeField] private DetectPlayer detectionScript;
+    #endregion
+    //=========================//
+    #region Detection
     [Header("Detection")]
-    public DetectPlayer detectionScript;
     public float stoppingDistance = 2f;
-
-    // variables for rotation
+    [SerializeField] private bool playerVisible = false;
+    [SerializeField] private bool sawPlayer = false;
+    private Vector3 lastKnownPlayerPosition;
+    #endregion
+    //=========================//
+    #region Combat
+    [Header("Combat")]
+    [SerializeField] private bool canAttack = true;
+    [SerializeField] private float attackRate;
+    public float health = 10;
+    [SerializeField] private float attackCoodldown = 1.5f;
+    [SerializeField] private bool isDamagingPlayer = false;
+    #endregion
+    //=========================//
+    #region AI State
+    [Header("AI State")]
+    [SerializeField] private bool goingToPlayer = false;
+    [SerializeField] private bool isDead = false;
+    #endregion
+    //=========================//
+    #region Rotation
     [Header("Rotation")]
     private Vector3 directionToPlayer;
     private Quaternion targetRotation;
-
-    // variables for going to last known location
-    [Header("Last Known Location of Player")]
-    public bool playerVisible = false;
-    [SerializeField]private bool sawPlayer = false;
-    private Vector3 lastKnownPlayerPosition;
-
-    [Header("Misc")]
-    [SerializeField] private Animator animator;
-    private bool canAttack = true;
-
+    #endregion
+    //=========================//
+    #region Debug
+    [Header("Debug")]
     public bool showDebugGizmos = true;
-
-
-
-    //public RoomEventManager roomManager;
-    //public int roomNumber = 1;
+    #endregion
+    //=========================//
 
     void Start()
     {
@@ -88,18 +89,18 @@ public class _TestEnemyAI : MonoBehaviour
 
                 agent.ResetPath();
             }
-            else
+            else // if enemy is not close go to them
             {
                 goingToPlayer = true;
                 agent.isStopped = false;
-                agent.SetDestination(player.position); // if not go to player
+                agent.SetDestination(player.position); 
             }
         }
         else if (sawPlayer && !playerVisible) // if player out of vision but enemy has seen them
         {
             goingToPlayer = false;
             agent.isStopped = false;
-            agent.SetDestination(lastKnownPlayerPosition); // go to last known position
+            agent.SetDestination(lastKnownPlayerPosition);
 
             if (agent.remainingDistance <= stoppingDistance && !agent.pathPending) // if enemy is close to last known position, stop
             {
@@ -111,12 +112,13 @@ public class _TestEnemyAI : MonoBehaviour
             
         }
 
-        if (agent != null && animator != null)
+        if (agent != null && animator != null) // tells animator if walking or stopped
         {
             float speed = agent.velocity.magnitude;
             animator.SetFloat("speedv", speed);
         }
     }
+
 
     private IEnumerator AttackCoolDown()
     {
@@ -173,7 +175,7 @@ public class _TestEnemyAI : MonoBehaviour
                 agent.ResetPath();
             }
 
-            hitCooldown();
+            StartCoroutine(hitCooldown());
             animator.SetTrigger("Hit1");
         }
     }
