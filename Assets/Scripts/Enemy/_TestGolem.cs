@@ -27,7 +27,8 @@ public class _TestGolem : MonoBehaviour
     private Quaternion targetRotation;
 
     // variables for going to last known location
-    [SerializeField] private bool playerSeen = false;
+    [SerializeField] private bool playerVisible = false;
+    public DetectPlayer detectionScript;
 
     private bool canAttack = true;
     public float attackCoodldown = 1.5f;
@@ -69,8 +70,11 @@ public class _TestGolem : MonoBehaviour
     {
         if (isDead) return;
 
-        if (playerSeen) // check if player is visible
+        playerVisible = detectionScript.playerVisible;
+
+        if (playerVisible) // check if player is visible
         {
+            directionToPlayer = (player.position - transform.position).normalized;
             RotateTowardsPlayer(); // rotate to player 
 
             if (canAttack && !isDead && !isCharging)
@@ -82,15 +86,9 @@ public class _TestGolem : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.B))
         {
             Debug.Log("[GOLEM] Manula Throw");
-            ThrowBoulder();
+            StartCoroutine(ChargeAndThrowBoulder());
         }
     }
-
-    public void OnPlayerSpotted()
-    {
-        playerSeen = true;
-    }
-
 
     private IEnumerator ChargeAndThrowBoulder()
     {
@@ -98,26 +96,30 @@ public class _TestGolem : MonoBehaviour
 
         Debug.Log("[GOLEM] Charging Boulder!");
 
+        Vector3 spawnPosition = transform.position + transform.forward * boulderSpawnOffset + Vector3.up * boulderSpawnHeight;
+        GameObject boulder = Instantiate(boulderPrefab, spawnPosition, Quaternion.identity);
+
+
         yield return new WaitForSeconds(chargeTime);
 
-        ThrowBoulder();
+       
+
+        ThrowBoulder(boulder);
 
         canAttack = true;
-
         isCharging = false;
     }
 
-    private void ThrowBoulder()
+    private void ThrowBoulder(GameObject boulder)
     {
         if (boulderPrefab != null)
         {
             if (!useGravity)
             {
                 Vector3 spawnPosition = transform.position + transform.forward * boulderSpawnOffset + Vector3.up * boulderSpawnHeight;
-                GameObject boulder = Instantiate(boulderPrefab, spawnPosition, Quaternion.identity);
 
                 Vector3 targetPosition = player.position + Vector3.up * targetPositionHeight;
-                Vector3 direction = (targetPosition - transform.position).normalized;
+                Vector3 direction = (targetPosition - spawnPosition).normalized;
 
                 Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
                 if (boulderRb != null)
@@ -131,23 +133,39 @@ public class _TestGolem : MonoBehaviour
             else
             {
                 Vector3 spawnPosition = transform.position + transform.forward * boulderSpawnOffset + Vector3.up * boulderSpawnHeight;
-                GameObject boulder = Instantiate(boulderPrefab, spawnPosition, Quaternion.identity);
 
                 Vector3 targetPosition = player.position + Vector3.up * targetPositionHeight;
-                Vector3 direction = (targetPosition - transform.position).normalized;
+                // Vector3 direction = (targetPosition - transform.position).normalized;
 
-                Vector3 arcDirection = direction + Vector3.up * arcDirectionHeight;
+                // Vector3 arcDirection = direction + Vector3.up * arcDirectionHeight;
 
                 Rigidbody boulderRb = boulder.GetComponent<Rigidbody>();
                 if (boulderRb != null)
                 {
                     boulderRb.useGravity = true;
-                    boulderRb.AddForce(arcDirection.normalized * throwSpeed, ForceMode.VelocityChange);
+                    // boulderRb.AddForce(arcDirection.normalized * throwSpeed, ForceMode.VelocityChange);
+                    boulderRb.velocity = CalculateProjectileVelocity(spawnPosition, targetPosition, 1.2f);
                 }
 
                 Debug.Log("[GOLEM] Boulder thrown towards the player");
             }
         }
+    }
+
+    Vector3 CalculateProjectileVelocity(Vector3 origin, Vector3 target, float timeToTarget)
+    {
+        Vector3 toTarget = target - origin;
+        Vector3 toTargetXZ = new Vector3(toTarget.x, 0, toTarget.z);
+
+        float y = toTarget.y;
+        float xz = toTargetXZ.magnitude;
+
+        float vxz = xz / timeToTarget;
+        float vy = y / timeToTarget + 0.5f * Mathf.Abs(Physics.gravity.y) * timeToTarget;
+
+        Vector3 result = toTargetXZ.normalized * vxz;
+        result.y = vy;
+        return result;
     }
 
     public void wasHit(float damage)

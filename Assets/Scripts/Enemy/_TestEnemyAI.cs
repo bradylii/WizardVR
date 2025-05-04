@@ -68,12 +68,6 @@ public class _TestEnemyAI : MonoBehaviour
             animator = GetComponent<Animator>();
     }
 
-    public void OnPlayerSpotted(Vector3 playerPosition)
-    {
-        playerVisible = true;
-        lastKnownPlayerPosition = playerPosition;
-    }
-
     void Update()
     {
         if (isDead) return;
@@ -213,7 +207,10 @@ public class _TestEnemyAI : MonoBehaviour
     void RotateTowardsPlayer()
     {
         if (isDead) return;
-        directionToPlayer = (player.position - transform.position).normalized;
+
+        Vector3 target = playerVisible ? player.position : lastKnownPlayerPosition;
+
+        directionToPlayer = (target - transform.position).normalized;
         directionToPlayer.y = 0; // make sure the enemy doesnt rotate head up and down (can change this if we have verticality in game)
 
         targetRotation = Quaternion.LookRotation(directionToPlayer); // figure out where to rotate to
