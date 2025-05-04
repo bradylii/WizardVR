@@ -22,7 +22,6 @@ public class _TestEnemyAI : MonoBehaviour
     // player positions and navmesh agent init
     [Header("Player Info")]
     public Transform player;
-    [SerializeField] private float distanceToPlayer;
     [SerializeField] private NavMeshAgent agent;
     public Player playerInfo;
 
@@ -48,8 +47,6 @@ public class _TestEnemyAI : MonoBehaviour
 
     public bool showDebugGizmos = true;
 
-    [Header("Debug")]
-    [SerializeField] private float distanceFromDestination;
 
 
     //public RoomEventManager roomManager;
@@ -71,7 +68,6 @@ public class _TestEnemyAI : MonoBehaviour
     void Update()
     {
         if (isDead) return;
-        distanceToPlayer = Vector3.Distance(transform.position, player.position);
         playerVisible = detectionScript.playerVisible;
 
         if (playerVisible) // check if player is visible
@@ -97,7 +93,6 @@ public class _TestEnemyAI : MonoBehaviour
                 goingToPlayer = true;
                 agent.isStopped = false;
                 agent.SetDestination(player.position); // if not go to player
-                distanceFromDestination = agent.remainingDistance;
             }
         }
         else if (sawPlayer && !playerVisible) // if player out of vision but enemy has seen them
@@ -105,7 +100,6 @@ public class _TestEnemyAI : MonoBehaviour
             goingToPlayer = false;
             agent.isStopped = false;
             agent.SetDestination(lastKnownPlayerPosition); // go to last known position
-            distanceFromDestination = agent.remainingDistance;
 
             if (agent.remainingDistance <= stoppingDistance && !agent.pathPending) // if enemy is close to last known position, stop
             {
