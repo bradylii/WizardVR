@@ -407,7 +407,7 @@ Transform:
   m_GameObject: {fileID: 2977122}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.449456, y: 14.5369625, z: -12.327441}
+  m_LocalPosition: {x: 7.57, y: 14.5369625, z: -12.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1a12d6d458e9a742a6ce6a67276bb23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collisionCooldown: 0
+  collisionCooldown: 0.5
   playerInfo: {fileID: 80478381}
 --- !u!54 &2977132
 Rigidbody:
@@ -59581,7 +59581,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.65
+      value: -12.53
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalPosition.y
@@ -59589,7 +59589,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.22
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 4655139138601034, guid: dca8e056b77d49c4aafe4dbcc2bab713, type: 3}
       propertyPath: m_LocalRotation.w
@@ -78441,11 +78441,13 @@ MonoBehaviour:
   distanceToPlayer: 0
   agent: {fileID: 1508192265}
   playerInfo: {fileID: 80478381}
+  detectionScript: {fileID: 1955511153}
   stoppingDistance: 1.07
-  playerSeen: 0
-  playerCurrentlyVisible: 0
+  playerVisible: 0
+  sawPlayer: 0
   animator: {fileID: 1508192266}
   showDebugGizmos: 1
+  distanceFromDestination: 0
 --- !u!1001 &1958480275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -87026,7 +87028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7829793302209176792, guid: d9af52bf624fb004abc7f4d28bdf39e2, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7829793302209176792, guid: d9af52bf624fb004abc7f4d28bdf39e2, type: 3}
       propertyPath: detectionRange
@@ -87096,7 +87098,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2467402195205115477}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99f426183077f4a4b99fa07ca8f234e4, type: 3}
   m_Name: 

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DetectPlayer : MonoBehaviour
 {
-    public MonoBehaviour enemyScript;
 
     // player positions and navmesh agent init
     [Header("Player Info")]
@@ -16,12 +15,11 @@ public class DetectPlayer : MonoBehaviour
     [Header("Detection")]
     public float detectionRange = 10f;
     public float angle = 80;
-    private Vector3 lastKnownPlayerPosition;
     private Vector3 directionToPlayer;
 
     // variables for going to last known location
     [Header("Last Known Location of Player")]
-    public bool playerSeen = false;
+    public bool playerVisible = false;
 
     [Header("Misc")]
     public bool showDebugGizmos = false;
@@ -51,31 +49,12 @@ public class DetectPlayer : MonoBehaviour
                 DebuggedPlayerSeen = true;
             }
 
-            playerSeen = true;
-            lastKnownPlayerPosition = player.position;
-
-            if (enemyScript != null)
-            {
-                if (enemyScript is _TestEnemyAI enemyAI && !enemyAI.playerSeen)
-                    // enemyAI.OnPlayerSpotted(player.position);
-                    enemyAI.playerSeen = true;
-                else if (enemyScript is _TestGolem golem)
-                    golem.OnPlayerSpotted();
-            }
+            playerVisible = true;
         }
         else 
         {
-            playerSeen = false;
+            playerVisible = false;
             DebuggedPlayerSeen = false;
-
-            if (enemyScript != null)
-            {
-                if (enemyScript is _TestEnemyAI enemyAI && !enemyAI.playerSeen)
-                    // enemyAI.OnPlayerSpotted(player.position);
-                    enemyAI.playerSeen = false;
-                else if (enemyScript is _TestGolem golem)
-                    golem.OnPlayerSpotted();
-            }
         }
     }
 

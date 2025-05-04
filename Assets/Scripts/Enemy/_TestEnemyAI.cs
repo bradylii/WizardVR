@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
@@ -27,6 +28,7 @@ public class _TestEnemyAI : MonoBehaviour
 
     // Variables for checking if enemy can see player
     [Header("Detection")]
+    public DetectPlayer detectionScript;
     public float stoppingDistance = 2f;
 
     // variables for rotation
@@ -36,8 +38,8 @@ public class _TestEnemyAI : MonoBehaviour
 
     // variables for going to last known location
     [Header("Last Known Location of Player")]
-    public bool playerSeen = false;
-    [SerializeField]private bool playerCurrentlyVisible = false;
+    public bool playerVisible = false;
+    [SerializeField]private bool sawPlayer = false;
     private Vector3 lastKnownPlayerPosition;
 
     [Header("Misc")]
@@ -45,6 +47,9 @@ public class _TestEnemyAI : MonoBehaviour
     private bool canAttack = true;
 
     public bool showDebugGizmos = true;
+
+    [Header("Debug")]
+    [SerializeField] private float distanceFromDestination;
 
 
     //public RoomEventManager roomManager;
@@ -65,7 +70,7 @@ public class _TestEnemyAI : MonoBehaviour
 
     public void OnPlayerSpotted(Vector3 playerPosition)
     {
-        playerSeen = true;
+        playerVisible = true;
         lastKnownPlayerPosition = playerPosition;
     }
 
@@ -73,14 +78,15 @@ public class _TestEnemyAI : MonoBehaviour
     {
         if (isDead) return;
         distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        playerVisible = detectionScript.playerVisible;
 
-        if (playerSeen) // check if player is visible
+        if (playerVisible) // check if player is visible
         {
-            playerCurrentlyVisible = true;
+            sawPlayer = true;
             lastKnownPlayerPosition = player.position;
             RotateTowardsPlayer(); // rotate to player 
 
-            if (distanceToPlayer <= stoppingDistance) // if enemy is close to player stop movement
+            if (agent.remainingDistance <= stoppingDistance && !agent.pathPending) // if enemy is close to player stop movement
             {
                 agent.isStopped = true;
                 goingToPlayer = false;
@@ -97,21 +103,24 @@ public class _TestEnemyAI : MonoBehaviour
                 goingToPlayer = true;
                 agent.isStopped = false;
                 agent.SetDestination(player.position); // if not go to player
+                distanceFromDestination = agent.remainingDistance;
             }
         }
-        else if (playerCurrentlyVisible) // if player out of vision but enemy has seen them
+        else if (sawPlayer && !playerVisible) // if player out of vision but enemy has seen them
         {
-            playerCurrentlyVisible = false;
             goingToPlayer = false;
             agent.isStopped = false;
             agent.SetDestination(lastKnownPlayerPosition); // go to last known position
+            distanceFromDestination = agent.remainingDistance;
 
-            if (Vector3.Distance(transform.position, lastKnownPlayerPosition) <= stoppingDistance) // if enemy is close to last known position, stop
+            if (agent.remainingDistance <= stoppingDistance && !agent.pathPending) // if enemy is close to last known position, stop
             {
                 agent.isStopped = true;
                 agent.ResetPath();
-                playerSeen = false;
+                sawPlayer = false;
             }
+
+            
         }
 
         if (agent != null && animator != null)
