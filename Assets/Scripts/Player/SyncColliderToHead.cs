@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class SyncColliderToHead : MonoBehaviour
 {
-    public Transform cameraRigRoot;
-    public Transform head;
+    [SerializeField] private Transform cameraRigRoot;
+    [SerializeField] private Transform head;
 
-    public CapsuleCollider bodyCollider;
+    [SerializeField] private CapsuleCollider bodyCollider;
     void Start()
     {
         if (cameraRigRoot == null)

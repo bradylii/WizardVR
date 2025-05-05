@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class InventoryFollowCamera : MonoBehaviour
 {
-    public Transform playerHead;
+    [SerializeField] private Transform playerHead;
 
-    public float forwardOffset = 0.5f;
-    public float rotationSpeed = 2f;
-    public float initialDelay = 0.5f;
+    [SerializeField] private float forwardOffset = 0.5f;
+    [SerializeField] private float rotationSpeed = 2f;
+    [SerializeField] private float initialDelay = 0.5f;
     [Range(0f, 1f)]
-    public float beltHeightPercent = 0.35f;
+    [SerializeField] private float beltHeightPercent = 0.35f;
 
     private bool initialPositionSet = false;
     private Vector3 lockedPosition;
-    private float delayTimer = 0f;
+    [SerializeField] private float delayTimer = 0f;
 
     private void LateUpdate()
     {

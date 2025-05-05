@@ -7,15 +7,15 @@ public class AlienMonsterInPit : MonoBehaviour
 {
     #region References
     [Header("References")]
-    public Transform player;
-    public Animator animator;
+    [SerializeField] private Transform player;
+    [SerializeField] private Animator animator;
 
-    private NavMeshAgent agent;
+    [SerializeField] private NavMeshAgent agent;
     #endregion
 
     #region Movement and Combat
     [Header("Movement and Combat")]
-    public float offset = 2f;
+    [SerializeField] private float offset = 2f;
     [SerializeField] private float velocity;
     [SerializeField] private bool chasingPlayer = false;
     #endregion

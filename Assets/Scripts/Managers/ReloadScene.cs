@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ReloadScene : MonoBehaviour
 {
-    public GameStateManager gameStateManager;
+    [SerializeField] private GameStateManager gameStateManager;
 
     private void Start()
     {

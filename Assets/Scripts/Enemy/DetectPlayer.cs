@@ -7,22 +7,22 @@ public class DetectPlayer : MonoBehaviour
 
     // player positions and navmesh agent init
     [Header("Player Info")]
-    public Transform player;
-    public Transform playerHead;
+    [SerializeField] private Transform player;
+    [SerializeField] private Transform playerHead;
     [SerializeField] private float distanceToPlayer;
 
     // Variables for checking if enemy can see player
     [Header("Detection")]
-    public float detectionRange = 10f;
-    public float angle = 80;
-    private Vector3 directionToPlayer;
+    [SerializeField] private float detectionRange = 10f;
+    [SerializeField] private float angle = 80;
+    [SerializeField] private Vector3 directionToPlayer;
 
     // variables for going to last known location
     [Header("Last Known Location of Player")]
     public bool playerVisible = false;
 
     [Header("Misc")]
-    public bool showDebugGizmos = false;
+    [SerializeField] private bool showDebugGizmos = false;
 
 
     [SerializeField] private bool DebuggedPlayerSeen = false;

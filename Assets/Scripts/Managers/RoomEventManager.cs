@@ -7,18 +7,18 @@ using UnityEngine;
 
 public class RoomEventManager : MonoBehaviour
 {
-    public GameObject[] doors;
+    [SerializeField] private GameObject[] doors;
 
-    public GameObject[] enemies;
+    [SerializeField] private GameObject[] enemies;
 
-    public int roomNumber = 1;
+    [SerializeField] private int roomNumber = 1;
 
     [SerializeField] private int enemyCount;
 
-    public float doorMoveDownAmount = 10f;
-    public float speed = 1f;
+    [SerializeField] private float doorMoveDownAmount = 10f;
+    [SerializeField] private float speed = 1f;
 
-    public bool doorsOpened = false;
+    [SerializeField] private bool doorsOpened = false;
 
     // Start is called before the first frame update
     void Start()

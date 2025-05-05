@@ -198,15 +198,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.171
+      value: -0.65149033
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.343
+      value: -1.3482038
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.323
+      value: 0.021007776
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalRotation.w
@@ -214,15 +214,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 26e10a39ff5a1446c9e879c4858bbc88, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -308,7 +308,7 @@ MonoBehaviour:
   used: 0
   playerHead: {fileID: 0}
   player: {fileID: 0}
-  drinkSound: {fileID: 0}
+  drinkSound: {fileID: 8300000, guid: 27ec9b3866ca3b14083a481490a4ef18, type: 3}
 --- !u!114 &5741929483595172583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 488323bf43830f2478bf0b07b1ac05a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  potionsScript: {fileID: 0}
+  potionsScript: {fileID: 3912645913816988488}
   playerInfo: {fileID: 0}
   destroyDelay: 1
   healAmount: 25

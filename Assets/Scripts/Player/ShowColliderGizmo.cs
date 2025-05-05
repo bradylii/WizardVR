@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShowColliderGizmo : MonoBehaviour
 {
-    public bool showCollider;
+    [SerializeField] private bool showCollider;
     void OnDrawGizmos()
     {
         if (!showCollider) return;

@@ -3,8 +3,8 @@ using TMPro;
 
 public class GolemStats : MonoBehaviour
 {
-    public Golem golem; // Drag your Player script here
-    public TextMeshProUGUI healthText;
+    [SerializeField] private Golem golem; // Drag your Player script here
+    [SerializeField] private TextMeshProUGUI healthText;
 
     void Update()
     {

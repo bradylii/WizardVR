@@ -8,9 +8,9 @@ using System.Collections;
 
 public class GrabTracker : MonoBehaviour
 {
-    public StartingWandToEnterGame wandScript;
+    [SerializeField] private StartingWandToEnterGame wandScript;
 
-    private bool grabbedTriggered = false;
+    [SerializeField] private bool grabbedTriggered = false;
 
     private void Start()
     {

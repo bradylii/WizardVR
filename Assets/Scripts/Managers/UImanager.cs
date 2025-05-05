@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UImanager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    public GameStateManager gameStateManager;
-    public TurnOffOnUI turnOffOnUI;
+    [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] private TurnOffOnUI turnOffOnUI;
 
     private void Start()
     {

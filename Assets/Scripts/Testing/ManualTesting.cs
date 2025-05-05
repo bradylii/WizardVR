@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ManualTesting : MonoBehaviour
 {
-    public GameStateManager gameManager;
+    [SerializeField] private GameStateManager gameManager;
     // Start is called before the first frame update
     void Start()
     {

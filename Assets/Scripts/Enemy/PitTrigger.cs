@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PitTrigger : MonoBehaviour
 {
-    public AlienMonsterInPit monsterScript;
+    [SerializeField] private AlienMonsterInPit monsterScript;
 
     [SerializeField] private bool playerInPit = false;
 
-    public JoyStickMove joyStickMove;
+    [SerializeField] private JoyStickMove joyStickMove;
 
     private void Start()
     {

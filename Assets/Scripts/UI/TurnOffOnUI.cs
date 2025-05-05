@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class TurnOffOnUI : MonoBehaviour
 {
-    public GameObject victoryUI;
-    public GameObject retryUI;
-    public GameObject secretTextUI;
+    [SerializeField] private GameObject victoryUI;
+    [SerializeField] private GameObject retryUI;
+    [SerializeField] private GameObject secretTextUI;
 
 
     private void Start()

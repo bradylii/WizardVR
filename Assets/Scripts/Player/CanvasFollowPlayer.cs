@@ -6,17 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class CanvasFollowPlayer : MonoBehaviour
 {
-    public Transform playerCamera;
-    public float followSpeed = 5f;
+    [SerializeField] private Transform playerCamera;
+    [SerializeField] private float followSpeed = 5f;
 
-    public float minimumHeight = 1.5f;
-    public float horizontalOffset = 0.5f;
+    [SerializeField] private float minimumHeight = 1.5f;
+    [SerializeField] private float horizontalOffset = 0.5f;
 
-    public bool followPlayer = true;
+    [SerializeField] private bool followPlayer = true;
 
-    public float forwardOffset = 4f;
+    [SerializeField] private float forwardOffset = 4f;
 
-    public bool isMenu = false;
+    [SerializeField] private bool isMenu = false;
     private void Start()
     {
         if (!followPlayer)

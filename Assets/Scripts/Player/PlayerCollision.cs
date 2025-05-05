@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    bool collided = false;
-    public float collisionCooldown = 0.5f;
+    [SerializeField] private bool collided = false;
+    [SerializeField] private float collisionCooldown = 0.5f;
 
-    public Player playerInfo;
+    [SerializeField] private Player playerInfo;
     // Start is called before the first frame update
     void Start()
     {

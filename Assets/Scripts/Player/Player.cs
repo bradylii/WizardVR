@@ -7,11 +7,11 @@ public class Player : MonoBehaviour
 {
     public float playerHealth;
     public float kills;
-    public GameStateManager gameStateManager;
-    public bool playing;
+    [SerializeField] private GameStateManager gameStateManager;
+    [SerializeField] private bool playing;
 
-    public bool collided = false;
-    public float collisionCooldown = 0.5f;
+    [SerializeField] private bool collided = false;
+    [SerializeField] private float collisionCooldown = 0.5f;
     // Start is called before the first frame update
     void Start()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MagicRockHealth : MonoBehaviour
 {
-    Golem golemAi;
+    [SerializeField] private Golem golemAi;
 
     [SerializeField] private float damage = 30;
 

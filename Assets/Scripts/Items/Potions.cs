@@ -5,21 +5,21 @@ using UnityEngine;
 
 public class Potions : MonoBehaviour
 {   
-    public PotionTypes potionType;
+    [SerializeField] private PotionTypes potionType;
 
-    public float drinkDistance = 0.3f; 
-    public float drinkAngleThreshold = 60f;
+    [SerializeField] private float drinkDistance = 0.3f; 
+    [SerializeField] private float drinkAngleThreshold = 60f;
 
-    public float distance;
-    public float angle;
+    [SerializeField] private float distance;
+    [SerializeField] private float angle;
 
-    public bool used = false;
+    [SerializeField] private bool used = false;
     
-    public Transform playerHead;
-    public Transform player;
+    [SerializeField] private Transform playerHead;
+    [SerializeField] private Transform player;
 
     [SerializeField] private AudioClip drinkSound;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
 
 

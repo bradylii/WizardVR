@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    public GameObject[] itemPrefabs;
-    public float spawnHeight = 2f;
+    [SerializeField] private GameObject[] itemPrefabs;
+    [SerializeField] private float spawnHeight = 2f;
 
     public void dropItem()
     {

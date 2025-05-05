@@ -11,9 +11,9 @@ public class GameStateManager : MonoBehaviour
 {
     public GameState currentState;
     public ScenesManager sceneManager;
-    public UImanager uiManager;
+    public UIManager uiManager;
 
-    public static GameStateManager Instance;
+    [SerializeField] private static GameStateManager Instance;
 
     public GameObject player;
 

@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class StatsUI : MonoBehaviour
 {
-    public Player player; // Drag your Player script here
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI killsText;
+    [SerializeField] private Player player; // Drag your Player script here
+    [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI killsText;
 
     private void Start()
     {

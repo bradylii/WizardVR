@@ -6,11 +6,11 @@ public class HealthPotion : MonoBehaviour
 {
 
 
-    public Potions potionsScript;
-    private bool used = false;
-    public Player playerInfo;
-    public float destroyDelay = 2f;
-    public float healAmount = 25f;
+    [SerializeField] private Potions potionsScript;
+    [SerializeField] private bool used = false;
+    [SerializeField] private Player playerInfo;
+    [SerializeField] private float destroyDelay = 2f;
+    [SerializeField] private float healAmount = 25f;
 
 
 

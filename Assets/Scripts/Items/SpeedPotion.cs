@@ -5,33 +5,21 @@ using UnityEngine;
 
 public class SpeedPotion : MonoBehaviour
 {
-    public float speedBoost = 2f;
+    [SerializeField] private float speedBoost = 2f;
 
 
-    public float deactivateDelay = 2f;
-    public float resetSpeedDelay = 5f;
-    public float currentSpeed;
+    [SerializeField] private float deactivateDelay = 2f;
+    [SerializeField] private float resetSpeedDelay = 5f;
+    [SerializeField] private float currentSpeed;
 
+    [SerializeField] private JoyStickMove playerMovement;
 
-    public Transform player;
-    public Transform playerHead;
-    JoyStickMove playerMovement;
-
-    public string manualButton;
-
-    [SerializeField] private AudioClip drinkSound;
-    private AudioSource audioSource;
+    [SerializeField] private string manualButton = "S";
 
     private void Start()
     {
         if (playerMovement == null)
             playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<JoyStickMove>();
-
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
     }
 
     private void Update()
@@ -40,7 +28,6 @@ public class SpeedPotion : MonoBehaviour
         {
             if (Input.GetKeyDown(key))
             {
-                Debug.Log($"[{manualButton}] key pressed");
                 ActivateSpeed();
             }
         }

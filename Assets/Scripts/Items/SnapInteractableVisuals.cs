@@ -11,10 +11,10 @@ public class SnapInteractableVisuals : MonoBehaviour
     [SerializeField] private SnapInteractable snapInteractable;
     [SerializeField] private Material hoverMaterial;
 
-    private GameObject currentInteractorGameObject;
-    private SnapInteractor currentInteractor;
+    [SerializeField] private GameObject currentInteractorGameObject;
+    [SerializeField] private SnapInteractor currentInteractor;
 
-    public float imageSize = 0.5f;
+    [SerializeField] private float imageSize = 0.5f;
 
     private void OnEnable()
     {
