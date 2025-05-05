@@ -35,7 +35,6 @@ public class BoulderDestroy : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("[BOULDER] Hit the player!");
-            // You can add player damage here too
         }
     }
 }

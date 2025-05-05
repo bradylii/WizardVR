@@ -5,25 +5,24 @@ using UnityEngine;
 
 public class CollisionDetection : MonoBehaviour
 {
-    Player player;
-    ItemDrop dropItemScript;
-    EnemyAI enemyAi;
-    Golem golemAi;
-    BoulderHealth BoulderHealth;
-
-    WeaponStats weaponStats;
-
-    public bool collided = false;
-
-    public float collisionCooldown = 0.5f;
-    public bool isSkeleton = true;
-    public bool isGolem;
-
-
-
+     [Header("References")]
+    [SerializeField] private Player player;
+    [SerializeField] private ItemDrop dropItemScript;
+    [SerializeField] private EnemyAI enemyAi;
+    [SerializeField] private Golem golemAi;
+    [SerializeField] private MagicRockHealth magicRockHealth;
     [SerializeField] private EnemyType enemyType;
 
+    [Header("Weapon")]
+    [SerializeField] private WeaponStats weaponStats;
+
+    [Header("Settings")]
+    [SerializeField] private float collisionCooldown = 0.5f;
+    [SerializeField] private bool collided = false;
     [SerializeField] private bool boulderAlreadyHit = false;
+
+    
+
 
     private void Start()
     {
@@ -40,15 +39,9 @@ public class CollisionDetection : MonoBehaviour
                 golemAi = GetComponent<Golem>();
                 break;
             case EnemyType.GolemBoulders:
-                BoulderHealth = GetComponent<BoulderHealth>();
-                break;
-            default:
-                defaultEnemyType();
+                magicRockHealth = GetComponent<MagicRockHealth>();
                 break;
         }
-
-
-
     }
     void OnTriggerEnter(Collider other)
     {
@@ -72,11 +65,8 @@ public class CollisionDetection : MonoBehaviour
                         break;
                     case EnemyType.GolemBoulders:
                         if (!boulderAlreadyHit)
-                            BoulderHealth.wasHit();
+                            magicRockHealth.wasHit();
                         boulderAlreadyHit = true;
-                        break;
-                    default:
-                        defaultEnemyHit();
                         break;
                 }
             }
@@ -91,35 +81,4 @@ public class CollisionDetection : MonoBehaviour
         collided = false;
     }
 
-    private void defaultEnemyType()
-    {
-        if (isSkeleton)
-        {
-            enemyAi = GetComponent<EnemyAI>();
-        }
-        else if (isGolem)
-        {
-            golemAi = GetComponent<Golem>();
-        }
-        else
-        {
-            BoulderHealth = GetComponent<BoulderHealth>();
-        }
-    }
-
-    private void defaultEnemyHit()
-    {
-        if (isSkeleton)
-        {
-            enemyAi.wasHit(weaponStats.damage, dropItemScript);
-        }
-        else if (isGolem)
-        {
-            golemAi.wasHit(weaponStats.damage);
-        }
-        else
-        {
-            BoulderHealth.wasHit();
-        }
-    }
 }

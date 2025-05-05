@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoulderHealth : MonoBehaviour
+public class MagicRockHealth : MonoBehaviour
 {
     Golem golemAi;
 
-    public float damage = 30;
+    [SerializeField] private float damage = 30;
 
     private void Start()
     {
