@@ -6,7 +6,43 @@ TagManager:
   tags:
   - weapon
   - endOfMaze
-  - enemy
+  - Enemy
+  - Item
+  - Wand
+  - wall
+  - EnemyWeapon
+  - trap
+  - Spawn
+  - RoomManager
+  - RoomDoor
+  - QDSUIToggleButton
+  - QDSUIIcon
+  - QDSUITextSecondaryColor
+  - QDSUIPrimaryButton
+  - QDSUISharedThemeColor
+  - QDSUIAccentColor
+  - QDSUISecondaryButton
+  - QDSUIDestructiveButton
+  - QDSUIBorderlessButton
+  - QDSUIToggleBorderlessButton
+  - QDSUITooltip
+  - QDSUIToggleSwitch
+  - Locomotion
+  - LocoButton
+  - LocoText
+  - PassThroughButton
+  - PassThrough
+  - QDSUITextInputField
+  - SamplesInfoPanel
+  - QDSUIToggleCheckboxRadio
+  - QDSUISection
+  - PitEnemy
+  - Golem
+  - RetryUI
+  - VictoryUI
+  - GameManager
+  - SecretTextUI
+  - UI
   layers:
   - Default
   - TransparentFX
@@ -16,11 +52,11 @@ TagManager:
   - UI
   - Obstacles
   - Grabbables
-  - enemy
-  - 
-  - 
-  - 
-  - 
+  - Enemy
+  - Weapon
+  - trap
+  - TrapRoom
+  - EnemyWeapon
   - 
   - 
   - 
@@ -43,4 +79,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 585156613
+    locked: 0
+  - name: Buttons
+    uniqueID: 1078394393
     locked: 0
