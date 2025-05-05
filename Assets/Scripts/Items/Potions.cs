@@ -74,7 +74,6 @@ public class Potions : MonoBehaviour
         if (potionType == PotionTypes.Healing)
             GetComponent<HealthPotion>().ActivateHeal();
         else if (potionType == PotionTypes.Speed)
-            if (potionType == PotionTypes.Healing)
             GetComponent<SpeedPotion>().ActivateSpeed();
     }
 }

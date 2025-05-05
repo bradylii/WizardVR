@@ -43,17 +43,38 @@ public class SnapInteractableVisuals : MonoBehaviour
 
     private void SnapInteractable_WhenSelectingInteractorViewAdded(IInteractorView obj)
     {
-        currentInteractorGameObject?.SetActive(false);
+        if (currentInteractorGameObject != null)
+            currentInteractorGameObject.SetActive(false);
+            
+        if (currentInteractorGameObject == null)
+        {
+            Debug.LogWarning("[SnapVisual] Tried to set active but ghost model isn't initialized yet.");
+            return;
+        }
     }
 
     private void SnapInteractable_WhenInteractorViewAdded(IInteractorView obj)
     {
-        currentInteractorGameObject?.SetActive(true);
+        if (currentInteractorGameObject != null)
+            currentInteractorGameObject.SetActive(true);
+
+        if (currentInteractorGameObject == null)
+        {
+            Debug.LogWarning("[SnapVisual] Tried to set active but ghost model isn't initialized yet.");
+            return;
+        }
     }
 
     private void SnapInteractable_WhenInteractorViewRemoved(IInteractorView obj)
     {
-        currentInteractorGameObject.SetActive(false);
+        if (currentInteractorGameObject != null)
+            currentInteractorGameObject.SetActive(false);
+        
+        if (currentInteractorGameObject == null)
+        {
+            Debug.LogWarning("[SnapVisual] Tried to set active but ghost model isn't initialized yet.");
+            return;
+        }
     }
 
     private void SetupGhostModel(SnapInteractor interactor)

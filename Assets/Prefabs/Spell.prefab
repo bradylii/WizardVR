@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5781249767355296421}
   - component: {fileID: 1945427696741128812}
   - component: {fileID: 23251051448847455}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Spell
   m_TagString: weapon
   m_Icon: {fileID: 0}

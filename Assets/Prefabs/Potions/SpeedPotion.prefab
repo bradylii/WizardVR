@@ -254,15 +254,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.424
+      value: -0.90449035
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.356
+      value: -1.3352039
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.021
+      value: -0.32299224
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalRotation.w
@@ -270,15 +270,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 14d8b54774750514d8666a4c569d4f99, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -376,7 +376,8 @@ MonoBehaviour:
   used: 0
   playerHead: {fileID: 0}
   player: {fileID: 0}
-  drinkSound: {fileID: 0}
+  drinkSound: {fileID: 8300000, guid: 27ec9b3866ca3b14083a481490a4ef18, type: 3}
+  audioSource: {fileID: 0}
 --- !u!114 &2468809265507816921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -393,10 +394,8 @@ MonoBehaviour:
   deactivateDelay: 2
   resetSpeedDelay: 5
   currentSpeed: 0
-  player: {fileID: 0}
-  playerHead: {fileID: 0}
+  playerMovement: {fileID: 0}
   manualButton: S
-  drinkSound: {fileID: 8300000, guid: 27ec9b3866ca3b14083a481490a4ef18, type: 3}
 --- !u!54 &658172092960406120
 Rigidbody:
   m_ObjectHideFlags: 0

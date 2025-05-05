@@ -92,9 +92,15 @@ public class GameStateManager : MonoBehaviour
         Debug.Log("[GAMESTATE] Main Menu is being played");
     }
 
+    public void MainMenuToLobby()
+    {
+        sceneManager.Lobby();
+        Debug.Log("[GameState] MainMenuToLobb()");
+    }
+
     public void LobbyScene()
     {
-        Debug.Log("[GAMESTATE] Game is in loading screen");
+        Debug.Log("[GAMESTATE] Game is in loading scene");
 
         Transform playerHead = GameObject.FindGameObjectWithTag("MainCamera").transform;
         Transform headTarget = GameObject.Find("HeadPosition").transform;

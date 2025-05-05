@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8983617287089438224}
   m_Layer: 0
   m_Name: HealthBoulder
-  m_TagString: Untagged
+  m_TagString: Golem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -583,6 +583,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3856802f009694bac8d3fd7595adf53b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  golemAi: {fileID: 0}
   damage: 30
 --- !u!114 &4325148116545014867
 MonoBehaviour:
@@ -601,12 +602,10 @@ MonoBehaviour:
   enemyAi: {fileID: 0}
   golemAi: {fileID: 0}
   magicRockHealth: {fileID: 0}
-  weaponStats: {fileID: 0}
-  collided: 0
-  collisionCooldown: 0.5
-  isSkeleton: 0
-  isGolem: 0
   enemyType: 2
+  weaponStats: {fileID: 0}
+  collisionCooldown: 0.5
+  collided: 0
   boulderAlreadyHit: 0
 --- !u!33 &1683732559303685999
 MeshFilter:

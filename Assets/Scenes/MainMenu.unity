@@ -17340,6 +17340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1400136400}
   - component: {fileID: 1400136401}
+  - component: {fileID: 1400136402}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: GameManager
@@ -17374,9 +17375,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59292ce3438a52f4ba4759896e29f052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentState: 0
+  currentState: 4
+  sceneManager: {fileID: 1400136402}
+  uiManager: {fileID: 0}
   player: {fileID: 0}
-  secretText: {fileID: 0}
+--- !u!114 &1400136402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1400136399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ff0d6b243fea147a7dc3edb50ad9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 4
+  gameStateManager: {fileID: 1400136401}
 --- !u!1 &1400172283
 GameObject:
   m_ObjectHideFlags: 0
@@ -26169,6 +26185,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1400136401}
+    - target: {fileID: 9100448255685075749, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: MainMenuToLobby
+      objectReference: {fileID: 0}
     - target: {fileID: 9114469951727481434, guid: dfc107e464cffdf48bfe8617a83d57ed, type: 3}
       propertyPath: m_Camera
       value: 

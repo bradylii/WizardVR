@@ -26,7 +26,9 @@ public class CollisionDetection : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+        if (player == null)
+            player = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
+            
         dropItemScript = GetComponent<ItemDrop>();
 
 

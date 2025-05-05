@@ -830,24 +830,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb8862daca5f1c4a9adfcdcddb409de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
-  attackRate: 0
-  health: 10
-  attackCoodldown: 1.5
-  isDamagingPlayer: 0
-  goingToPlayer: 0
-  isDead: 0
   player: {fileID: 0}
-  distanceToPlayer: 0
   agent: {fileID: 7732992947256230589}
   playerInfo: {fileID: 0}
+  animator: {fileID: 95690985424869934}
   detectionScript: {fileID: 4583912775803344974}
   stoppingDistance: 1.07
   playerVisible: 0
   sawPlayer: 0
-  animator: {fileID: 95690985424869934}
+  canAttack: 1
+  attackRate: 0
+  health: 10
+  attackCoodldown: 1.5
+  isDamagingPlayer: 0
+  isAttacking: 0
+  goingToPlayer: 0
+  isDead: 0
   showDebugGizmos: 1
-  distanceFromDestination: 0
 --- !u!114 &4583912775803344974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,6 +864,7 @@ MonoBehaviour:
   distanceToPlayer: 0
   detectionRange: 3.76
   angle: 80
+  directionToPlayer: {x: 0, y: 0, z: 0}
   playerVisible: 0
   showDebugGizmos: 1
   DebuggedPlayerSeen: 0
@@ -880,11 +880,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ebdcafa2b910e438f8f910df33c71e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collided: 0
-  collisionCooldown: 0.5
-  isSkeleton: 1
-  isGolem: 0
+  player: {fileID: 0}
+  dropItemScript: {fileID: 0}
+  enemyAi: {fileID: 0}
+  golemAi: {fileID: 0}
+  magicRockHealth: {fileID: 0}
   enemyType: 0
+  weaponStats: {fileID: 0}
+  collisionCooldown: 0.5
+  collided: 0
   boulderAlreadyHit: 0
 --- !u!114 &6698878439760984427
 MonoBehaviour:
@@ -973,7 +977,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1.25
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

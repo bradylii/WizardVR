@@ -39,7 +39,7 @@ public class TurnOffOnUI : MonoBehaviour
     {
         retryUI.SetActive(false); // turn off retry ui
 
-        victoryUI.SetActive(!victoryUI.activeSelf);
+        victoryUI.SetActive(true);
     }
 
     public void SwitchSecretTextUI()

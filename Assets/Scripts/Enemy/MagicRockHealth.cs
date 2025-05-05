@@ -10,7 +10,10 @@ public class MagicRockHealth : MonoBehaviour
 
     private void Start()
     {
-        golemAi = GameObject.FindGameObjectWithTag("Golem").GetComponent<Golem>();
+        if (golemAi == null)
+        {
+            golemAi = GameObject.FindGameObjectWithTag("Golem").GetComponent<Golem>();
+        }
     }
 
     public void wasHit()

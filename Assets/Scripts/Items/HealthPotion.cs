@@ -20,7 +20,7 @@ public class HealthPotion : MonoBehaviour
             potionsScript = GetComponent<Potions>();
 
         if (playerInfo == null)
-            playerInfo = GameObject.Find("Game Manager")?.GetComponent<Player>();
+            playerInfo = GameObject.FindGameObjectWithTag("GameManager")?.GetComponent<Player>();
     }
 
     private void Update()
